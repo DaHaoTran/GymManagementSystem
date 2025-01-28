@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Accounts
+    public class Account
     {
         [Key]
         [Column(TypeName = "Varchar(10)")]

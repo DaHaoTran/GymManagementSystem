@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Fines
+    public class Fine
     {
         [Key]
         public Guid FineCode { get; set; }
