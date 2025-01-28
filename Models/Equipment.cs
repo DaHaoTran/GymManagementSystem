@@ -8,24 +8,28 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Branch
+    public class Equipment
     {
         [Key]
+        [Column(TypeName = "Varchar(10)")]
+        public string EquipCode { get; set; }
+
         [Column(TypeName = "Varchar(6)")]
         public string BranchCode { get; set; }
 
-        public string BranchName { get; set; }
+        public string EquipName { get; set; }
 
-        public string Address { get; set; }
+        public string Status { get; set; }
 
-        public int QuantityOfStaffs { get; set; }
+        public string? Note { get; set; }
 
-        public int QuantityOfPTs { get; set; }
-
-        public int QuantityOfWorkers { get; set; }
+        [Column(TypeName = "Varchar(10)")]
+        public string? StaffUpdate { get; set; }
 
         [Column(TypeName = "Varchar(10)")]
         public string AdminUpdate { get; set; }
+
+        public bool IsReceived { get; set; }
 
         public bool IsDeleted { get; set; }
     }
