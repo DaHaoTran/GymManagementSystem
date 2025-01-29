@@ -20,5 +20,7 @@ namespace Models
         public double PricesApply { get; set; }
 
         public DateTime UpdateDate { get; set; }
+
+        public Account? account;
     }
 }

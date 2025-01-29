@@ -15,5 +15,7 @@ namespace Models
         public int OrderNumber { get; set; }
 
         public string RoleName { get; set; }
+
+        public ICollection<Account>? accounts;
     }
 }

@@ -21,10 +21,5 @@ namespace DBA.Context
         public DbSet<Salary> Salaries { get; set; }
         public DbSet<ServicePackage> ServicePackages { get; set; }
         public DbSet<WorkingCheck> WorkingChecks { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //Code table relationship here ...
-        }
     }
 }

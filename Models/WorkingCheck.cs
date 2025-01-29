@@ -20,5 +20,8 @@ namespace Models
         public string CheckOf { get; set; }
 
         public bool IsCheckIn { get; set; }
+
+        [ForeignKey("CheckOf")]
+        public Account? account;
     }
 }

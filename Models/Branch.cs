@@ -28,5 +28,12 @@ namespace Models
         public string AdminUpdate { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        [ForeignKey("AdminUpdate")]
+        public Account? account;
+
+        public ICollection<Equipment>? equipment;
+
+        public ICollection<Customer>? customers;
     }
 }

@@ -35,5 +35,17 @@ namespace Models
 
         [Column(TypeName = "Varchar(5)")]
         public string SalaryCode { get; set; }
+
+        public ICollection<Branch>? branches;
+
+        public ICollection<WorkingCheck>? workingChecks;
+
+        [ForeignKey("RoleId")]
+        public Role? role;
+
+        [ForeignKey("SalaryCode")]
+        public Salary? salary;
+
+        public ICollection<EmployeeSalary>? employeeSalaries;
     }
 }

@@ -27,5 +27,12 @@ namespace Models
 
         [Column(TypeName = "Varchar(10)")]
         public string UpdateBy { get; set; }
+
+        [ForeignKey("BranchCode")]
+        public Branch? branch;
+
+        public ICollection<CustomersVoucher>? customersVouchers;
+
+        public ICollection<Fine>? fines;
     }
 }

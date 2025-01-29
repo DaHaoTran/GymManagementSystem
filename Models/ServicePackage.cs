@@ -24,5 +24,7 @@ namespace Models
 
         [Column(TypeName = "Varchar(10)")]
         public string AdminUpdate { get; set; }
+
+        public ICollection<CustomersVoucher>? customersVoucher;
     }
 }

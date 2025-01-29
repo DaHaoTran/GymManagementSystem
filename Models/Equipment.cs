@@ -32,5 +32,8 @@ namespace Models
         public bool IsReceived { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        [ForeignKey("BranchCode")]
+        public Branch? branch;
     }
 }
