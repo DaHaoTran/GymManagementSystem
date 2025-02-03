@@ -21,5 +21,7 @@ namespace DBA.Context
         public DbSet<Salary> Salaries { get; set; }
         public DbSet<ServicePackage> ServicePackages { get; set; }
         public DbSet<WorkingCheck> WorkingChecks { get; set; }
+
+        public GymManagementSystemDBContext(DbContextOptions<GymManagementSystemDBContext> options): base (options) { }
     }
 }

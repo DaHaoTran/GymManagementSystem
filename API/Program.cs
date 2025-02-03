@@ -1,3 +1,6 @@
+using DBA.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Add dbcontext
+builder.Services.AddDbContext<GymManagementSystemDBContext>(option =>
+{
+    option.UseSqlServer(builder.Configuration.GetConnectionString("GymConnection"));
+});
 
 var app = builder.Build();
 
