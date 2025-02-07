@@ -1,4 +1,4 @@
-html, body {
+﻿html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -48,4 +48,34 @@ h1:focus {
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+.new_sidebar {
+    background-color: #1A2A3B;
+    width: 250px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+header {
+    background-color: #B4FBCA;
+    position: sticky;
+    top: 0;
+    height: 7vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+footer {
+    background-color: #B4FBCA;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
