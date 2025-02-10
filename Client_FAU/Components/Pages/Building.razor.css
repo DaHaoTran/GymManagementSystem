@@ -1,1 +1,24 @@
-﻿
+﻿button {
+    background-color: #00FF4F;
+    font-size: 220%;
+    font-weight: bolder;
+    padding: 0% 3% 0 3%;
+}
+
+.branch {
+    width: 18%;
+}
+
+.head-container {
+    align-items: end;
+    grid-template-areas: "bell code";
+}
+
+.bell {
+    grid-area: bell;
+}
+
+.branch-code {
+    grid-area: code;
+    text-align:end;
+}
