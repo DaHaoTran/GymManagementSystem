@@ -3,13 +3,13 @@
 <PageTitle>Building</PageTitle>
 
 <div>
-    <button class="btn mt-3">+</button>
+    <button class="btn mt-3" data-bs-toggle="modal" data-bs-target="#create-modal">+</button>
 </div>
 
 <div class="row mt-5">
     @for(int i =0; i< 4;i++)
     {
-        <div class="branch col-4 mx-5 my-3">
+        <div class="branch col-4 my-3">
             <div class="head-container d-grid">
                 <div class="bell w-75">
                     <img class="w-50" src="./images/bell.png" alt="Bell" />
@@ -26,4 +26,25 @@
             </div>
         </div>
     }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="create-modal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="BranchName" class="form-label">Branch name</label>
+                        <input type="text" class="form-control" id="BranchName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="Address">
+                    </div>
+                    <button type="submit" class="btn mt-3 w-25 fs-3">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

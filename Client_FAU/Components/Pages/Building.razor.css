@@ -6,7 +6,8 @@
 }
 
 .branch {
-    width: 18%;
+    width: 15%;
+    margin: 0 5% 0 5% !important;
 }
 
 .head-container {
@@ -21,4 +22,9 @@
 .branch-code {
     grid-area: code;
     text-align:end;
+}
+
+form > div > label {
+    font-size: 130%;
+    font-weight: bolder;
 }
