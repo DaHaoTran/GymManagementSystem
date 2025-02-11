@@ -8,6 +8,7 @@
 .branch {
     width: 15%;
     margin: 0 5% 0 5% !important;
+    border-radius: 10px;
 }
 
 .head-container {
@@ -27,4 +28,24 @@
 form > div > label {
     font-size: 130%;
     font-weight: bolder;
+}
+
+.branch-detail {
+    font-size: 130%;
+    font-weight: bolder;
+    background-color: gainsboro;
+    width: 30%;
+    height: 30vh;
+    border-radius: 10px;
+    border: 1px solid #00FF4F;
+}
+
+.delete {
+    border-radius: 0 10px 10px 0;
+    background-color: red;
+}
+
+.address > h5 {
+    height: 10vh;
+    word-wrap: break-word;
 }
