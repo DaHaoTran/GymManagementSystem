@@ -336,6 +336,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("Money");
+
                     b.HasKey("PackageCode");
 
                     b.ToTable("ServicePackages");

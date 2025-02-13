@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(GymManagementSystemDBContext))]
-    [Migration("20250206125619_GymDB")]
+    [Migration("20250213132339_GymDB")]
     partial class GymDB
     {
         /// <inheritdoc />
@@ -338,6 +338,9 @@ namespace API.Migrations
                     b.Property<string>("PackageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("Money");
 
                     b.HasKey("PackageCode");
 

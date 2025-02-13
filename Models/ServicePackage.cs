@@ -16,6 +16,9 @@ namespace Models
 
         public string PackageName { get; set; }
 
+        [Column(TypeName = "Money")]
+        public double Price { get; set; }
+
         public int MemberQuantity { get; set; }
 
         public int NumberOfDays { get; set; }

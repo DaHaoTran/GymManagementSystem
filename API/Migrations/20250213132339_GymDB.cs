@@ -174,6 +174,7 @@ namespace API.Migrations
                 {
                     PackageCode = table.Column<string>(type: "Varchar(5)", nullable: false),
                     PackageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "Money", nullable: false),
                     MemberQuantity = table.Column<int>(type: "int", nullable: false),
                     NumberOfDays = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
