@@ -5,7 +5,7 @@
     padding: 0% 3% 0 3%;
 }
 
-.branch {
+.account{
     width: 15%;
     margin: 0 5% 0 5% !important;
     border-radius: 10px;
@@ -13,16 +13,16 @@
 
 .head-container {
     align-items: end;
-    grid-template-areas: "bell code";
+    grid-template-areas: "role code";
 }
 
-.bell {
-    grid-area: bell;
+.role {
+    grid-area: role;
 }
 
-.branch-code {
+.code {
     grid-area: code;
-    text-align:end;
+    text-align: end;
 }
 
 form > div > label {
@@ -30,7 +30,7 @@ form > div > label {
     font-weight: bolder;
 }
 
-.branch-detail {
+.user-detail {
     font-size: 130%;
     font-weight: bolder;
     background-color: gainsboro;
@@ -60,4 +60,8 @@ form > div > label {
 
 a:hover {
     cursor: pointer;
+}
+
+.search-input {
+    width: 35%;
 }

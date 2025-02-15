@@ -1,60 +1,48 @@
-﻿@page "/"
+﻿@page "/account"
 
 <PageTitle>Building</PageTitle>
 
-<div class="row mt-3">
-    <div class="col-6">
-        <button class="btn w-25" data-bs-toggle="modal" data-bs-target="#editmodal">+</button>
-    </div>
-    <div class="d-flex justify-content-end col-6">
-        <input type="text" class="form-control me-3"/>
-        <button class="btn">Search</button>
-    </div>
+<div class="d-flex justify-content-end mt-3">
+    <input type="text" class="form-control me-3 search-input" />
+    <button class="btn">Search</button>
 </div>
 
 <div class="row mt-5">
-    <div class="nav-link link-dark col-3 branch" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+    <div class="nav-link link-dark col-3 account" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
         <div class="head-container d-grid">
-            <div class="bell w-75">
-                <img class="w-50" src="./images/bell.png" alt="Bell" />
+            <div class="role">
+                <h4 class="fw-bolder">Role</h4>
             </div>
-            <div class="branch-code">
+            <div class="code">
                 <h4 class="fw-bolder">Code</h4>
             </div>
         </div>
         <div class="w-100">
-            <img class="w-100" src="./images/gymhouse.png" alt="A Branch" />
+            <img class="w-100" src="./images/user.png" alt="A User" />
         </div>
-        <div class="branch-name text-center mt-3">
-            <h4 class="fw-bolder">Branch name</h4>
-        </div>
-        <div class="revenue text-end">
-            <a class="nav nav-link mt-0">Revenue>>></a>
+        <div class="user-name text-center mt-3">
+            <h4 class="fw-bolder">Full name</h4>
         </div>
     </div>
     <div class="mt-1 mb-2">
         <div class="collapse collapse-horizontal" id="collapse">
-            <div class="card card-body branch-detail">
+            <div class="card card-body user-detail">
                 <div class="row">
                     <div class="col-10">
                         <div class="address w-50">
-                            <h5 class="fw-bold ms-3">Address...............</h5>
+                            <h5 class="fw-bold">Living at...............</h5>
                         </div>
                         <div class="quantities row w-100">
-                            <div class="col-6 text-start">Staff</div>
-                            <div class="col-6 text-end">X 1</div>
-
-                            <div class="col-6 text-start">PTs</div>
-                            <div class="col-6 text-end">X 1</div>
-
-                            <div class="col-6 text-start">Workers</div>
-                            <div class="col-6 text-end">X 1</div>
+                            <div class="text-start col-12">Age</div>
+                            <div class="text-start col-12">Phone number</div>
+                            <div class="text-start col-12">Id</div>
+                            <div class="text-start col-12">Salary name</div>
 
                             <div class="col-12 text-center fs-6 mt-2">Update by AD001</div>
                         </div>
                     </div>
 
-                   <div class="row col-2 d-grid a-container">
+                    <div class="row col-2 d-grid a-container">
                         <div class="delete d-flex justify-content-center align-items-center col-12">
                             <a class="image w-75">
                                 <img class="w-100" src="images/trash.png" alt="Trash" />
@@ -66,7 +54,7 @@
                                 <img class="w-100" src="images/edit.png" alt="Edit" />
                             </a>
                         </div>
-                   </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,3 +81,4 @@
         </div>
     </div>
 </div>
+
