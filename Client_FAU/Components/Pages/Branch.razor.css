@@ -25,7 +25,7 @@
     text-align:end;
 }
 
-form > div > label {
+label {
     font-size: 130%;
     font-weight: bolder;
 }

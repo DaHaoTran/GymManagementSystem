@@ -25,7 +25,7 @@
     text-align: end;
 }
 
-form > div > label {
+label {
     font-size: 130%;
     font-weight: bolder;
 }
@@ -55,13 +55,9 @@ form > div > label {
 }
 
 .submit-button {
-    width: 30% !important;
+    width: 35% !important;
 }
 
 a:hover {
     cursor: pointer;
-}
-
-.search-input {
-    width: 35%;
 }
