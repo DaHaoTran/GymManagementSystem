@@ -3,3 +3,27 @@
     font-weight: bolder !important;
     color: black !important;
 }
+
+.text {
+    font-weight: bolder !important;
+}
+
+.setting {
+    border-radius: 10px;
+    background-color: lightgray;
+    width: 45%;
+}
+
+.title {
+    background-color: #00F811;
+    border-radius: 10px 0 0 0;
+}
+
+.right-section {
+    background-color: red;
+    border-radius: 0 10px 10px 0;
+}
+
+.form-control {
+    border-radius: 10px !important;
+}

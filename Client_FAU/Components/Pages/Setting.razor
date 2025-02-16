@@ -3,22 +3,64 @@
 <PageTitle>Setting</PageTitle>
 
 <script type="text/javascript">
-        function SetActiveClass(element) {
-        var navLinkActive = document.querySelector('.active');
-        if (navLinkActive != null) {
-            navLinkActive.classList.remove('active');
-        }
-        if (element != null) {
-            element.classList.add('active');
-        }
+    function SetActiveClass(element) {
+    var navLinkActive = document.querySelector('.active');
+    if (navLinkActive != null) {
+    navLinkActive.classList.remove('active');
+    }
+    if (element != null) {
+    element.classList.add('active');
+    }
     }
 </script>
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" onclick="SetActiveClass(this)">Salary</a>
+        <a class="nav-link active" id="pills-salary-tab" data-bs-toggle="pill" data-bs-target="#pills-salary" role="tab" aria-controls="pills-salary" aria-selected="true" aria-current="page" onclick="SetActiveClass(this)">Salary</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" onclick="SetActiveClass(this)">Service</a>
+        <a class="nav-link" id="pills-service-tab" data-bs-toggle="pill" data-bs-target="#pills-service" role="tab" aria-controls="pills-service" aria-selected="true" aria-current="page" onclick="SetActiveClass(this)">Service</a>
     </li>
 </ul>
+
+<div class="tab-content mt-5" id="pills-tabContent">
+    <!-- salary tab -->
+    <div class="tab-pane fade show active" id="pills-salary" role="tabpanel" aria-labelledby="pills-salary-tab" tabindex="0">
+        <div class="row">
+            @for(int i = 0; i < 3;i++)
+            {
+                <div class="setting col-6 my-3 mx-4">
+                    <div class="row">
+                        <div class="left-section col-11">
+                            <div class="title row">
+                                <h4 class="col-6 text text-start mt-1">Salary Type</h4>
+                                <h5 class="col-6 text text-end">Date updated</h5>
+                            </div>
+                            <div class="body mt-2">
+                                <h4 class="col-6 text text-start">Price</h4>
+                            </div>
+                            <form class="mt-1">
+                                <div class="mb-3">
+                                    <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
+                                    <div class="d-flex justify-content-start">
+                                        <input type="text" class="form-control" id="Price Apply">
+                                        <h4 class="text mt-2 col-3 text-center">Vn đồng</h4>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="right-section col-1 d-flex justify-content-center align-items-center">
+                            <div class="image w-75">
+                                <img class="w-100" src="/images/trash.png" alt="A Trash" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- service tab -->
+    <div class="tab-pane fade" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab" tabindex="0">
+
+    </div>
+</div>
