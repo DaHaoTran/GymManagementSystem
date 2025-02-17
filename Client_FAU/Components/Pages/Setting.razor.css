@@ -19,9 +19,19 @@
     border-radius: 10px 0 0 0;
 }
 
+.title2 {
+    background-color: #00F811;
+    border-radius: 10px 10px 0 0;
+}
+
 .right-section {
     background-color: red;
     border-radius: 0 10px 10px 0;
+}
+
+.delete-button {
+    background-color: red;
+    border-radius: 0 0 10px 10px;
 }
 
 .form-control {

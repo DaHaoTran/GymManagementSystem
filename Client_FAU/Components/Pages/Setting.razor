@@ -26,7 +26,7 @@
 <div class="tab-content mt-5" id="pills-tabContent">
     <!-- salary tab -->
     <div class="tab-pane fade show active" id="pills-salary" role="tabpanel" aria-labelledby="pills-salary-tab" tabindex="0">
-        <div class="row">
+        <div class="row mb-5">
             @for(int i = 0; i < 3;i++)
             {
                 <div class="setting col-6 my-3 mx-4">
@@ -44,7 +44,7 @@
                                     <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
                                     <div class="d-flex justify-content-start">
                                         <input type="text" class="form-control" id="Price Apply">
-                                        <h4 class="text mt-2 col-3 text-center">Vn đồng</h4>
+                                        <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
                                     </div>
                                 </div>
                             </form>
@@ -57,10 +57,49 @@
                     </div>
                 </div>
             }
+            <div class="setting col-6 my-3 mx-4 d-flex justify-content-center align-items-center">
+                <a class="nav nav-link" href="#"><h1 class="text">+</h1></a>
+            </div>
         </div>
     </div>
     <!-- service tab -->
     <div class="tab-pane fade" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab" tabindex="0">
-
+        <div class="row mb-5">
+            @for(int i = 0; i < 3;i++)
+            {
+                <div class="setting col-6 my-3 mx-4">
+                    <div class="title2 row">
+                        <h4 class="col-6 text text-start mt-1">Package name</h4>
+                        <h5 class="col-6 text text-end">Admin update</h5>
+                    </div>
+                    <div class="body mt-2">
+                        <h4 class="col-6 text text-start">Price</h4>
+                    </div>
+                    <form class="mt-1">
+                        <div class="mb-3">
+                            <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
+                            <div class="d-flex justify-content-start">
+                                <input type="text" class="form-control" id="PriceApply">
+                                <h4 class="text mt-2 col-3 text-start">Vn dong</h4>
+                            </div>
+                        </div>
+                        <div class="mb-3 d-flex justify-content-start">
+                            <label for="Member" class="form-label text fs-4 me-2">Member</label>
+                            <input type="number" class="form-control" id="Member">
+                            <label for="Days" class="form-label text fs-4 m-2">Days</label>
+                            <input type="number" class="form-control" id="Days">
+                        </div>
+                    </form>
+                    <div class="delete-button d-flex w-100 justify-content-center align-items-center">
+                        <div class="image w-25 d-flex justify-content-center align-items-center m-1">
+                            <img class="w-25" src="/images/trash.png" alt="A Trash" />
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="setting col-6 my-3 mx-4 d-flex justify-content-center align-items-center">
+                <a class="nav nav-link" href="#"><h1 class="text">+</h1></a>
+            </div>
+        </div>
     </div>
 </div>
