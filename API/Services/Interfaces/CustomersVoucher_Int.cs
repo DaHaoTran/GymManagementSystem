@@ -4,11 +4,11 @@ namespace API.Services.Interfaces
 {
     public interface CustomersVoucher_Int
     {
-        List<CustomersVoucher> GetCustomersVoucherList();
-        CustomersVoucher GetTheCustomersVoucherByOrderNumber(int orderNumber);
-        List<CustomersVoucher> GetTheCustomersVouchersByCustomerCode(string customerCode);
-        CustomersVoucher AddANewCustomersVoucher(CustomersVoucher customersVoucher);
-        CustomersVoucher EditAnExistCustomersVoucher(CustomersVoucher customersVoucher);
-        CustomersVoucher DeleteAnExistCustomersVoucher(int orderNumber);
+        Task<List<CustomersVoucher>> GetCustomersVoucherList();
+        Task<CustomersVoucher> GetTheCustomersVoucherByOrderNumber(int orderNumber);
+        Task<List<CustomersVoucher>> GetTheCustomersVouchersByCustomerCode(string customerCode);
+        Task<CustomersVoucher> AddANewCustomersVoucher(CustomersVoucher customersVoucher);
+        Task<CustomersVoucher> EditAnExistCustomersVoucher(CustomersVoucher customersVoucher);
+        Task<CustomersVoucher> DeleteAnExistCustomersVoucher(int orderNumber);
     }
 }

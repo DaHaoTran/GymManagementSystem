@@ -4,11 +4,11 @@ namespace API.Services.Interfaces
 {
     public interface WorkingCheck_Int
     {
-        List<WorkingCheck> GetWorkingCheckList();
-        WorkingCheck GetTheWorkingCheckByOrderNumber(int orderNumber);
-        WorkingCheck AddANewWorkingCheck(WorkingCheck workingCheck);
-        WorkingCheck EditAnExistWorkingCheck(WorkingCheck workingCheck);
-        WorkingCheck DeleteAnExistWorkingCheck(int orderNumber);
-        List<WorkingCheck> GetTheWorkingChecksByAccountCode(string accountCode);
+        Task<List<WorkingCheck>> GetWorkingCheckList();
+        Task<WorkingCheck> GetTheWorkingCheckByOrderNumber(int orderNumber);
+        Task<WorkingCheck> AddANewWorkingCheck(WorkingCheck workingCheck);
+        Task<WorkingCheck> EditAnExistWorkingCheck(WorkingCheck workingCheck);
+        Task<WorkingCheck> DeleteAnExistWorkingCheck(int orderNumber);
+        Task<List<WorkingCheck>> GetTheWorkingChecksByAccountCode(string accountCode);
     }
 }

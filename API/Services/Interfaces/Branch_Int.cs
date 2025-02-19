@@ -4,12 +4,12 @@ namespace API.Services.Interfaces
 {
     public interface Branch_Int
     {
-        List<Branch> GetBranchList();
-        Branch GetTheBranchByBranchCode(string branchCode);
-        List<Branch> GetTheBranchesByBranchName(string branchName);
-        List<Branch> GetTheBranchesByAddress(string address);
-        Branch AddANewBranch(Branch branch);
-        Branch EditAnExistBranch(Branch branch);
-        Branch DeleteAnExistBranch(string branchCode);
+        Task<List<Branch>> GetBranchList();
+        Task<Branch> GetTheBranchByBranchCode(string branchCode);
+        Task<List<Branch>> GetTheBranchesByBranchName(string branchName);
+        Task<List<Branch>> GetTheBranchesByAddress(string address);
+        Task<Branch> AddANewBranch(Branch branch);
+        Task<Branch> EditAnExistBranch(Branch branch);
+        Task<Branch> DeleteAnExistBranch(string branchCode);
     }
 }

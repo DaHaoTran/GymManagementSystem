@@ -4,13 +4,13 @@ namespace API.Services.Interfaces
 {
     public interface EmployeeSalary_Int
     {
-        List<EmployeeSalary> GetEmployeeSalaryList();
-        EmployeeSalary GetTheEmployeeSalaryByEmployeeSalaryCode(Guid employeeSalaryCode);
-        List<EmployeeSalary> GetTheEmployeeSalariesByFullName(string fullName);
-        List<EmployeeSalary> GetTheEmployeeSalariesByBranchName(string branchName);
-        List<EmployeeSalary> GetTheEmployeeSalariesByAccountCode(string accountCode);
-        EmployeeSalary AddANewEmployeeSalary(EmployeeSalary employeeSalary);
-        EmployeeSalary EditAnExistEmployeeSalary(EmployeeSalary employeeSalary);
-        EmployeeSalary DeleteAnExistEmployeeSalary(Guid employeeSalaryCode);
+        Task<List<EmployeeSalary>> GetEmployeeSalaryList();
+        Task<EmployeeSalary> GetTheEmployeeSalaryByEmployeeSalaryCode(Guid employeeSalaryCode);
+        Task<List<EmployeeSalary>> GetTheEmployeeSalariesByFullName(string fullName);
+        Task<List<EmployeeSalary>> GetTheEmployeeSalariesByBranchName(string branchName);
+        Task<List<EmployeeSalary>> GetTheEmployeeSalariesByAccountCode(string accountCode);
+        Task<EmployeeSalary> AddANewEmployeeSalary(EmployeeSalary employeeSalary);
+        Task<EmployeeSalary> EditAnExistEmployeeSalary(EmployeeSalary employeeSalary);
+        Task<EmployeeSalary> DeleteAnExistEmployeeSalary(Guid employeeSalaryCode);
     }
 }

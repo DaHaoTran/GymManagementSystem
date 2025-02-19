@@ -4,11 +4,11 @@ namespace API.Services.Interfaces
 {
     public interface Equipment_Int
     {
-        List<Equipment> GetEquipmentList();
-        Equipment GetTheEquipmentByEquipCode(string equipCode);
-        List<Equipment> GetTheEquipmentByEquipName(string equipName);
-        Equipment AddANewEquipment(Equipment equipment);
-        Equipment EditAnExistEquipment(Equipment equipment);
-        Equipment DeleteAnExistEquipment(string equipCode);
+        Task<List<Equipment>> GetEquipmentList();
+        Task<Equipment> GetTheEquipmentByEquipCode(string equipCode);
+        Task<List<Equipment>> GetTheEquipmentByEquipName(string equipName);
+        Task<Equipment> AddANewEquipment(Equipment equipment);
+        Task<Equipment> EditAnExistEquipment(Equipment equipment);
+        Task<Equipment> DeleteAnExistEquipment(string equipCode);
     }
 }

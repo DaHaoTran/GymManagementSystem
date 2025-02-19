@@ -4,11 +4,11 @@ namespace API.Services.Interfaces
 {
     public interface ServicePackage_Int
     {
-        List<ServicePackage> GetServicePackageList();
-        ServicePackage GetTheServicePackageByPackageCode(string packageCode);
-        List<ServicePackage> GetTheServicePackagesByPackageName(string packageName);
-        ServicePackage AddANewServicePackage(ServicePackage servicePackage);
-        ServicePackage EditAnExistServicePackage(ServicePackage servicePackage);
-        ServicePackage DeleteAnExistServicePackage(string packageCode);
+        Task<List<ServicePackage>> GetServicePackageList();
+        Task<ServicePackage> GetTheServicePackageByPackageCode(string packageCode);
+        Task<List<ServicePackage>> GetTheServicePackagesByPackageName(string packageName);
+        Task<ServicePackage> AddANewServicePackage(ServicePackage servicePackage);
+        Task<ServicePackage> EditAnExistServicePackage(ServicePackage servicePackage);
+        Task<ServicePackage> DeleteAnExistServicePackage(string packageCode);
     }
 }
