@@ -1,5 +1,8 @@
+﻿using API.Services.Implements;
+using API.Services.Interfaces;
 using DBA.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +13,36 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Add dbcontext
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Version = "V1",
+        Title = "Gym management API document",
+    });
+    // using System.Reflection;
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
+//Add dbContext
 builder.Services.AddDbContext<GymManagementSystemDBContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("GymConnection"));
 });
+
+//Add services
+builder.Services.AddScoped<Branch_Int, Branch_Imp>();
 
 var app = builder.Build();
 
