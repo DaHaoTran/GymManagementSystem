@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(GymManagementSystemDBContext))]
-    [Migration("20250213132339_GymDB")]
-    partial class GymDB
+    [Migration("20250220045657_gymdb")]
+    partial class gymdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,8 +37,8 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdNumber")
-                        .HasColumnType("int");
+                    b.Property<double>("IdNumber")
+                        .HasColumnType("float");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

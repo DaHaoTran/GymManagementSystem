@@ -20,7 +20,7 @@ namespace Models
 
         public int PhoneNumber { get; set; }
 
-        public int IdNumber { get; set; }
+        public double IdNumber { get; set; }
 
         public string LivingAt { get; set; }
 

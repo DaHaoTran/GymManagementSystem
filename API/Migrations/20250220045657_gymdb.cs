@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class GymDB : Migration
+    public partial class gymdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace API.Migrations
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     PhoneNumber = table.Column<int>(type: "int", nullable: false),
-                    IdNumber = table.Column<int>(type: "int", nullable: false),
+                    IdNumber = table.Column<double>(type: "float", nullable: false),
                     LivingAt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdateBy = table.Column<string>(type: "Varchar(10)", nullable: false),

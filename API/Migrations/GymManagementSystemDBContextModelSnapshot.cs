@@ -34,8 +34,8 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdNumber")
-                        .HasColumnType("int");
+                    b.Property<double>("IdNumber")
+                        .HasColumnType("float");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
