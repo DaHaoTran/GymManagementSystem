@@ -44,6 +44,7 @@ builder.Services.AddDbContext<GymManagementSystemDBContext>(option =>
 //Add services
 builder.Services.AddScoped<Branch_Int, Branch_Imp>();
 builder.Services.AddScoped<Equipment_Int, Equipment_Imp>();
+builder.Services.AddScoped<Account_Int, Account_Imp>();
 
 var app = builder.Build();
 
