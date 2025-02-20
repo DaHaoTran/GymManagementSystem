@@ -88,6 +88,7 @@ namespace API.Controllers
         {
             if(branch == null) { return BadRequest(); }
             var editBranch = await _branchSvc.EditAnExistBranch(branch);
+            if(editBranch == null) { return NotFound(); }
             return Ok(editBranch);
         }
 
@@ -101,6 +102,7 @@ namespace API.Controllers
         {
             if(string.IsNullOrEmpty(branch_code)) { return BadRequest(); }
             var delBranch = await _branchSvc.DeleteAnExistBranch(branch_code);
+            if(delBranch == null) { return NotFound(); }
             return Ok(delBranch);
         }
     }
