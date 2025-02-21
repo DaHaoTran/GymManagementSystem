@@ -16,7 +16,8 @@ namespace Models
 
         public string CustomerName { get; set; }
 
-        public int PhoneNumber { get; set; }
+        [Column(TypeName = "Char(10)")]
+        public string PhoneNumber { get; set; }
 
         public bool IsBanned { get; set; }
 
