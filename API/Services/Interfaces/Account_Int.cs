@@ -7,8 +7,8 @@ namespace API.Services.Interfaces
         Task<List<Account>> GetAccountList();
         Task<Account> GetTheAccountByAccountCode(string accountCode);
         Task<List<Account>> GetTheAccountsByFullName(string fullName);
-        Task<Account> GetTheAccountByPhoneNumber(int phoneNumber);
-        Task<Account> GetTheAccountByIdNumber(double idNumber);
+        Task<Account> GetTheAccountByPhoneNumber(string phoneNumber);
+        Task<Account> GetTheAccountByIdNumber(string idNumber);
         Task<List<Account>> GetTheAccountsByAddress(string address);
         Task<Account> AddANewAccount(Account account);
         Task<Account> EditAnExistAccount(Account account);
