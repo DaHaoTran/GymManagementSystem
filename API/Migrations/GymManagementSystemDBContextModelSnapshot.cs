@@ -34,8 +34,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("IdNumber")
-                        .HasColumnType("float");
+                    b.Property<string>("IdNumber")
+                        .IsRequired()
+                        .HasColumnType("Char(12)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -48,8 +49,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("Char(10)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");

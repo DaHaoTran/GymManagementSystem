@@ -18,9 +18,11 @@ namespace Models
 
         public int Age { get; set; }
 
-        public int PhoneNumber { get; set; }
+        [Column(TypeName = "Char(10)")]
+        public string PhoneNumber { get; set; }
 
-        public double IdNumber { get; set; }
+        [Column(TypeName = "Char(12)")]
+        public string IdNumber { get; set; }
 
         public string LivingAt { get; set; }
 
