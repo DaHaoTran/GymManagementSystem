@@ -28,6 +28,8 @@ namespace Models
 
         public bool IsPaid { get; set; }
 
+        public byte[]? ProofImage { get; set; }
+
         [Column(TypeName = "Varchar(10)")]
         public string AccountCode { get; set; }
 
