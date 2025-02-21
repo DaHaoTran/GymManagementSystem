@@ -61,7 +61,7 @@ namespace API.Controllers
             if (getBranches.Count() >= limit) { return Ok(getBranches); }
 
             var byAddress = await _branchSvc.GetTheBranchesByAddress(str);
-            getBranches = getBranches.Union(byAddress);
+            getBranches = limit > 0 ? getBranches.Union(byAddress).Take(limit - getBranches.Count()) : getBranches.Union(byAddress);
 
             return Ok(getBranches);
         }
