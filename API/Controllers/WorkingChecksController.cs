@@ -18,11 +18,29 @@ namespace API.Controllers
         /// <summary>
         /// Get working check list
         /// </summary>
+        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="limit">data retrieval limit</param>
         /// <returns>working check list</returns>
         [HttpGet]
-        public async Task<List<WorkingCheck>> GetWorkingCheckList()
+        public async Task<IEnumerable<WorkingCheck>> GetWorkingCheckList([FromQuery] string sort, [FromQuery] int limit)
         {
-            return await _WKSvc.GetWorkingCheckList();
+            IEnumerable<WorkingCheck> workingChecks = await _WKSvc.GetWorkingCheckList();
+            
+            if(limit > 0) { workingChecks = workingChecks.Take(limit); }
+
+            switch(sort)
+            {
+                case "asc":
+                    workingChecks = workingChecks.OrderBy(x => x.CheckDate);
+                    break;
+                case "desc":
+                    workingChecks = workingChecks.OrderByDescending(x => x.CheckDate);
+                    break;
+                default:
+                    break;
+            }
+
+            return workingChecks;
         }
 
         /// <summary>
@@ -30,7 +48,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="order_number">order number</param>
         /// <returns>a valid working check</returns>
-        [HttpGet("order-number/{order_number}")]
+        [HttpGet("{order_number}")]
         public async Task<IActionResult> GetTheWorkingCheckByOrderNumber(int order_number)
         {
             if(order_number <= 0) { return BadRequest(); }
@@ -43,13 +61,30 @@ namespace API.Controllers
         /// Get the working checks by account code
         /// </summary>
         /// <param name="account_code">account code</param>
+        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="limit">data retrieval limit</param>
         /// <returns>valid working check list</returns>
-        [HttpGet("accounts/account-code/{account_code}/working-checks")]
-        public async Task<IActionResult> GetTheWorkingChecksByAccountCode(string account_code)
+        [HttpGet("working-checks/{account_code}/accounts/")]
+        public async Task<IActionResult> GetTheWorkingChecksByAccountCode(string account_code, [FromQuery] string sort, [FromQuery] int limit)
         {
             if(string.IsNullOrEmpty(account_code)) { return BadRequest(); }
-            var getWK = await _WKSvc.GetTheWorkingChecksByAccountCode(account_code);
-            return Ok(getWK);
+            IEnumerable<WorkingCheck> getWKs = await _WKSvc.GetTheWorkingChecksByAccountCode(account_code);
+
+            if (limit > 0) { getWKs = getWKs.Take(limit); }
+
+            switch (sort)
+            {
+                case "asc":
+                    getWKs = getWKs.OrderBy(x => x.CheckDate);
+                    break;
+                case "desc":
+                    getWKs = getWKs.OrderByDescending(x => x.CheckDate);
+                    break;
+                default:
+                    break;
+            }
+
+            return Ok(getWKs);
         }
 
         /// <summary>
