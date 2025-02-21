@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using System.Collections.Immutable;
 
 namespace API.Controllers
 {
@@ -18,11 +19,14 @@ namespace API.Controllers
         /// <summary>
         /// Get branch list
         /// </summary>
-        /// <returns> Branch list </returns>
+        /// <param name="limit">data retrieval limit (0 will take all)</param>
+        /// <returns>branch list</returns>
         [HttpGet]
-        public async Task<List<Branch>> GetBranchList()
+        public async Task<IEnumerable<Branch>> GetBranchList([FromQuery] int limit)
         {
-            return await _branchSvc.GetBranchList();
+            var branches = await _branchSvc.GetBranchList();
+            if(limit <= 0) { return branches; }
+            return branches.Take(limit);
         }
 
         /// <summary>
@@ -30,7 +34,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="branch_code">branch code</param>
         /// <returns>a valid branch</returns>
-        [HttpGet("branch-code/{branch_code}")]
+        [HttpGet("{branch_code}")]
         public async Task<IActionResult> GetTheBranchByBranchCode(string branch_code)
         {
             if(string.IsNullOrEmpty(branch_code)) { return BadRequest(); }
@@ -40,28 +44,25 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Get the branches by branch name
+        /// Get the branches by branch name or address
         /// </summary>
-        /// <param name="branch_name">branch name</param>
+        /// <param name="str">search string</param>
+        /// <param name="limit">data retrieval limit (0 will take all)</param>
         /// <returns>valid branch list</returns>
-        [HttpGet("branch-name/{branch_name}")]
-        public async Task<IActionResult> GetTheBranchesByBranchName(string branch_name)
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetTheBranchesBySearchString([FromQuery] string str, [FromQuery] int limit)
         {
-            if (string.IsNullOrEmpty(branch_name)) { return BadRequest(); }
-            var getBranches = await _branchSvc.GetTheBranchesByBranchName(branch_name);
-            return Ok(getBranches);
-        }
+            IEnumerable<Branch> getBranches;
+            if (string.IsNullOrEmpty(str)) { return BadRequest(); }
 
-        /// <summary>
-        /// Get the branches by address
-        /// </summary>
-        /// <param name="address">address</param>
-        /// <returns>valid branch list</returns>
-        [HttpGet("address/{address}")]
-        public async Task<IActionResult> GetTheBranchesByAddress(string address)
-        {
-            if(string.IsNullOrEmpty(address)) { return BadRequest(); }
-            var getBranches = await _branchSvc.GetTheBranchesByAddress(address);
+            var byBranchName = await _branchSvc.GetTheBranchesByBranchName(str);
+            getBranches = limit > 0 ? byBranchName.Take(limit) : byBranchName;
+
+            if (getBranches.Count() >= limit) { return Ok(getBranches); }
+
+            var byAddress = await _branchSvc.GetTheBranchesByAddress(str);
+            getBranches = getBranches.Union(byAddress);
+
             return Ok(getBranches);
         }
 
