@@ -18,11 +18,14 @@ namespace API.Controllers
         /// <summary>
         /// Get salary list
         /// </summary>
-        /// <returns>salary list</returns>
+        /// <param name="limit">data retrieval limit</param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<List<Salary>> GetSalaryList()
+        public async Task<IEnumerable<Salary>> GetSalaryList([FromQuery] int limit)
         {
-            return await _salarySvc.GetSalaryList();
+            var getSalaries = await _salarySvc.GetSalaryList();
+            if(limit <= 0) { return getSalaries; }
+            return getSalaries.Take(limit);
         }
 
         /// <summary>
@@ -30,7 +33,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="salary_code">salary code</param>
         /// <returns>a valid salary</returns>
-        [HttpGet("salary-code/{salary_code}")]
+        [HttpGet("{salary_code}")]
         public async Task<IActionResult> GetTheSalaryBySalaryCode(string salary_code)
         {
             if(string.IsNullOrEmpty(salary_code)) { return BadRequest(); }
