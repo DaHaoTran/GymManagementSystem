@@ -51,7 +51,7 @@ namespace API.Services.Implements
 
             await _dBContext.SaveChangesAsync();
 
-            return branch;
+            return getBranch;
         }
 
         public async Task<List<Branch>> GetBranchList()

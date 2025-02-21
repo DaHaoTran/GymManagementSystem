@@ -43,7 +43,7 @@ namespace API.Services.Implements
 
             await _dBContext.SaveChangesAsync();
 
-            return salary;
+            return getSalary;
         }
 
         public async Task<List<Salary>> GetSalaryList()

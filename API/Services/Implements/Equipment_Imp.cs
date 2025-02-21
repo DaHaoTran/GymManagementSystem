@@ -48,7 +48,7 @@ namespace API.Services.Implements
 
             await _dBContext.SaveChangesAsync();
 
-            return equipment;
+            return getEquipment;
         }
 
         public async Task<List<Equipment>> GetEquipmentList()

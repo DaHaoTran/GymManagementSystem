@@ -42,7 +42,7 @@ namespace API.Services.Implements
 
             await _dBContext.SaveChangesAsync();
 
-            return workingCheck;
+            return getWK;
         }
 
         public async Task<WorkingCheck> GetTheWorkingCheckByOrderNumber(int orderNumber)
