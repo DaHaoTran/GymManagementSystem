@@ -62,14 +62,14 @@ namespace API.Services.Implements
             return await _dBContext.Accounts.Where(x => x.AccountCode == accountCode).FirstOrDefaultAsync();
         }
 
-        public async Task<Account> GetTheAccountByIdNumber(string idNumber)
+        public async Task<List<Account>> GetTheAccountsByIdNumber(string idNumber)
         {
-            return await _dBContext.Accounts.Where(x => x.IdNumber == idNumber).FirstOrDefaultAsync();
+            return await _dBContext.Accounts.Where(x => x.IdNumber == idNumber).ToListAsync();
         }
 
-        public async Task<Account> GetTheAccountByPhoneNumber(string phoneNumber)
+        public async Task<List<Account>> GetTheAccountsByPhoneNumber(string phoneNumber)
         {
-            return await _dBContext.Accounts.Where(x => x.PhoneNumber == phoneNumber).FirstOrDefaultAsync();
+            return await _dBContext.Accounts.Where(x => x.PhoneNumber == phoneNumber).ToListAsync();
         }
 
         public async Task<List<Account>> GetTheAccountsByAddress(string address)
