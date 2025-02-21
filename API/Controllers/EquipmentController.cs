@@ -18,11 +18,14 @@ namespace API.Controllers
         /// <summary>
         /// Get equipment list
         /// </summary>
+        /// <param name="limit">data retrieval data (0 will take all)</param>
         /// <returns>equipment list</returns>
         [HttpGet]
-        public async Task<List<Equipment>> GetEquipmentList()
+        public async Task<IEnumerable<Equipment>> GetEquipmentList([FromQuery] int limit)
         {
-            return await _equipmentSvc.GetEquipmentList();
+            var equipment = await _equipmentSvc.GetEquipmentList();
+            if(limit <= 0) { return equipment; }
+            return equipment.Take(limit);
         }
 
         /// <summary>
@@ -30,7 +33,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="equip_code">equipment code</param>
         /// <returns>a valid equipment</returns>
-        [HttpGet("equip-code/{equip_code}")]
+        [HttpGet("{equip_code}")]
         public async Task<IActionResult> GetTheEquipmentByEquipCode(string equip_code)
         {
             if(string.IsNullOrEmpty(equip_code)) { return BadRequest(); }
@@ -42,13 +45,18 @@ namespace API.Controllers
         /// <summary>
         /// Get the equipment by equip name
         /// </summary>
-        /// <param name="equip_name">equipment name</param>
+        /// <param name="str">search string</param>
+        /// <param name="limit">data retrieval data (0 will take all)</param>
         /// <returns>valid equipment list</returns>
-        [HttpGet("equip-name/{equip_name}")]
-        public async Task<IActionResult> GetTheEquipmentByEquipName(string equip_name)
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetTheEquipmentBySearchString([FromQuery] string str, [FromQuery] int limit)
         {
-            if(string.IsNullOrEmpty(equip_name)) { return BadRequest(); }
-            var getEquipment = await _equipmentSvc.GetTheEquipmentByEquipName(equip_name);
+            IEnumerable<Equipment> getEquipment;
+            if(string.IsNullOrEmpty(str)) { return BadRequest(); }
+
+            var byEquipName = await _equipmentSvc.GetTheEquipmentByEquipName(str);
+            getEquipment = limit > 0 ? byEquipName.Take(limit) : byEquipName;
+
             return Ok(getEquipment);
         }
 
