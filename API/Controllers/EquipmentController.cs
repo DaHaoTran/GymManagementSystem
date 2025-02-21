@@ -18,7 +18,7 @@ namespace API.Controllers
         /// <summary>
         /// Get equipment list
         /// </summary>
-        /// <param name="limit">data retrieval data (0 will take all)</param>
+        /// <param name="limit">data retrieval limit</param>
         /// <returns>equipment list</returns>
         [HttpGet]
         public async Task<IEnumerable<Equipment>> GetEquipmentList([FromQuery] int limit)
@@ -46,7 +46,7 @@ namespace API.Controllers
         /// Get the equipment by equip name
         /// </summary>
         /// <param name="str">search string</param>
-        /// <param name="limit">data retrieval data (0 will take all)</param>
+        /// <param name="limit">data retrieval limit</param>
         /// <returns>valid equipment list</returns>
         [HttpGet("filter")]
         public async Task<IActionResult> GetTheEquipmentBySearchString([FromQuery] string str, [FromQuery] int limit)

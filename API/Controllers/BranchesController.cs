@@ -19,7 +19,7 @@ namespace API.Controllers
         /// <summary>
         /// Get branch list
         /// </summary>
-        /// <param name="limit">data retrieval limit (0 will take all)</param>
+        /// <param name="limit">data retrieval limit</param>
         /// <returns>branch list</returns>
         [HttpGet]
         public async Task<IEnumerable<Branch>> GetBranchList([FromQuery] int limit)
@@ -44,10 +44,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Get the branches by branch name or address
+        /// Get the branches by branch name/address
         /// </summary>
         /// <param name="str">search string</param>
-        /// <param name="limit">data retrieval limit (0 will take all)</param>
+        /// <param name="limit">data retrieval limit</param>
         /// <returns>valid branch list</returns>
         [HttpGet("filter")]
         public async Task<IActionResult> GetTheBranchesBySearchString([FromQuery] string str, [FromQuery] int limit)

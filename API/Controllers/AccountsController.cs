@@ -16,14 +16,17 @@ namespace API.Controllers
             _accountSvc = accountSvc;
         }
 
-        /// <summary>
-        /// Get account list
-        /// </summary>
-        /// <returns>account list</returns>
+       /// <summary>
+       /// Get account list
+       /// </summary>
+       /// <param name="limit">data retrieval limit</param>
+       /// <returns></returns>
         [HttpGet]
-        public async Task<List<Account>> GetAccountList()
+        public async Task<IEnumerable<Account>> GetAccountList([FromQuery] int limit)
         {
-            return await _accountSvc.GetAccountList();
+            var accounts = await _accountSvc.GetAccountList();
+            if(limit <= 0) { return accounts; }
+            return accounts.Take(limit);
         }
 
         /// <summary>
@@ -31,7 +34,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="account_code">account code</param>
         /// <returns>a valid account</returns>
-        [HttpGet("account-code/{account_code}")]
+        [HttpGet("{account_code}")]
         public async Task<IActionResult> GetTheAccountByAccountCode(string account_code)
         {
             if(string.IsNullOrEmpty(account_code)) { return BadRequest(); }
@@ -41,56 +44,32 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Get the accounts by full name
+        /// Get the accounts by full name/address/phone number/id number
         /// </summary>
-        /// <param name="full_name">full name</param>
+        /// <param name="str">search string</param>
+        /// <param name="limit">data retrieval limit</param>
         /// <returns>valid account list</returns>
-        [HttpGet("full-name/{full_name}")]
-        public async Task<IActionResult> GetTheAccountsByFullName(string full_name)
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetTheAccountsByFullName([FromQuery] string str, [FromQuery] int limit)
         {
-            if(string.IsNullOrEmpty(full_name)) { return BadRequest(); }
-            var getAccounts = await _accountSvc.GetTheAccountsByFullName(full_name);
-            return Ok(getAccounts);
-        }
+            IEnumerable<Account> getAccounts;
+            if(string.IsNullOrEmpty(str)) { return BadRequest(); }
 
-        /// <summary>
-        /// Get the account by phone number
-        /// </summary>
-        /// <param name="phone_number">phone number</param>
-        /// <returns>a valid account</returns>
-        [HttpGet("phone-number/{phone_number}")]
-        public async Task<IActionResult> GetTheAccountByPhoneNumber(int phone_number)
-        {
-            if(phone_number <= 999999999) { return BadRequest(); }
-            var getAccount = await _accountSvc.GetTheAccountByPhoneNumber(phone_number);
-            if(getAccount == null) { return NotFound(); }
-            return Ok(getAccount);
-        }
+            var byFullName = await _accountSvc.GetTheAccountsByFullName(str);
+            getAccounts = limit > 0 ? byFullName.Take(limit) : byFullName;
+            if(getAccounts.Count() >= limit) { return Ok(getAccounts); }
 
-        /// <summary>
-        /// Get the account by id number
-        /// </summary>
-        /// <param name="id_number">id number</param>
-        /// <returns>a valid account</returns>
-        [HttpGet("id-number/{id_number}")]
-        public async Task<IActionResult> GetTheAccountByIdNumber(double id_number)
-        {
-            if (id_number <= 99999999999) { return BadRequest(); }
-            var getAccount = await _accountSvc.GetTheAccountByIdNumber(id_number);
-            if(getAccount == null) { return NotFound(); }
-            return Ok(getAccount);
-        }
+            var byAddress = await _accountSvc.GetTheAccountsByAddress(str);
+            getAccounts = limit > 0 ? getAccounts.Union(byAddress).Take(limit - getAccounts.Count()) : getAccounts.Union(byAddress);
+            if(getAccounts.Count() >= limit) { return Ok(getAccounts); }
 
-        /// <summary>
-        /// Get the account by address
-        /// </summary>
-        /// <param name="address">address</param>
-        /// <returns>valid account list</returns>
-        [HttpGet("address/{address}")]
-        public async Task<IActionResult> GetTheAccountsByAddress(string address)
-        {
-            if(string.IsNullOrEmpty(address)) { return BadRequest(); }
-            var getAccounts = await _accountSvc.GetTheAccountsByAddress(address);
+            var byPhoneNumber = await _accountSvc.GetTheAccountsByPhoneNumber(str);
+            getAccounts = limit > 0 ? getAccounts.Union(byPhoneNumber).Take(limit - getAccounts.Count()) : getAccounts.Union(byPhoneNumber);
+            if (getAccounts.Count() >= limit) { return Ok(getAccounts); }
+
+            var byIdNumber = await _accountSvc.GetTheAccountsByIdNumber(str);
+            getAccounts = limit > 0 ? getAccounts.Union(byIdNumber).Take(limit - getAccounts.Count()) : getAccounts.Union(byIdNumber);
+
             return Ok(getAccounts);
         }
 
