@@ -91,7 +91,7 @@ namespace API.Controllers
         /// Add a new working check
         /// </summary>
         /// <param name="workingCheck">working check data</param>
-        /// <returns>working check have added</returns>
+        /// <returns>working check has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewWorkingCheck([FromBody] WorkingCheck workingCheck)
         {
@@ -104,7 +104,7 @@ namespace API.Controllers
         /// Edit an exist working check
         /// </summary>
         /// <param name="workingCheck">working check data</param>
-        /// <returns>working check have edited</returns>
+        /// <returns>working check has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistWorkingCheck([FromBody] WorkingCheck workingCheck)
         {
@@ -118,7 +118,7 @@ namespace API.Controllers
         /// Delete an exist working check
         /// </summary>
         /// <param name="order_number">order number</param>
-        /// <returns>working check have deleted</returns>
+        /// <returns>working check has deleted</returns>
         [HttpDelete("{order_number}")]
         public async Task<IActionResult> DeleteAnExistWorkingCheck(int order_number)
         {

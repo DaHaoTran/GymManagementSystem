@@ -70,7 +70,7 @@ namespace API.Controllers
         /// Add a new branch
         /// </summary>
         /// <param name="branch">branch data</param>
-        /// <returns>branch have added</returns>
+        /// <returns>branch has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewBranch([FromBody] Branch branch)
         {
@@ -83,7 +83,7 @@ namespace API.Controllers
         /// Edit an exist branch
         /// </summary>
         /// <param name="branch">branch data</param>
-        /// <returns>branch have edited</returns>
+        /// <returns>branch has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistBranch([FromBody] Branch branch)
         {
@@ -97,7 +97,7 @@ namespace API.Controllers
         /// Delete an exist branch
         /// </summary>
         /// <param name="branch_code">branch code</param>
-        /// <returns>branch have deleted</returns>
+        /// <returns>branch has deleted</returns>
         [HttpDelete("{branch_code}")] 
         public async Task<IActionResult> DeleteAnExistBranch(string branch_code)
         {

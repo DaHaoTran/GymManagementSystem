@@ -64,7 +64,7 @@ namespace API.Controllers
         /// Add a new equipment
         /// </summary>
         /// <param name="equipment">equipment data</param>
-        /// <returns>equipment have added</returns>
+        /// <returns>equipment has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewEquipment([FromBody] Equipment equipment)
         {
@@ -77,7 +77,7 @@ namespace API.Controllers
         /// Edit an exist equipment
         /// </summary>
         /// <param name="equipment">equipment data</param>
-        /// <returns>equipment have edited</returns>
+        /// <returns>equipment has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistEquipment([FromBody] Equipment equipment)
         {
@@ -91,7 +91,7 @@ namespace API.Controllers
         /// Delete an exist equipment
         /// </summary>
         /// <param name="equip_code">equipment code</param>
-        /// <returns>equipment have deleted</returns>
+        /// <returns>equipment has deleted</returns>
         [HttpDelete("{equip_code}")]
         public async Task<IActionResult> DeleteAnExistEquipment(string equip_code)
         {

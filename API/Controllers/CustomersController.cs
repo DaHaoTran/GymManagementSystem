@@ -84,7 +84,7 @@ namespace API.Controllers
         /// Add a new customer
         /// </summary>
         /// <param name="customer">customer data</param>
-        /// <returns>customer have added</returns>
+        /// <returns>customer has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewCustomer([FromBody] Customer customer)
         {
@@ -97,7 +97,7 @@ namespace API.Controllers
         /// Edit an exist customer
         /// </summary>
         /// <param name="customer">customer data</param>
-        /// <returns>customer have edited</returns>
+        /// <returns>customer has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistCustomer([FromBody] Customer customer)
         {
@@ -111,7 +111,7 @@ namespace API.Controllers
         /// Delete an exist customer
         /// </summary>
         /// <param name="customer_code">customer code</param>
-        /// <returns>customer have deleted</returns>
+        /// <returns>customer has deleted</returns>
         [HttpDelete("{customer_code}")]
         public async Task<IActionResult> DeleteAnExistCustomer(string customer_code)
         {

@@ -88,7 +88,7 @@ namespace API.Controllers
         /// Add a new fine
         /// </summary>
         /// <param name="fine">fine data</param>
-        /// <returns>fine have added</returns>
+        /// <returns>fine has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewFine([FromBody] Fine fine)
         {
@@ -101,7 +101,7 @@ namespace API.Controllers
         /// Edit an exist fine
         /// </summary>
         /// <param name="fine">fine data</param>
-        /// <returns>fine have edited</returns>
+        /// <returns>fine has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistFine([FromBody] Fine fine)
         {
@@ -115,7 +115,7 @@ namespace API.Controllers
         /// Delete an exist fine
         /// </summary>
         /// <param name="fine_code">fine code</param>
-        /// <returns>fine have deleted</returns>
+        /// <returns>fine has deleted</returns>
         [HttpDelete("{fine_code}")]
         public async Task<IActionResult> DeleteAnExistFine(Guid fine_code)
         {

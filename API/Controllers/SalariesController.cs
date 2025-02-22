@@ -46,7 +46,7 @@ namespace API.Controllers
         /// Add a new salary
         /// </summary>
         /// <param name="salary">salary data</param>
-        /// <returns>salary have added</returns>
+        /// <returns>salary has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewSalary([FromBody] Salary salary)
         {
@@ -59,7 +59,7 @@ namespace API.Controllers
         /// Edit an exist salary
         /// </summary>
         /// <param name="salary">salary data</param>
-        /// <returns>salary have edited</returns>
+        /// <returns>salary has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistSalary([FromBody] Salary salary)
         {
@@ -73,7 +73,7 @@ namespace API.Controllers
         /// Delete an exist salary
         /// </summary>
         /// <param name="salary_code">salary code</param>
-        /// <returns>salary have deleted</returns>
+        /// <returns>salary has deleted</returns>
         [HttpDelete("{salary_code}")]
         public async Task<IActionResult> DeleteAnExistSalary(string salary_code)
         {

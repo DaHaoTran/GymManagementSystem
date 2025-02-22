@@ -61,7 +61,7 @@ namespace API.Controllers
         /// Add a new customers voucher
         /// </summary>
         /// <param name="customersVoucher">customers voucher data</param>
-        /// <returns>customers voucher have added</returns>
+        /// <returns>customers voucher has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewCustomersVoucher([FromBody] CustomersVoucher customersVoucher)
         {
@@ -74,7 +74,7 @@ namespace API.Controllers
         /// Edit an exist customers voucher
         /// </summary>
         /// <param name="customersVoucher">customers voucher data</param>
-        /// <returns>customers voucher have edited</returns>
+        /// <returns>customers voucher has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistCustomersVoucher([FromBody] CustomersVoucher customersVoucher)
         {
@@ -88,7 +88,7 @@ namespace API.Controllers
         /// Delete an exist customers voucher
         /// </summary>
         /// <param name="order_number">order number</param>
-        /// <returns>customers voucher have deleted</returns>
+        /// <returns>customers voucher has deleted</returns>
         [HttpDelete("{order_number}")]
         public async Task<IActionResult> DeleteAnExistCustomersVoucher(int order_number)
         {

@@ -77,7 +77,7 @@ namespace API.Controllers
         /// Add a new account
         /// </summary>
         /// <param name="account">account data</param>
-        /// <returns>account have added</returns>
+        /// <returns>account has added</returns>
         [HttpPost]
         public async Task<IActionResult> AddANewAccount([FromBody] Account account)
         {
@@ -90,7 +90,7 @@ namespace API.Controllers
         /// Edit an exist account
         /// </summary>
         /// <param name="account">account data</param>
-        /// <returns>account have edited</returns>
+        /// <returns>account has edited</returns>
         [HttpPut]
         public async Task<IActionResult> EditAnExistAccount([FromBody] Account account)
         {
@@ -104,7 +104,7 @@ namespace API.Controllers
         /// Delete an exist account
         /// </summary>
         /// <param name="account_code">account code</param>
-        /// <returns>account have deleted</returns>
+        /// <returns>account has deleted</returns>
         [HttpDelete("{account_code}")]
         public async Task<IActionResult> DeleteAnExistAccount(string account_code)
         {
