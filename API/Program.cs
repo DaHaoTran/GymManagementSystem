@@ -52,6 +52,7 @@ builder.Services.AddScoped<Customer_Int, Customer_Imp>();
 builder.Services.AddScoped<Fine_Int, Fine_Imp>();
 builder.Services.AddScoped<CustomersVoucher_Int, CustomerVoucher_Imp>();
 builder.Services.AddScoped<ServicePackage_Int, ServicePackage_Imp>();
+builder.Services.AddScoped<Role_Int, Role_Imp>();
 
 var app = builder.Build();
 
