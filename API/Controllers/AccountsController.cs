@@ -50,7 +50,7 @@ namespace API.Controllers
         /// <param name="limit">data retrieval limit</param>
         /// <returns>valid account list</returns>
         [HttpGet("filter")]
-        public async Task<IActionResult> GetTheAccountsByFullName([FromQuery] string str, [FromQuery] int limit)
+        public async Task<IActionResult> GetTheAccountsBySearchString([FromQuery] string str, [FromQuery] int limit)
         {
             IEnumerable<Account> getAccounts;
             if(string.IsNullOrEmpty(str)) { return BadRequest(); }
