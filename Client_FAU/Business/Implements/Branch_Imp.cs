@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Text;
+using Models;
 
 namespace Client_FAU.Business.Implements
 {
