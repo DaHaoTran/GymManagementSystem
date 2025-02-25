@@ -14,8 +14,10 @@ namespace Models
         [Column(TypeName = "Varchar(6)")]
         public string BranchCode { get; set; }
 
+        [Required(ErrorMessage = "Branch name is required")]
         public string BranchName { get; set; }
 
+        [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
 
         public int QuantityOfStaffs { get; set; }
