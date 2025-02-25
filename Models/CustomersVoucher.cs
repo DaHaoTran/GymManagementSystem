@@ -29,10 +29,10 @@ namespace Models
         [Column(TypeName = "Varchar(10)")]
         public string UpdateBy { get; set; }
 
-        [ForeignKey("CustomerCode")]
-        public Customer? customer;
+        //[ForeignKey("CustomerCode")]
+        //public Customer? customer { get; set; }
 
-        [ForeignKey("PackageCode")]
-        public ServicePackage? servicePackage;
+        //[ForeignKey("PackageCode")]
+        //public ServicePackage? servicePackage { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Models
 
         public bool IsCheckIn { get; set; }
 
-        [ForeignKey("CheckOf")]
-        public Account? account;
+        //[ForeignKey("CheckOf")]
+        //public Account? account { get; set; }
     }
 }

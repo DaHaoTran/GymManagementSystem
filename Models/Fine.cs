@@ -26,10 +26,10 @@ namespace Models
 
         public string? StaffNote { get; set; }
 
-        [Column(TypeName = "Varchar(10)")]
-        public string UpdateBy { get; set; }
+        //[Column(TypeName = "Varchar(10)")]
+        //public string UpdateBy { get; set; }
 
-        [ForeignKey("CustomerCode")]
-        public Customer? customer;
+        //[ForeignKey("CustomerCode")]
+        //public Customer? customer { get; set; }
     }
 }

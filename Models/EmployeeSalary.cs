@@ -30,10 +30,10 @@ namespace Models
 
         public byte[]? ProofImage { get; set; }
 
-        [Column(TypeName = "Varchar(10)")]
-        public string AccountCode { get; set; }
+        //[Column(TypeName = "Varchar(10)")]
+        //public string AccountCode { get; set; }
 
-        [ForeignKey("AccountCode")]
-        public Account? account;
+        //[ForeignKey("AccountCode")]
+        //public Account? account { get; set; }
     }
 }

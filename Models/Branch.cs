@@ -29,11 +29,11 @@ namespace Models
 
         public bool IsDeleted { get; set; }
 
-        [ForeignKey("AdminUpdate")]
-        public Account? account;
+        //[ForeignKey("AdminUpdate")]
+        //public Account? account { get; set; }
 
-        public ICollection<Equipment>? equipment;
+        //public ICollection<Equipment>? equipment { get; set; }
 
-        public ICollection<Customer>? customers;
+        //public ICollection<Customer>? customers { get; set; }
     }
 }

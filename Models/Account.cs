@@ -38,16 +38,16 @@ namespace Models
         [Column(TypeName = "Varchar(5)")]
         public string SalaryCode { get; set; }
 
-        public ICollection<Branch>? branches;
+        //public ICollection<Branch>? branches { get; set; }
 
-        public ICollection<WorkingCheck>? workingChecks;
+        //public ICollection<WorkingCheck>? workingChecks { get; set; }
 
-        [ForeignKey("RoleId")]
-        public Role? role;
+        //[ForeignKey("RoleId")]
+        //public Role? role { get; set; }
 
-        [ForeignKey("SalaryCode")]
-        public Salary? salary;
+        //[ForeignKey("SalaryCode")]
+        //public Salary? salary { get; set; }
 
-        public ICollection<EmployeeSalary>? employeeSalaries;
+        //public ICollection<EmployeeSalary>? employeeSalaries { get; set; }
     }
 }

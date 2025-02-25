@@ -16,6 +16,6 @@ namespace Models
 
         public string RoleName { get; set; }
 
-        public ICollection<Account>? accounts;
+        public ICollection<Account>? accounts { get; set; }
     }
 }

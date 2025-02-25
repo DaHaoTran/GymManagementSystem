@@ -33,7 +33,7 @@ namespace Models
 
         public bool IsDeleted { get; set; }
 
-        [ForeignKey("BranchCode")]
-        public Branch? branch;
+        //[ForeignKey("BranchCode")]
+        //public Branch? branch { get; set; }
     }
 }

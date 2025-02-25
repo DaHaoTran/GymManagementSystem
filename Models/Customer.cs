@@ -29,11 +29,11 @@ namespace Models
         [Column(TypeName = "Varchar(10)")]
         public string UpdateBy { get; set; }
 
-        [ForeignKey("BranchCode")]
-        public Branch? branch;
+        //[ForeignKey("BranchCode")]
+        //public Branch? branch { get; set; }
 
-        public ICollection<CustomersVoucher>? customersVouchers;
+        //public ICollection<CustomersVoucher>? customersVouchers { get; set; }
 
-        public ICollection<Fine>? fines;
+        //public ICollection<Fine>? fines { get; set; }
     }
 }
