@@ -22,7 +22,7 @@
 
 .branch-code {
     grid-area: code;
-    text-align:end;
+    text-align: end;
 }
 
 label {
