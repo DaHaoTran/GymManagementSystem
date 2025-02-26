@@ -2,11 +2,21 @@
 
 <PageTitle>Branch</PageTitle>
 
+@if(!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-info mt-2 d-flex">
+        @message
+        <div class="w-100 d-flex justify-content-end align-items-center">
+            <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />
+        </div>
+    </div>
+}
+
 @if(branches != null)
 {
     <div class="row mt-3">
         <div class="col-6">
-            <button class="btn w-25" data-bs-toggle="modal" data-bs-target="#editmodal">+</button>
+            <button class="btn w-25" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick=SetAddState>+</button>
         </div>
         <div class="d-flex justify-content-end col-6">
             <input type="text" class="form-control me-3" />
@@ -71,7 +81,7 @@
                                 </div>
 
                                 <div class="edit d-flex justify-content-center align-items-center col-12">
-                                    <a class="image w-75" data-bs-toggle="modal" data-bs-target="#editmodal">
+                                    <a class="image w-75" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick=SetEditState>
                                         <img class="w-100" src="images/edit.png" alt="Edit" />
                                     </a>
                                 </div>
@@ -89,7 +99,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <EditForm Model="@model" FormName="Edit Branch" OnValidSubmit="UpdateData">
+                <EditForm Model="@model" FormName="Edit Branch" OnValidSubmit="UpdateDatabase">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
                     <div class="mb-3">
@@ -101,7 +111,7 @@
                         <input type="text" class="form-control" id="Address" @bind-value=model.Address>
                     </div>
 
-                    <button type="submit" class="btn mt-3 submit-button fs-3">Confirm</button>
+                    <button type="submit" class="btn mt-3 submit-button fs-3" @onsubmit=UpdateData>Confirm</button>
                 </EditForm>
             </div>
         </div>
