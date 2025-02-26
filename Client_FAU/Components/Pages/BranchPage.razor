@@ -1,11 +1,16 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Antiforgery
+@attribute [RequireAntiforgeryToken(required: true)]
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>Branch</PageTitle>
 
 @if(!string.IsNullOrEmpty(message))
 {
     <div class="alert alert-info mt-2 d-flex">
-        @message
+        <div class="w-50">
+            @message
+        </div>
         <div class="w-100 d-flex justify-content-end align-items-center">
             <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />
         </div>
@@ -99,19 +104,21 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <EditForm Model="@model" FormName="Edit Branch" OnValidSubmit="UpdateDatabase">
+                <EditForm Model="@Model" FormName="Edit Branch" OnValidSubmit="UpdateDatabase" OnInvalidSubmit="ShowInvalidMessage">
                     <DataAnnotationsValidator />
-                    <ValidationSummary />
+
                     <div class="mb-3">
-                        <label for="BranchName" class="form-label">Branch name</label>
-                        <input type="text" class="form-control" id="BranchName" @bind-value=model.BranchName>
+                        <label class="form-label">Branch name</label>
+                        <InputText type="text" class="form-control" @bind-value=Model!.BranchName />
                     </div>
                     <div class="mb-3">
-                        <label for="Address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="Address" @bind-value=model.Address>
+                        <label class="form-label">Address</label>
+                        <InputText type="text" class="form-control" @bind-value=Model.Address />
                     </div>
 
-                    <button type="submit" class="btn mt-3 submit-button fs-3" @onsubmit=UpdateData>Confirm</button>
+                    <ValidationSummary />
+
+                    <button type="submit" class="btn mt-3 submit-button fs-3">Confirm</button>
                 </EditForm>
             </div>
         </div>

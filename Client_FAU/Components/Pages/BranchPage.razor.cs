@@ -15,9 +15,10 @@ namespace Client_FAU.Components.Pages
         [Inject]
         public Branch_Int? BranchBsn { get; set; }
         [Inject]
-        public IHttpContextAccessor HttpContextAccessor { get; set; }
+        public IHttpContextAccessor? HttpContextAccessor { get; set; }
+        [SupplyParameterFromForm]
+        private Branch? Model { get; set; } = new();
 
-        private Branch model = new Branch();
         private List<Branch>? branches;
         private static string sessionName = "branches";
         private string message = string.Empty;
@@ -29,7 +30,7 @@ namespace Client_FAU.Components.Pages
 
         private async Task LoadBranchList()
         {
-            var data = HttpContextAccessor.HttpContext!.Session.GetString(sessionName);
+            var data = HttpContextAccessor!.HttpContext!.Session.GetString(sessionName);
             if(data != null) 
             {
                 branches = JsonConvert.DeserializeObject<List<Branch>>(data)!;
@@ -39,6 +40,8 @@ namespace Client_FAU.Components.Pages
             branches = getBranches;
             HttpContextAccessor.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(getBranches));
         }
+
+        private void ClearForm() => Model = new();
 
         private void SetAddState()
         {
@@ -52,7 +55,8 @@ namespace Client_FAU.Components.Pages
 
         private void SetModelProperties()
         {
-            model.AdminUpdate = "AD00000001";
+            Model!.BranchCode = "BR";
+            Model!.AdminUpdate = "AD00000001";
         }
 
         private async Task UpdateDatabase()
@@ -64,10 +68,10 @@ namespace Client_FAU.Components.Pages
                 switch (ModalState.current_state)
                 {
                     case ModalState.State.Add:
-                        result = await BranchBsn!.AddNewBranch(model);
+                        result = await BranchBsn!.AddNewBranch(Model!);
                         break;
                     case ModalState.State.Edit:
-                        result = await BranchBsn!.EditAnExistBranch(model);
+                        result = await BranchBsn!.EditAnExistBranch(Model!);
                         break;
                     default:
                         break;
@@ -86,6 +90,8 @@ namespace Client_FAU.Components.Pages
             {
                 message = ex.Message;
             }
+
+            ClearForm();
         }
 
         private void UpdateData(Branch branch)
@@ -101,7 +107,12 @@ namespace Client_FAU.Components.Pages
                 branches[index] = branch;
             }
 
-            HttpContextAccessor.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(branches));
+            HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(branches));
+        }
+
+        private void ShowInvalidMessage()
+        {
+            message = "The inputs are invalid, Check again !";
         }
     }
 }
