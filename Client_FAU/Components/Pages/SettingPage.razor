@@ -1,6 +1,12 @@
 ﻿@page "/setting"
+@using Client_FAU.Components.Ingredients
 
 <PageTitle>Setting</PageTitle>
+
+@if(isLoading)
+{
+    <Loading></Loading>
+}
 
 <ul class="nav nav-tabs">
     <li class="nav-item">

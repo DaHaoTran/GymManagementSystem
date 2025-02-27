@@ -17,10 +17,15 @@ namespace Client_FAU.Components.Pages
         private List<Salary>? salaries;
         private string sessionName = "salaries";
         private string message = string.Empty;
+        private bool isLoading = false;
 
         protected override async Task OnInitializedAsync()
         {
+            isLoading = true;
+
             await LoadSalaryList();
+
+            isLoading = false;
         }
 
         private async Task LoadSalaryList()
