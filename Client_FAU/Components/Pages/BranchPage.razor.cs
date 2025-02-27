@@ -13,9 +13,9 @@ namespace Client_FAU.Components.Pages
     public partial class BranchPage
     {
         [Inject]
-        public Branch_Int? BranchBsn { get; set; }
+        private Branch_Int? BranchBsn { get; set; }
         [Inject]
-        public IHttpContextAccessor? HttpContextAccessor { get; set; }
+        private IHttpContextAccessor? HttpContextAccessor { get; set; }
         [SupplyParameterFromForm]
         private Branch? Model { get; set; } = new();
 
