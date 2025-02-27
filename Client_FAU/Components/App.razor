@@ -19,23 +19,33 @@
     <script src="/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         function SetActiveClass(element) {
-        var navLinkActive = document.querySelector('.active');
-        if (navLinkActive != null) {
-        navLinkActive.classList.remove('active');
-        }
-        if (element != null) {
-        element.classList.add('active');
-        }
+            var navLinkActive = document.querySelector('.active');
+            if (navLinkActive != null) {
+            navLinkActive.classList.remove('active');
+            }
+            if (element != null) {
+            element.classList.add('active');
+            }
         }
 
         function AddSalarySample() {
-        var settingPlus = document.querySelector('.setting-plus');
-        if(settingPlus == null) { return; }
-        settingPlus.classList.add('d-none');
+            var settingPlus = document.querySelector('.setting-plus');
+            if(settingPlus == null) { return; }
+            settingPlus.classList.add('d-none');
 
-        var settingSample = document.querySelector('.setting-sample');
-        if(settingSample == null) {return;}
-        settingSample.classList.remove('d-none');
+            var settingSample = document.querySelector('.setting-sample');
+            if(settingSample == null) {return;}
+            settingSample.classList.remove('d-none');
+        }
+
+        function UndisplaySalarySample() {
+            var settingPlus = document.querySelector('.setting-plus');
+            if(settingPlus == null) { return; }
+            settingPlus.classList.remove('d-none');
+
+            var settingSample = document.querySelector('.setting-sample');
+            if(settingSample == null) {return;}
+            settingSample.classList.add('d-none');
         }
     </script>
 </body>
