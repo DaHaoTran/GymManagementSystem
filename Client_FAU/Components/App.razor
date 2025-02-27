@@ -14,8 +14,30 @@
 
 <body>
     <Routes />
+    <noscript class="text-bg-danger">There are not connect js !</noscript>
     <script src="_framework/blazor.web.js"></script>
     <script src="/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function SetActiveClass(element) {
+        var navLinkActive = document.querySelector('.active');
+        if (navLinkActive != null) {
+        navLinkActive.classList.remove('active');
+        }
+        if (element != null) {
+        element.classList.add('active');
+        }
+        }
+
+        function AddSalarySample() {
+        var settingPlus = document.querySelector('.setting-plus');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.add('disabled');
+
+        var settingSample = document.querySelector('.setting-sample');
+        if(settingSample == null) {return;}
+        settingSample.classList.remove('disabled');
+        }
+    </script>
 </body>
 
 </html>
