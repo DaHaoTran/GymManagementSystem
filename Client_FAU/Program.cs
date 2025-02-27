@@ -27,6 +27,7 @@ builder.Services.AddSession(options =>
 
 //
 builder.Services.AddScoped<Branch_Int, Branch_Imp>();
+builder.Services.AddScoped<Salary_Int, Salary_Imp>();
 
 var app = builder.Build();
 
