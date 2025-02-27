@@ -11,12 +11,24 @@
     </li>
 </ul>
 
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-info mt-2 d-flex">
+        <div class="w-50">
+            @message
+        </div>
+        <div class="w-100 d-flex justify-content-end align-items-center">
+            <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />
+        </div>
+    </div>
+}
+
 <div class="tab-content mt-5" id="pills-tabContent">
     <!-- salary tab -->
     <div class="tab-pane fade show active" id="pills-salary" role="tabpanel" aria-labelledby="pills-salary-tab" tabindex="0">
         <div class="row mb-5">
             @if(salaries == null) { <h5>There are a problem !</h5>} 
-            else if(salaries.Count <= 0) {<h5>Threre are no record to display</h5>}
+            else if(salaries.Count() <= 0) {<h5>There are no record to display</h5>}
             else
             {
                 @foreach(var salary in salaries)
@@ -55,24 +67,26 @@
                         <div class="title row">
                             <h5 class="col-6 text text-start mt-1">@DateTime.Now</h5>
                         </div>
-                        <form class="mt-1">
+                        <EditForm Model=@Model FormName="Add Salary" class="mt-1" OnValidSubmit="AddSalariesDataBase" OnInvalidSubmit="ShowInvalidMessage">
+                            <DataAnnotationsValidator/>
                             <div class="mb-3">
                                 <label for="salaryType" class="form-label text fs-4">Salary Type</label>
                                 <div class="d-flex justify-content-start">
-                                    <input type="text" class="form-control" id="salaryType">
+                                    <InputText type="text" class="form-control" id="salaryType" @bind-Value=Model!.SalaryType />
                                 </div>
                                 <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
                                 <div class="d-flex justify-content-start">
-                                    <input type="text" class="form-control" id="PriceApply">
+                                    <InputText type="text" class="form-control" id="PriceApply" @bind-Value=Model.GetPricesApply/>
                                     <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
                                 </div>
                             </div>
+                            <ValidationSummary />
 
                             <div class="mb-2">
                                 <button type="submit" class="btn btn-success">Confirm</button>
                                 <button class="btn btn-danger" onclick="UndisplaySalarySample()">Cancel</button>
                             </div>
-                        </form>
+                        </EditForm>
                     </div>
                 </div>
             </div>
