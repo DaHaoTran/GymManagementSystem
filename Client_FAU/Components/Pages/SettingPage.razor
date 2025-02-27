@@ -43,14 +43,14 @@
                         <div class="row">
                             <div class="left-section col-11">
                                 <div class="title row">
-                                    <h4 class="col-6 text text-start mt-1">Salary Type</h4>
-                                    <h5 class="col-6 text text-end">Date updated</h5>
+                                    <h4 class="col-6 text text-start mt-1">@salary.SalaryType</h4>
+                                    <h5 class="col-6 text text-end">@salary.UpdateDate</h5>
                                 </div>
                                 <form class="mt-1">
                                     <div class="mb-3">
                                         <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
                                         <div class="d-flex justify-content-start">
-                                            <input type="text" class="form-control" id="Price Apply">
+                                            <input type="text" class="form-control" id="Price Apply" value="@salary.PricesApply">
                                             <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
                                         </div>
                                     </div>
@@ -67,6 +67,7 @@
             }
 
             <!-- sample -->
+            <hr class="d-none line-down"/>
             <div class="setting setting-sample col-6 my-3 mx-4 d-none">
                 <div class="row">
                     <div class="col-12">
@@ -90,7 +91,7 @@
 
                             <div class="mb-2">
                                 <button type="submit" class="btn btn-success">Confirm</button>
-                                <button class="btn btn-danger" onclick="UndisplaySalarySample()">Cancel</button>
+                                <button type="reset" class="btn btn-danger" onclick="UndisplaySalarySample()">Cancel</button>
                             </div>
                         </EditForm>
                     </div>

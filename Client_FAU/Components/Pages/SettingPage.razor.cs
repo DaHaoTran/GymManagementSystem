@@ -74,6 +74,7 @@ namespace Client_FAU.Components.Pages
 
         private void UpdateSalariesData(Salary salary)
         {
+            isLoading = true;
             if(salary == null) { return; }
             var getSalary = salaries.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
             if(getSalary == default || getSalary == null)
@@ -87,6 +88,7 @@ namespace Client_FAU.Components.Pages
             }
 
             HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(salaries));
+            isLoading = false;
         }
 
         private void ShowInvalidMessage()
