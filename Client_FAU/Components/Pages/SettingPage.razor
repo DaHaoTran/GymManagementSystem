@@ -50,7 +50,10 @@
                                     <div class="mb-3">
                                         <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
                                         <div class="d-flex justify-content-start">
-                                            <input type="text" class="form-control" id="Price Apply" value="@salary.PricesApply">
+                                            @{
+                                                salary.GetPricesApply = salary.PricesApply.ToString();
+                                            }
+                                            <input type="text" class="form-control" id="PriceApply" @bind-value=salary.PricesApply />
                                             <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
                                         </div>
                                     </div>
@@ -61,7 +64,7 @@
                                     <img class="w-100" src="/images/trash.png" alt="A Trash" />
                                 </div>
                                 <hr />
-                                <div class="image w-75 mb-2">
+                                <div class="image w-75 mb-2" @onclick="() => EditSalaryDataBase(salary)">
                                     <img class="w-100" src="/images/edit.png" alt="An Edit" />
                                 </div>
                             </div>
@@ -78,7 +81,7 @@
                         <div class="title row">
                             <h5 class="col-6 text text-start mt-1">@DateTime.Now</h5>
                         </div>
-                        <EditForm Model=@Model FormName="Add Salary" class="mt-1" OnValidSubmit="AddSalariesDataBase" OnInvalidSubmit="ShowInvalidMessage">
+                        <EditForm Model=@Model FormName="Add Salary" class="mt-1" OnValidSubmit="AddSalaryDataBase" OnInvalidSubmit="ShowInvalidMessage">
                             <DataAnnotationsValidator/>
                             <div class="mb-3">
                                 <label for="salaryType" class="form-label text fs-4">Salary Type</label>

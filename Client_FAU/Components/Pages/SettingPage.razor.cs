@@ -52,8 +52,9 @@ namespace Client_FAU.Components.Pages
             Model.UpdateDate = DateTime.UtcNow;
         }
 
-        private async Task AddSalariesDataBase()
+        private async Task AddSalaryDataBase()
         {
+            isLoading = true;
             try
             {
                 SetSalaryProperties();
@@ -73,10 +74,18 @@ namespace Client_FAU.Components.Pages
                 message = ex.Message;
             }
             ClearForm();
+            isLoading = false;
         }
 
-        private async Task EditSalariesDataBase(Salary salary)
+        private async Task EditSalaryDataBase(Salary salary)
         {
+            isLoading = true;
+            if(salary.GetPricesApply == salary.PricesApply.ToString())
+            {
+                isLoading = false;
+                return;
+            }
+
             try
             {
                 salary.PricesApply = double.Parse(salary.GetPricesApply);
@@ -96,6 +105,7 @@ namespace Client_FAU.Components.Pages
                 message = ex.Message;
             }
             ClearForm();
+            isLoading = false;
         }
 
         private void UpdateSalariesData(Salary salary)
