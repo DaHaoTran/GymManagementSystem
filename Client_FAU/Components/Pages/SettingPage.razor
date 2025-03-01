@@ -50,15 +50,22 @@
                                     <div class="mb-3">
                                         <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
                                         <div class="d-flex justify-content-start">
-                                            <input type="text" class="form-control" id="Price Apply" value="@salary.PricesApply">
+                                            @{
+                                                var price = salary.PricesApply.ToString("N0");
+                                            }
+                                            <h4 class="text mt-2 col-3 text-center">@price</h4>
                                             <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="right-section col-1 d-flex justify-content-center align-items-center">
-                                <div class="image w-75">
+                            <div class="right-section col-1 d-grid justify-content-center align-items-center">
+                                <div class="image w-75 mt-2">
                                     <img class="w-100" src="/images/trash.png" alt="A Trash" />
+                                </div>
+                                <hr />
+                                <div class="image w-75 mb-2" onclick="() => OpenDialog(salary)">
+                                    <img class="w-100" src="/images/edit.png" alt="An Edit" />
                                 </div>
                             </div>
                         </div>

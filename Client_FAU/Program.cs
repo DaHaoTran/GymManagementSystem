@@ -1,7 +1,8 @@
-using Client_FAU.Business.Implements;
+﻿using Client_FAU.Business.Implements;
 using Client_FAU.Business.Interfaces;
 using Client_FAU.Components;
 using Microsoft.AspNetCore.ResponseCompression;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddHttpClient();
 builder.Services.AddSignalR();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddRadzenComponents();
 builder.Services.AddResponseCompression(opts =>
 {
     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(

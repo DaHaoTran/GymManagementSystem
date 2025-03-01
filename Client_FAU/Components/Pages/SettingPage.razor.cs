@@ -1,7 +1,10 @@
 ﻿using Client_FAU.Business.Interfaces;
+using Client_FAU.Components.Dialogs;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Models;
 using Newtonsoft.Json;
+using Radzen;
 
 namespace Client_FAU.Components.Pages
 {
@@ -11,6 +14,8 @@ namespace Client_FAU.Components.Pages
         private Salary_Int? SalaryBsn { get; set; }
         [Inject]
         private IHttpContextAccessor? HttpContextAccessor { get; set; }
+        [Inject]
+        private DialogService? DialogService { get; set; }
         [SupplyParameterFromForm]
         private Salary? Model { get; set; } = new();
 
@@ -59,17 +64,41 @@ namespace Client_FAU.Components.Pages
 
                 if (result != null)
                 {
-                    message = "Add new Salary Successfully";
+                    message = "Add new salary successfully";
                     UpdateSalariesData(result);
                 }
                 else
                 {
-                    message = "Add new Salary failed. There may be problem !";
+                    message = "Add new salary failed. Problems arise !";
                 }
             } catch (Exception ex)
             {
                 message = ex.Message;
             }
+            ClearForm();
+        }
+
+        private async Task EditSalariesDataBase(Salary salary)
+        {
+            try
+            {
+                salary.PricesApply = double.Parse(salary.GetPricesApply);
+                var result = await SalaryBsn!.EditAnExistSalary(salary);
+
+                if(result != null)
+                {
+                    message = $"Edit {salary.SalaryType} Successfully";
+                    UpdateSalariesData(salary);
+                }
+                else
+                {
+                    message = "Edit salary failed. Problems arise !";
+                }
+            } catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            ClearForm();
         }
 
         private void UpdateSalariesData(Salary salary)
@@ -93,7 +122,20 @@ namespace Client_FAU.Components.Pages
 
         private void ShowInvalidMessage()
         {
-            message = "The inputs are invalid, Check again !";
+            message = "The inputs are invalid, check again !";
+        }
+
+        private async Task OpenDialog(Salary salary)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("salary", salary);
+            dynamic dialog = await DialogService!.OpenAsync<SalaryDialog>($"Edit {salary.SalaryType}", param, new DialogOptions()
+            {
+                Width = "50%",
+                Height = "50%",
+                ShowClose = true,
+                CloseDialogOnEsc = true
+            });
         }
     }
 }
