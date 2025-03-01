@@ -64,7 +64,7 @@
                                     <img class="w-100" src="/images/trash.png" alt="A Trash" />
                                 </div>
                                 <hr />
-                                <div class="image w-75 mb-2" onclick="() => OpenDialog(salary)">
+                                <div class="image w-75 mb-2" @OnClick="() => OpenDialog(salary)">
                                     <img class="w-100" src="/images/edit.png" alt="An Edit" />
                                 </div>
                             </div>
@@ -127,21 +127,25 @@
                     <form class="mt-1">
                         <div class="mb-3">
                             <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
-                            <div class="d-flex justify-content-start">
-                                <input type="text" class="form-control" id="PriceApply">
-                                <h4 class="text mt-2 col-3 text-start">Vn dong</h4>
+                            <div class="d-flex justify-content-start mt-2">
+                                <h4 class="text col-3 ms-4 text-start">1,000</h4>
+                                <h4 class="text col-3 text-start">Vn dong</h4>
                             </div>
                         </div>
-                        <div class="mb-3 d-flex justify-content-start">
-                            <label for="Member" class="form-label text fs-4 me-2">Member</label>
-                            <input type="number" class="form-control" id="Member">
-                            <label for="Days" class="form-label text fs-4 m-2">Days</label>
-                            <input type="number" class="form-control" id="Days">
+                        <div class="mb-3 d-flex justify-content-start mt-2">
+                            <h4 class="text col-3 text-start">Member</h4>
+                            <h4 class="text col-3 text-start">4</h4>
+                            <h4 class="text col-3 text-start">Days</h4>
+                            <h4 class="text col-3 text-start">31</h4>
                         </div>
                     </form>
-                    <div class="delete-button d-flex w-100 justify-content-center align-items-center">
-                        <div class="image w-25 d-flex justify-content-center align-items-center m-1">
+                    <div class="bottom-section d-flex w-100 justify-content-center align-items-center">
+                        <div class="image w-25 d-flex justify-content-center align-items-center m-1 me-5">
                             <img class="w-25" src="/images/trash.png" alt="A Trash" />
+                        </div>
+                        <h1>|</h1>
+                        <div class="image w-25 d-flex justify-content-center align-items-center m-1 ms-5">
+                            <img class="w-25" src="/images/edit.png" alt="An Edit" />
                         </div>
                     </div>
                 </div>

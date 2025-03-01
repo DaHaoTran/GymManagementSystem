@@ -25,12 +25,12 @@
 }
 
 .right-section {
-    background-color: yellow;
+    background-color: greenyellow;
     border-radius: 0 10px 10px 0;
 }
 
-.delete-button {
-    background-color: red;
+.bottom-section {
+    background-color: greenyellow;
     border-radius: 0 0 10px 10px;
 }
 
