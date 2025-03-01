@@ -1,6 +1,5 @@
 ﻿@page "/setting"
 @using Client_FAU.Components.Ingredients
-@rendermode InteractiveServer
 
 <PageTitle>Setting</PageTitle>
 
@@ -51,10 +50,7 @@
                                     <div class="mb-3">
                                         <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
                                         <div class="d-flex justify-content-start">
-                                            @{
-                                                var price = salary.PricesApply.ToString("N0");
-                                            }
-                                            <h4 class="text mt-2 col-3 text-center">@price</h4>
+                                            <input type="text" class="form-control" id="Price Apply" value="@salary.PricesApply">
                                             <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
                                         </div>
                                     </div>
@@ -128,16 +124,16 @@
                     <form class="mt-1">
                         <div class="mb-3">
                             <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
-                            <div class="d-flex justify-content-start mt-2">
-                                <h4 class="text col-3 ms-4 text-start">1,000</h4>
-                                <h4 class="text col-3 text-start">Vn dong</h4>
+                            <div class="d-flex justify-content-start">
+                                <input type="text" class="form-control" id="PriceApply">
+                                <h4 class="text mt-2 ms-2 col-3 text-start">Vn dong</h4>
                             </div>
                         </div>
-                        <div class="mb-3 d-flex justify-content-start mt-2">
-                            <h4 class="text col-3 text-start">Member</h4>
-                            <h4 class="text col-3 text-start">4</h4>
-                            <h4 class="text col-3 text-start">Days</h4>
-                            <h4 class="text col-3 text-start">31</h4>
+                        <div class="mb-3 d-flex justify-content-start">
+                            <label for="Member" class="form-label text fs-4 me-2">Member</label>
+                            <input type="number" class="form-control" id="Member">
+                            <label for="Days" class="form-label text fs-4 m-2">Days</label>
+                            <input type="number" class="form-control" id="Days">
                         </div>
                     </form>
                     <div class="bottom-section d-flex w-100 justify-content-center align-items-center">
