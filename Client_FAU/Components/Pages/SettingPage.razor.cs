@@ -1,5 +1,4 @@
 ﻿using Client_FAU.Business.Interfaces;
-using Client_FAU.Components.Dialogs;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Models;
@@ -14,8 +13,6 @@ namespace Client_FAU.Components.Pages
         private Salary_Int? SalaryBsn { get; set; }
         [Inject]
         private IHttpContextAccessor? HttpContextAccessor { get; set; }
-        [Inject]
-        private DialogService? DialogService { get; set; }
         [SupplyParameterFromForm]
         private Salary? Model { get; set; } = new();
 
@@ -123,19 +120,6 @@ namespace Client_FAU.Components.Pages
         private void ShowInvalidMessage()
         {
             message = "The inputs are invalid, check again !";
-        }
-
-        private async Task OpenDialog(Salary salary)
-        {
-            Dictionary<string, object> param = new Dictionary<string, object>();
-            param.Add("salary", salary);
-            dynamic dialog = await DialogService!.OpenAsync<SalaryDialog>($"Edit {salary.SalaryType}", param, new DialogOptions()
-            {
-                Width = "50%",
-                Height = "50%",
-                ShowClose = true,
-                CloseDialogOnEsc = true
-            });
         }
     }
 }

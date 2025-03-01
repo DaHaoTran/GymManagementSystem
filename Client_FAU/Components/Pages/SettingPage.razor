@@ -1,5 +1,6 @@
 ﻿@page "/setting"
 @using Client_FAU.Components.Ingredients
+@rendermode InteractiveServer
 
 <PageTitle>Setting</PageTitle>
 
@@ -64,7 +65,7 @@
                                     <img class="w-100" src="/images/trash.png" alt="A Trash" />
                                 </div>
                                 <hr />
-                                <div class="image w-75 mb-2" @OnClick="() => OpenDialog(salary)">
+                                <div class="image w-75 mb-2">
                                     <img class="w-100" src="/images/edit.png" alt="An Edit" />
                                 </div>
                             </div>
