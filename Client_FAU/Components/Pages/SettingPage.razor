@@ -121,9 +121,6 @@
                         <h4 class="col-6 text text-start mt-1">Package name</h4>
                         <h5 class="col-6 text text-end">Admin update</h5>
                     </div>
-                    <div class="body mt-2">
-                        <h4 class="col-6 text text-start">Price</h4>
-                    </div>
                     <form class="mt-1">
                         <div class="mb-3">
                             <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
@@ -150,8 +147,44 @@
                     </div>
                 </div>
             }
-            <div class="setting col-6 my-3 mx-4 d-flex justify-content-center align-items-center">
-                <a class="nav nav-link"><h1 class="text">+</h1></a>
+
+            <!-- sample -->
+            <hr class="d-none line-down2" />
+            <div class="setting setting-sample2 col-6 my-3 mx-4 d-none">
+                <div class="title2 row">
+                    <h5 class="col-6 text text-start">Updated by ...</h5>
+                </div>
+                <EditForm Model=Model2 FormName="Add Service" class="mt-1">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <label for="PackageName" class="form-label text fs-4">Package name</label>
+                        <InputText type="text" class="form-control" id="PackageName" @bind-Value=Model2!.PackageName />
+                    </div>
+                    <div class="mb-3">
+                        <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
+                        <div class="d-flex justify-content-start">
+                            <InputText type="text" class="form-control" id="PriceApply" @bind-Value=Model2.GetPrice />
+                            <h4 class="text mt-2 ms-2 col-3 text-start">Vn dong</h4>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-start">
+                        <label for="Member" class="form-label text fs-4 me-2">Member</label>
+                        <InputNumber type="number" class="form-control" id="Member" @bind-Value=Model2.MemberQuantity />
+                        <label for="Days" class="form-label text fs-4 m-2">Days</label>
+                        <InputNumber type="number" class="form-control" id="Days" @bind-Value=Model2.NumberOfDays />
+                    </div>
+                    <ValidationSummary />
+
+                    <div class="mb-2">
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                        <button type="reset" class="btn btn-danger" onclick="UndisplayServiceSample()">Cancel</button>
+                    </div>
+                </EditForm>
+            </div>
+            <!-- end sample -->
+
+            <div class="setting setting-plus2 col-6 my-3 mx-4 d-flex justify-content-center align-items-center">
+                <a class="nav nav-link" onclick="AddServiceSample()"><h1 class="text">+</h1></a>
             </div>
         </div>
     </div>
@@ -166,7 +199,7 @@
         if (element != null) {
         element.classList.add('active');
         }
-    }
+    };
 
     function AddSalarySample() {
         var settingPlus = document.querySelector('.setting-plus');
@@ -192,6 +225,34 @@
         settingSample.classList.add('d-none');
 
         var lineDown = document.querySelector('.line-down');
+        if(lineDown == null) {return;}
+        lineDown.classList.add('d-none');
+    }
+
+    function AddServiceSample() {
+        var settingPlus = document.querySelector('.setting-plus2');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.add('d-none');
+
+        var settingSample = document.querySelector('.setting-sample2');
+        if(settingSample == null) {return;}
+        settingSample.classList.remove('d-none');
+
+        var lineDown = document.querySelector('.line-down2');
+        if(lineDown == null) {return;}
+        lineDown.classList.remove('d-none');
+    }
+
+    function UndisplayServiceSample() {
+        var settingPlus = document.querySelector('.setting-plus2');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.remove('d-none');
+
+        var settingSample = document.querySelector('.setting-sample2');
+        if(settingSample == null) {return;}
+        settingSample.classList.add('d-none');
+
+        var lineDown = document.querySelector('.line-down2');
         if(lineDown == null) {return;}
         lineDown.classList.add('d-none');
     }
