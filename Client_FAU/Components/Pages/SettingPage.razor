@@ -156,3 +156,43 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function SetActiveClass(element) {
+        var navLinkActive = document.querySelector('.active');
+        if (navLinkActive != null) {
+        navLinkActive.classList.remove('active');
+        }
+        if (element != null) {
+        element.classList.add('active');
+        }
+    }
+
+    function AddSalarySample() {
+        var settingPlus = document.querySelector('.setting-plus');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.add('d-none');
+
+        var settingSample = document.querySelector('.setting-sample');
+        if(settingSample == null) {return;}
+        settingSample.classList.remove('d-none');
+
+        var lineDown = document.querySelector('.line-down');
+        if(lineDown == null) {return;}
+        lineDown.classList.remove('d-none');
+    }
+
+    function UndisplaySalarySample() {
+        var settingPlus = document.querySelector('.setting-plus');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.remove('d-none');
+
+        var settingSample = document.querySelector('.setting-sample');
+        if(settingSample == null) {return;}
+        settingSample.classList.add('d-none');
+
+        var lineDown = document.querySelector('.line-down');
+        if(lineDown == null) {return;}
+        lineDown.classList.add('d-none');
+    }
+</script>
