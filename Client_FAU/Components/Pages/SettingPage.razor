@@ -60,7 +60,7 @@
                                 </form>
                             </div>
                             <div class="right-section col-1 d-grid justify-content-center align-items-center">
-                                <div class="image w-75 mt-2">
+                                <div class="image w-75 mt-2"@onclick="() => DeleteSalaryDataBase(salary.SalaryCode)" >
                                     <img class="w-100" src="/images/trash.png" alt="A Trash" />
                                 </div>
                                 <hr />
@@ -81,7 +81,7 @@
                         <div class="title row">
                             <h5 class="col-6 text text-start mt-1">@DateTime.Now</h5>
                         </div>
-                        <EditForm Model=@Model FormName="Add Salary" class="mt-1" OnValidSubmit="AddSalaryDataBase" OnInvalidSubmit="ShowInvalidMessage">
+                        <EditForm Model=@Model FormName="Add Salary" class="mt-1" OnValidSubmit="AddSalaryDataBase">
                             <DataAnnotationsValidator/>
                             <div class="mb-3">
                                 <label for="salaryType" class="form-label text fs-4">Salary Type</label>

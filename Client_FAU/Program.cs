@@ -3,6 +3,7 @@ using Client_FAU.Business.Interfaces;
 using Client_FAU.Components;
 using Microsoft.AspNetCore.ResponseCompression;
 using Radzen;
+using SweetAlert2;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddSweetAlert2();
 
 //
 builder.Services.AddScoped<Branch_Int, Branch_Imp>();

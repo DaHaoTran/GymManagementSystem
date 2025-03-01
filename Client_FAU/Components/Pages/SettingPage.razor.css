@@ -4,6 +4,10 @@
     color: black !important;
 }
 
+a:hover {
+    cursor: pointer !important;
+}
+
 .text {
     font-weight: bolder !important;
 }

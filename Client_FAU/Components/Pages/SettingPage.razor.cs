@@ -1,9 +1,12 @@
 ﻿using Client_FAU.Business.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using Models;
 using Newtonsoft.Json;
 using Radzen;
+using SweetAlert2;
+using System.Threading.Tasks;
 
 namespace Client_FAU.Components.Pages
 {
@@ -13,6 +16,10 @@ namespace Client_FAU.Components.Pages
         private Salary_Int? SalaryBsn { get; set; }
         [Inject]
         private IHttpContextAccessor? HttpContextAccessor { get; set; }
+        [Inject]
+        private IJSRuntime? JSRuntime { get; set; }
+        [Inject]
+        private ISweetAlertService? Swal { get; set; }
         [SupplyParameterFromForm]
         private Salary? Model { get; set; } = new();
 
@@ -75,6 +82,7 @@ namespace Client_FAU.Components.Pages
             }
             ClearForm();
             isLoading = false;
+            await JSRuntime!.InvokeVoidAsync("UndisplaySalarySample");
         }
 
         private async Task EditSalaryDataBase(Salary salary)
@@ -107,10 +115,45 @@ namespace Client_FAU.Components.Pages
             ClearForm();
             isLoading = false;
         }
+        
+        private async Task DeleteSalaryDataBase(string salaryCode)
+        {
+            SweetAlertResult swalResult = await Swal!.FireAsync(new SweetAlertOptions
+            {
+                Title = "Are you sure?",
+                Text = "You won't be able to revert this!",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Yes, delete it!",
+                CancelButtonText = "No, cancel!"
+            });
+
+            if(swalResult.IsConfirmed)
+            {
+                isLoading = true;
+                try
+                {
+                    var result = await SalaryBsn!.DeleteAnExistSalary(salaryCode);
+                    if (result != null)
+                    {
+                        message = $"Delete {result.SalaryType} Successfully";
+                        RemoveSalariesFromData(result);
+                    }
+                    else
+                    {
+                        message = "Delete salary failed. Problems arise !";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    message = ex.Message;
+                }
+                isLoading = false;
+            }
+        }
 
         private void UpdateSalariesData(Salary salary)
         {
-            isLoading = true;
             if(salary == null) { return; }
             var getSalary = salaries.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
             if(getSalary == default || getSalary == null)
@@ -124,7 +167,15 @@ namespace Client_FAU.Components.Pages
             }
 
             HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(salaries));
-            isLoading = false;
+        }
+
+        private void RemoveSalariesFromData(Salary salary)
+        {
+            if (salary == null) { return; }
+            var getSalary = salaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
+            if (getSalary == null || getSalary == default) { return; }
+            salaries!.Remove(getSalary);
+            HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(salaries));
         }
 
         private void ShowInvalidMessage()
