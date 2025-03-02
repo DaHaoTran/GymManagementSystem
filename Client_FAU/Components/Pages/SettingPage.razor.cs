@@ -22,8 +22,6 @@ namespace Client_FAU.Components.Pages
         private ISweetAlertService? Swal { get; set; }
         [SupplyParameterFromForm]
         private Salary? Model { get; set; } = new();
-        [SupplyParameterFromForm]
-        private ServicePackage? Model2 { get; set; } = new();
 
         private List<Salary>? salaries;
         private string sessionName = "salaries";
@@ -35,6 +33,7 @@ namespace Client_FAU.Components.Pages
             isLoading = true;
 
             await LoadSalaryList();
+            await LoadServicePackageList();
 
             isLoading = false;
         }

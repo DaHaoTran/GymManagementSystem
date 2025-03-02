@@ -1,9 +1,10 @@
 ﻿@page "/setting"
 @using Client_FAU.Components.Ingredients
+@inherits SettingPageBase
 
 <PageTitle>Setting</PageTitle>
 
-@if(isLoading)
+@if(isLoading || isLoading2)
 {
     <Loading></Loading>
 }
@@ -17,11 +18,14 @@
     </li>
 </ul>
 
-@if (!string.IsNullOrEmpty(message))
+@if (!string.IsNullOrEmpty(message) || !string.IsNullOrEmpty(message2))
 {
+    // Code
+    var messageSet = !string.IsNullOrEmpty(message) ? message : message2;
+
     <div class="alert alert-info mt-2 d-flex">
         <div class="w-50">
-            @message
+            @messageSet
         </div>
         <div class="w-100 d-flex justify-content-end align-items-center">
             <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />
@@ -114,38 +118,49 @@
     <!-- service tab -->
     <div class="tab-pane fade" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab" tabindex="1">
         <div class="row mb-5">
-            @for(int i = 0; i < 3;i++)
+            @if (servicePackages == null)
             {
-                <div class="setting col-6 my-3 mx-4">
-                    <div class="title2 row">
-                        <h4 class="col-6 text text-start mt-1">Package name</h4>
-                        <h5 class="col-6 text text-end">Admin update</h5>
-                    </div>
-                    <form class="mt-1">
-                        <div class="mb-3">
-                            <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
-                            <div class="d-flex justify-content-start">
-                                <input type="text" class="form-control" id="PriceApply">
-                                <h4 class="text mt-2 ms-2 col-3 text-start">Vn dong</h4>
+                <h5>There are a problem !</h5>
+            }
+            else if (servicePackages.Count() <= 0)
+            {
+                <h5>There are no record to display</h5>
+            }
+            else
+            {
+                @foreach(var service in servicePackages)
+                {
+                    <div class="setting col-6 my-3 mx-4">
+                        <div class="title2 row">
+                            <h4 class="col-6 text text-start mt-1">@service.PackageName</h4>
+                            <h5 class="col-6 text text-end">@service.AdminUpdate</h5>
+                        </div>
+                        <form class="mt-1">
+                            <div class="mb-3">
+                                <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
+                                <div class="d-flex justify-content-start">
+                                    <input type="text" class="form-control" id="PriceApply" @bind-value=service.Price>
+                                    <h4 class="text mt-2 ms-2 col-3 text-start">Vn dong</h4>
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex justify-content-start">
+                                <label for="Member" class="form-label text fs-4 me-2">Member</label>
+                                <input type="number" class="form-control" id="Member" @bind-value=service.MemberQuantity>
+                                <label for="Days" class="form-label text fs-4 m-2">Days</label>
+                                <input type="number" class="form-control" id="Days" @bind-value=service.NumberOfDays>
+                            </div>
+                        </form>
+                        <div class="bottom-section d-flex w-100 justify-content-center align-items-center">
+                            <div class="image w-25 d-flex justify-content-center align-items-center m-1 me-5">
+                                <img class="w-25" src="/images/trash.png" alt="A Trash" />
+                            </div>
+                            <h1>|</h1>
+                            <div class="image w-25 d-flex justify-content-center align-items-center m-1 ms-5">
+                                <img class="w-25" src="/images/edit.png" alt="An Edit" />
                             </div>
                         </div>
-                        <div class="mb-3 d-flex justify-content-start">
-                            <label for="Member" class="form-label text fs-4 me-2">Member</label>
-                            <input type="number" class="form-control" id="Member">
-                            <label for="Days" class="form-label text fs-4 m-2">Days</label>
-                            <input type="number" class="form-control" id="Days">
-                        </div>
-                    </form>
-                    <div class="bottom-section d-flex w-100 justify-content-center align-items-center">
-                        <div class="image w-25 d-flex justify-content-center align-items-center m-1 me-5">
-                            <img class="w-25" src="/images/trash.png" alt="A Trash" />
-                        </div>
-                        <h1>|</h1>
-                        <div class="image w-25 d-flex justify-content-center align-items-center m-1 ms-5">
-                            <img class="w-25" src="/images/edit.png" alt="An Edit" />
-                        </div>
                     </div>
-                </div>
+                }
             }
 
             <!-- sample -->
@@ -154,7 +169,7 @@
                 <div class="title2 row">
                     <h5 class="col-6 text text-start">Updated by ...</h5>
                 </div>
-                <EditForm Model=Model2 FormName="Add Service" class="mt-1">
+                <EditForm Model=Model2 FormName="Add Service" class="mt-1" OnValidSubmit="AddServiceDataBase">
                     <DataAnnotationsValidator />
                     <div class="mb-3">
                         <label for="PackageName" class="form-label text fs-4">Package name</label>
