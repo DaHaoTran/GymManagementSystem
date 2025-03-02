@@ -55,6 +55,7 @@ namespace Client_FAU.Components.Pages
 
         private void SetSalaryProperties()
         {
+            Model!.SalaryType = Model.SalaryType!.Trim();
             Model!.SalaryCode = "SA";
             Model.PricesApply = double.Parse(Model.GetPricesApply);
             Model.UpdateDate = DateTime.UtcNow;
@@ -89,15 +90,26 @@ namespace Client_FAU.Components.Pages
         private async Task EditSalaryDataBase(Salary salary)
         {
             isLoading = true;
-            if(salary.GetPricesApply == salary.PricesApply.ToString())
+
+            //Get the salaries from session and check if the values salary
+            var sessionSalaries = HttpContextAccessor!.HttpContext!.Session.GetString(sessionName);
+            if(sessionSalaries != null)
             {
-                isLoading = false;
-                return;
+                var temSalaries  = JsonConvert.DeserializeObject<List<Salary>>(sessionSalaries);
+                var getSalary = temSalaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
+                if (getSalary != null)
+                {
+                    if(getSalary.PricesApply == salary.PricesApply)
+                    {
+                        isLoading = false;
+                        return;
+                    }
+                }
             }
 
+            //Else update the salary
             try
             {
-                salary.PricesApply = double.Parse(salary.GetPricesApply);
                 var result = await SalaryBsn!.EditAnExistSalary(salary);
 
                 if(result != null)
@@ -156,14 +168,14 @@ namespace Client_FAU.Components.Pages
         private void UpdateSalariesData(Salary salary)
         {
             if(salary == null) { return; }
-            var getSalary = salaries.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
+            var getSalary = salaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
             if(getSalary == default || getSalary == null)
             {
-                salaries.Insert(0, salary);
+                salaries!.Insert(0, salary);
             }
             else
             {
-                int index = salaries.IndexOf(getSalary);
+                int index = salaries!.IndexOf(getSalary);
                 salaries[index] = salary;
             }
 
