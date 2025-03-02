@@ -84,7 +84,8 @@ namespace Client_FAU.Components.Pages
                 var getSP = temSPs!.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
                 if (getSP != null || getSP != default)
                 {
-                    if (getSP.Price != servicePackage.Price) { }
+                    if(getSP.IsDeleted != servicePackage.IsDeleted) { }
+                    else if (getSP.Price != servicePackage.Price) { }
                     else if (getSP.MemberQuantity != servicePackage.MemberQuantity) { }
                     else if (getSP.NumberOfDays != servicePackage.NumberOfDays) { }
                     else
@@ -115,6 +116,12 @@ namespace Client_FAU.Components.Pages
             }
             ClearForm2();
             isLoading2 = false;
+        }
+
+        protected async Task SetDeleteStateForEditDataBase(ServicePackage servicePackage)
+        {
+            servicePackage.IsDeleted = !servicePackage.IsDeleted;
+            await EditServiceDataBase(servicePackage);
         }
 
         protected void UpdateServicePackagesData(ServicePackage servicePackage)
