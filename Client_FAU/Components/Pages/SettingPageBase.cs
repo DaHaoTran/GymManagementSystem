@@ -40,6 +40,7 @@ namespace Client_FAU.Components.Pages
 
         protected void SetServicePackageProperties()
         {
+            Model2!.PackageName = Model2.PackageName!.Trim();
             Model2!.PackageCode = "SP";
             Model2.Price = double.Parse(Model2.GetPrice);
             Model2.AdminUpdate = "AC00000001";
@@ -69,6 +70,51 @@ namespace Client_FAU.Components.Pages
             ClearForm2();
             isLoading2 = false;
             await JSRuntime2!.InvokeVoidAsync("UndisplayServiceSample");
+        }
+
+        protected async Task EditServiceDataBase(ServicePackage servicePackage)
+        {
+            isLoading2 = true;
+
+            //Get the service packages from the session and check if the service package is not null and has changed
+            var sessionSPs = HttpContextAccessor2!.HttpContext!.Session.GetString(sessionName2);
+            if (sessionSPs != null)
+            {
+                var temSPs = JsonConvert.DeserializeObject<List<ServicePackage>>(sessionSPs);
+                var getSP = temSPs!.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
+                if (getSP != null || getSP != default)
+                {
+                    if (getSP.Price != servicePackage.Price) { }
+                    else if (getSP.MemberQuantity != servicePackage.MemberQuantity) { }
+                    else if (getSP.NumberOfDays != servicePackage.NumberOfDays) { }
+                    else
+                    {
+                        isLoading2 = false;
+                        return;
+                    }
+                }
+            }
+
+            //Else update the service package
+            try
+            {
+                var result = await SPBsn!.EditAnExistServicePackage(servicePackage);
+                if (result != null)
+                {
+                    message2 = $"Edit {result.PackageCode} successfully";
+                    UpdateServicePackagesData(result);
+                }
+                else
+                {
+                    message2 = "Edit service package failed. Problems arise !";
+                }
+            }
+            catch (Exception ex)
+            {
+                message2 = ex.Message;
+            }
+            ClearForm2();
+            isLoading2 = false;
         }
 
         protected void UpdateServicePackagesData(ServicePackage servicePackage)
