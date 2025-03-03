@@ -31,7 +31,7 @@ namespace Client_FAU.Components.Pages
                 servicePackages = JsonConvert.DeserializeObject<List<ServicePackage>>(data);
                 return;
             }
-            var getServicePackages = await SPBsn!.GetServicePackageList(12);
+            var getServicePackages = await SPBsn!.GetServicePackageList(0);
             servicePackages = getServicePackages;
             HttpContextAccessor2!.HttpContext!.Session.SetString(SessionNames.ServicePackages, JsonConvert.SerializeObject(getServicePackages));
         }

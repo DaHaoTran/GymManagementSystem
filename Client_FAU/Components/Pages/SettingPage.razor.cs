@@ -46,7 +46,7 @@ namespace Client_FAU.Components.Pages
                 salaries = JsonConvert.DeserializeObject<List<Salary>>(data);
                 return;
             }
-            var getSalaries = await SalaryBsn!.GetSalaryList(12);
+            var getSalaries = await SalaryBsn!.GetSalaryList(0);
             salaries = getSalaries;
             HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Salaries, JsonConvert.SerializeObject(getSalaries));
         }
