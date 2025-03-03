@@ -6,7 +6,7 @@ namespace Client_FAU.Business.Interfaces
     {
         Task<List<Account>> GetAccountList(int limit);
         Task<Account> GetTheAccountByAccountCode(string accountCode);
-        Task<List<Account>> GetTheAccountBySearchString(string str, int limit);
+        Task<List<Account>> GetTheAccountsBySearchString(string str, int limit);
         Task<Account> AddANewAccount(Account account);
         Task<Account> EditAnExistAccount(Account account);
         Task<Account> DeleteAnExistAccount(string accountCode);

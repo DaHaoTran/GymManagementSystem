@@ -9,7 +9,7 @@ namespace Client_FAU.Business.Implements
     {
         private static string? baseAPIUrl;
         private readonly HttpClient _httpClient;
-        private readonly string name = "branches";
+        private readonly string name = "accounts";
         public Account_Imp(IConfiguration configuration, HttpClient httpClient)
         {
             var apiUrl = configuration["BaseAPIUrl"];
@@ -61,7 +61,7 @@ namespace Client_FAU.Business.Implements
             return JsonConvert.DeserializeObject<Account>(apiResponse)!;
         }
 
-        public async Task<List<Account>> GetTheAccountBySearchString(string str, int limit)
+        public async Task<List<Account>> GetTheAccountsBySearchString(string str, int limit)
         {
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/filter?str={str}&limit={limit}");
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
