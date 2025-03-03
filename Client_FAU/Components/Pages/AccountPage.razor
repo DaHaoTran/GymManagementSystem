@@ -49,10 +49,10 @@
                         @{
                             account.GetRoleName = roles!.Where(x => x.OrderNumber == account.RoleId).FirstOrDefault()!.RoleName;
                         }
-                        <h4 class="fw-bolder">@account.GetRoleName</h4>
+                        <h4 class="fw-bolder">@account.GetRoleName.Substring(0, 2)</h4>
                     </div>
                     <div class="code">
-                        <h4 class="fw-bolder">@account.AccountCode</h4>
+                        <h4 class="fw-bolder">@account.AccountCode.Substring(0, 2)..</h4>
                     </div>
                 </div>
                 <div class="w-100">
@@ -62,22 +62,22 @@
                     <h4 class="fw-bolder">@account.FullName</h4>
                 </div>
             </div>
-            <div class="mt-1 mb-2">
+            <div class="mt-1 mb-5">
                 <div class="collapse collapse-horizontal" id="@account.AccountCode">
                     <div class="card card-body user-detail">
                         <div class="row">
                             <div class="col-10">
                                 <div class="address w-50">
-                                    <h5 class="fw-bold">@account.LivingAt</h5>
+                                    <h5 class="fw-bold">Address: <span class="sub-detail">@account.LivingAt</span></h5>
                                 </div>
                                 <div class="quantities row w-100">
-                                    <div class="text-start col-12">@account.Age</div>
-                                    <div class="text-start col-12">@account.PhoneNumber</div>
-                                    <div class="text-start col-12">@account.IdNumber</div>
+                                    <div class="text-start col-12">Age: <span class="sub-detail">@account.Age</span></div>
+                                    <div class="text-start col-12">Phone number: <span class="sub-detail">@account.PhoneNumber</span></div>
+                                    <div class="text-start col-12">Id: <span class="sub-detail">@account.IdNumber</span></div>
                                     @{
                                         account.GetSalaryType = salaries!.Where(x => x.SalaryCode == account.SalaryCode).FirstOrDefault()!.SalaryType;
                                     }
-                                    <div class="text-start col-12">@account.GetSalaryType</div>
+                                    <div class="text-start col-12">Salary type: <span class="sub-detail">@account.GetSalaryType</span></div>
 
                                     <div class="col-12 text-center fs-6 mt-2">Update by @account.UpdateBy</div>
                                 </div>
@@ -109,7 +109,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <EditForm Model=Model FormName="Edit Account">
+                <EditForm Model=Model FormName="Edit Account" OnValidSubmit="AddAccountDataBase">
                     <DataAnnotationsValidator />
                     <div class="row">
                         <div class="col-6">

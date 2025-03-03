@@ -61,3 +61,7 @@ label {
 a:hover {
     cursor: pointer;
 }
+
+.sub-detail {
+    font-size: 18px !important;
+} 
