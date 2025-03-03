@@ -33,6 +33,7 @@ builder.Services.AddScoped<Branch_Int, Branch_Imp>();
 builder.Services.AddScoped<Salary_Int, Salary_Imp>();
 builder.Services.AddScoped<ServicePackage_Int, ServicePackage_Imp>();
 builder.Services.AddScoped<Account_Int, Account_Imp>();
+builder.Services.AddScoped<Role_Int, Role_Imp>();
 
 var app = builder.Build();
 
