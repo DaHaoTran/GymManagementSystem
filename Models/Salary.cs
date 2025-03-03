@@ -23,7 +23,7 @@ namespace Models
 
         public DateTime UpdateDate { get; set; }
 
-        //public Account? account { get; set; }
+        //public IEnumerable<Account>? account { get; set; }
 
         [NotMapped]
         [Required(ErrorMessage = "Prices apply is required")]
