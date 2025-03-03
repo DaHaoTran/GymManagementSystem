@@ -2,6 +2,7 @@
 using Client_FAU.Extensions;
 using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Models;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace Client_FAU.Components.Pages
         private Account_Int? AccountBsn { get; set; }
         [Inject]
         private IHttpContextAccessor? HttpContextAccessor { get; set; }
+        [Inject]
+        private IJSRuntime? JSRuntime { get; set; }
         [SupplyParameterFromForm]
         private Account? Model { get; set; } = new();
 
@@ -58,14 +61,14 @@ namespace Client_FAU.Components.Pages
                 accounts = JsonConvert.DeserializeObject<List<Account>>(data);
                 return;
             }
-            var getAccounts = await AccountBsn!.GetAccountList(12);
+            var getAccounts = await AccountBsn!.GetAccountList(9);
             accounts = getAccounts;
             HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Accounts, JsonConvert.SerializeObject(getAccounts));
         }
 
         private void SetAccountProperties()
         {
-            Model!.AccountCode = Model.GetSalaryType.Trim().Substring(0, 2).ToUpper();
+            Model!.AccountCode = Model.GetRoleName.Trim().Substring(0, 2).ToUpper();
             Model.FullName = Model.FullName.Trim();
             Model.PhoneNumber = Model.PhoneNumber.Trim();
             Model.IdNumber = Model.IdNumber.Trim();
@@ -74,7 +77,7 @@ namespace Client_FAU.Components.Pages
             Model.UpdateBy = "AD00000001";
 
             var getRole = roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
-            if(getRole == null) 
+            if(getRole == null || getRole == default) 
             {
                 message = "Role is missing !";
                 return; 
@@ -82,7 +85,7 @@ namespace Client_FAU.Components.Pages
             Model.RoleId = getRole.OrderNumber;
 
             var getSalary = salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
-            if (getSalary == null)
+            if (getSalary == null || getSalary == default)
             {
                 message = "Salary type is missing !";
                 return;
@@ -113,6 +116,7 @@ namespace Client_FAU.Components.Pages
             }
             ClearForm();
             isLoading = false;
+            await JSRuntime!.InvokeVoidAsync("CloseEditModal");
         }
 
         private void UpdateAccountsData(Account account)
@@ -122,7 +126,7 @@ namespace Client_FAU.Components.Pages
             if(getAccount  == default || getAccount == null)
             {
                 accounts!.Insert(0, account);
-                accounts.RemoveAt(accounts.Count() - 1);
+                if (accounts.Count() >= 9) { accounts.RemoveAt(accounts.Count() - 1); }
             }
             else
             {

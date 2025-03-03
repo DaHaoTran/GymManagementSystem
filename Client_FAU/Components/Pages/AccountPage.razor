@@ -43,7 +43,7 @@
     {
         foreach(var account in accounts)
         {
-            <div class="nav-link link-dark col-3 account" data-bs-toggle="collapse" data-bs-target="#@account.AccountCode" aria-expanded="false" aria-controls="collapse">
+            <div class="nav-link link-dark col-3 mb-5 account" data-bs-toggle="modal" data-bs-target="#@account.AccountCode">
                 <div class="head-container d-grid">
                     <div class="role">
                         @{
@@ -62,44 +62,53 @@
                     <h4 class="fw-bolder">@account.FullName</h4>
                 </div>
             </div>
-            <div class="mt-1 mb-5">
-                <div class="collapse collapse-horizontal" id="@account.AccountCode">
-                    <div class="card card-body user-detail">
-                        <div class="row">
-                            <div class="col-10">
-                                <div class="address w-50">
-                                    <h5 class="fw-bold">Address: <span class="sub-detail">@account.LivingAt</span></h5>
-                                </div>
-                                <div class="quantities row w-100">
-                                    <div class="text-start col-12">Age: <span class="sub-detail">@account.Age</span></div>
-                                    <div class="text-start col-12">Phone number: <span class="sub-detail">@account.PhoneNumber</span></div>
-                                    <div class="text-start col-12">Id: <span class="sub-detail">@account.IdNumber</span></div>
-                                    @{
-                                        account.GetSalaryType = salaries!.Where(x => x.SalaryCode == account.SalaryCode).FirstOrDefault()!.SalaryType;
-                                    }
-                                    <div class="text-start col-12">Salary type: <span class="sub-detail">@account.GetSalaryType</span></div>
+            <!-- detail modal -->
+            <div class="modal fade" id="@account.AccountCode" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content bg-transparent">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Account Detail</h1>
+                        </div>
+                        <div class="modal-body d-flex justify-content-center align-items-center">
+                            <div class="card card-body user-detail">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <div class="address w-50">
+                                            <h5 class="fw-bold">Address: <span class="sub-detail">@account.LivingAt</span></h5>
+                                        </div>
+                                        <div class="quantities row w-100">
+                                            <div class="text-start col-12">Age: <span class="sub-detail">@account.Age</span></div>
+                                            <div class="text-start col-12">Phone number: <span class="sub-detail">@account.PhoneNumber</span></div>
+                                            <div class="text-start col-12">Id: <span class="sub-detail">@account.IdNumber</span></div>
+                                            @{
+                                                account.GetSalaryType = salaries!.Where(x => x.SalaryCode == account.SalaryCode).FirstOrDefault()!.SalaryType;
+                                            }
+                                            <div class="text-start col-12">Salary type: <span class="sub-detail">@account.GetSalaryType</span></div>
 
-                                    <div class="col-12 text-center fs-6 mt-2">Update by @account.UpdateBy</div>
-                                </div>
-                            </div>
+                                            <div class="col-12 text-center fs-6 mt-2">Update by @account.UpdateBy</div>
+                                        </div>
+                                    </div>
 
-                            <div class="row col-2 d-grid a-container">
-                                <div class="delete d-flex justify-content-center align-items-center col-12">
-                                    <a class="image w-75">
-                                        <img class="w-100" src="images/trash.png" alt="Trash" />
-                                    </a>
-                                </div>
+                                    <div class="row col-1 d-grid a-container">
+                                        <div class="delete d-flex justify-content-center align-items-center col-12">
+                                            <a class="image w-100">
+                                                <img class="w-100" src="images/trash.png" alt="Trash" />
+                                            </a>
+                                        </div>
 
-                                <div class="edit d-flex justify-content-center align-items-center col-12">
-                                    <a class="image w-75" data-bs-toggle="modal" data-bs-target="#editmodal">
-                                        <img class="w-100" src="images/edit.png" alt="Edit" />
-                                    </a>
+                                        <div class="edit d-flex justify-content-center align-items-center col-12">
+                                            <a class="image w-100" data-bs-toggle="modal" data-bs-target="#editmodal">
+                                                <img class="w-100" src="images/edit.png" alt="Edit" />
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- end detail modal -->
         }
     }
 </div>
@@ -175,4 +184,12 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function CloseEditModal() {
+        var modal = document.getElementById('editmodal');
+        var bsModal = bootstrap.Modal.getInstance(modal);
+        bsModal.hide();
+    }
+</script>
 
