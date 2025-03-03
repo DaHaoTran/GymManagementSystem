@@ -11,7 +11,7 @@ namespace Client_FAU.Components.Layout
         [Inject]
         private Role_Int? RoleBsn { get; set; }
         [Inject]
-        private HttpContextAccessor? HttpContextAccessor { get; set; }
+        private IHttpContextAccessor? HttpContextAccessor { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
