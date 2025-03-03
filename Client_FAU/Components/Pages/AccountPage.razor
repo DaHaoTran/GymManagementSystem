@@ -1,4 +1,5 @@
 ﻿@page "/account"
+@using Client_FAU.Components.Ingredients;
 
 <PageTitle>Account</PageTitle>
 
@@ -11,59 +12,96 @@
         <button class="btn">Search</button>
     </div>
 </div>
-<!-- detail -->
-<div class="row mt-5">
-    <div class="nav-link link-dark col-3 account" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
-        <div class="head-container d-grid">
-            <div class="role">
-                <h4 class="fw-bolder">Role</h4>
-            </div>
-            <div class="code">
-                <h4 class="fw-bolder">Code</h4>
-            </div>
+
+@if(isLoading)
+{
+    <Loading></Loading>
+}
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-info mt-2 d-flex">
+        <div class="w-50">
+            @message
         </div>
-        <div class="w-100">
-            <img class="w-100" src="./images/user.png" alt="A User" />
-        </div>
-        <div class="user-name text-center mt-3">
-            <h4 class="fw-bolder">Full name</h4>
+        <div class="w-100 d-flex justify-content-end align-items-center">
+            <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />
         </div>
     </div>
-    <div class="mt-1 mb-2">
-        <div class="collapse collapse-horizontal" id="collapse">
-            <div class="card card-body user-detail">
-                <div class="row">
-                    <div class="col-10">
-                        <div class="address w-50">
-                            <h5 class="fw-bold">Living at...............</h5>
-                        </div>
-                        <div class="quantities row w-100">
-                            <div class="text-start col-12">Age</div>
-                            <div class="text-start col-12">Phone number</div>
-                            <div class="text-start col-12">Id</div>
-                            <div class="text-start col-12">Salary name</div>
+}
 
-                            <div class="col-12 text-center fs-6 mt-2">Update by AD001</div>
-                        </div>
+<!-- detail -->
+<div class="row mt-5">
+    @if (accounts == null)
+    {
+        <h5>There are a problem !</h5>
+    } else if(accounts.Count() <= 0)
+    {
+        <h5>There are no record to display</h5>
+    }
+    else
+    {
+        foreach(var account in accounts)
+        {
+            <div class="nav-link link-dark col-3 account" data-bs-toggle="collapse" data-bs-target="#@account.AccountCode" aria-expanded="false" aria-controls="collapse">
+                <div class="head-container d-grid">
+                    <div class="role">
+                        @{
+                            account.GetRoleName = roles!.Where(x => x.OrderNumber == account.RoleId).FirstOrDefault()!.RoleName;
+                        }
+                        <h4 class="fw-bolder">@account.GetRoleName</h4>
                     </div>
+                    <div class="code">
+                        <h4 class="fw-bolder">@account.AccountCode</h4>
+                    </div>
+                </div>
+                <div class="w-100">
+                    <img class="w-100" src="./images/user.png" alt="A User" />
+                </div>
+                <div class="user-name text-center mt-3">
+                    <h4 class="fw-bolder">@account.FullName</h4>
+                </div>
+            </div>
+            <div class="mt-1 mb-2">
+                <div class="collapse collapse-horizontal" id="@account.AccountCode">
+                    <div class="card card-body user-detail">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="address w-50">
+                                    <h5 class="fw-bold">@account.LivingAt</h5>
+                                </div>
+                                <div class="quantities row w-100">
+                                    <div class="text-start col-12">@account.Age</div>
+                                    <div class="text-start col-12">@account.PhoneNumber</div>
+                                    <div class="text-start col-12">@account.IdNumber</div>
+                                    @{
+                                        account.GetSalaryType = salaries!.Where(x => x.SalaryCode == account.SalaryCode).FirstOrDefault()!.SalaryType;
+                                    }
+                                    <div class="text-start col-12">@account.GetSalaryType</div>
 
-                    <div class="row col-2 d-grid a-container">
-                        <div class="delete d-flex justify-content-center align-items-center col-12">
-                            <a class="image w-75">
-                                <img class="w-100" src="images/trash.png" alt="Trash" />
-                            </a>
-                        </div>
+                                    <div class="col-12 text-center fs-6 mt-2">Update by @account.UpdateBy</div>
+                                </div>
+                            </div>
 
-                        <div class="edit d-flex justify-content-center align-items-center col-12">
-                            <a class="image w-75" data-bs-toggle="modal" data-bs-target="#editmodal">
-                                <img class="w-100" src="images/edit.png" alt="Edit" />
-                            </a>
+                            <div class="row col-2 d-grid a-container">
+                                <div class="delete d-flex justify-content-center align-items-center col-12">
+                                    <a class="image w-75">
+                                        <img class="w-100" src="images/trash.png" alt="Trash" />
+                                    </a>
+                                </div>
+
+                                <div class="edit d-flex justify-content-center align-items-center col-12">
+                                    <a class="image w-75" data-bs-toggle="modal" data-bs-target="#editmodal">
+                                        <img class="w-100" src="images/edit.png" alt="Edit" />
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        }
+    }
 </div>
 
 <!-- Modal -->
@@ -71,54 +109,68 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <form>
+                <EditForm Model=Model FormName="Edit Account">
+                    <DataAnnotationsValidator />
                     <div class="row">
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="FullName" class="form-label">Full name</label>
-                                <input type="text" class="form-control" id="FullName">
+                                <InputText type="text" class="form-control" id="FullName" @bind-Value=Model!.FullName/>
                             </div>
                             <div class="mb-3">
                                 <label for="PhoneNumber" class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" id="PhoneNumber">
+                                <InputText type="text" class="form-control" id="PhoneNumber" @bind-Value=Model.PhoneNumber />
                             </div>
                             <div class="mb-3">
                                 <div class="row">
                                     <div class="col-4 d-flex align-items-center">
                                         <label for="Age" class="form-label mx-1">Age</label>
-                                        <input type="number" class="form-control mb-3" id="Age">
+                                        <InputNumber type="number" class="form-control mb-3" id="Age" @bind-Value=Model.Age />
                                     </div>
                                     <div class="col-8 d-flex align-items-center">
                                         <label for="Role" class="form-label mx-1">Role</label>
                                         <div class="input-group mb-3">
-                                            <select class="form-select" id="Role">
-                                                <option selected>Choose...</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
+                                            <InputSelect class="form-select" id="Role" @bind-Value=Model.GetRoleName >
+                                                <option selected>-- Choose --</option>
+                                                @foreach (var role in roles!)
+                                                {
+                                                    <option value="@role.RoleName">@role.RoleName</option>
+                                                }
+                                            </InputSelect>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn mt-3 submit-button fs-3">Confirm</button>
+                            <div class="mb-3 d-flex justify-content-start">
+                                <label for="Salary" class="form-label mx-1">Salary</label>
+                                <InputSelect class="form-select" id="Salary" @bind-Value=Model.GetSalaryType>
+                                    <option selected>-- Choose --</option>
+                                    @foreach (var salary in salaries!)
+                                    {
+                                        <option value="@salary.SalaryType">@salary.SalaryType</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                            <ValidationSummary />
+
+                            <button type="submit" class="btn submit-button fs-3 mt-3">Confirm</button>
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="Address" class="form-label mx-1">Living at</label>
-                                <textarea class="form-control"></textarea>
+                                <InputTextArea class="form-control" @bind-Value=Model.LivingAt />
                             </div>
                             <div class="mb-3">
                                 <label for="Password" class="form-label mx-1">Password</label>
-                                <input type="text" class="form-control mb-3" id="Password">
+                                <InputText type="text" class="form-control mb-3" id="Password" @bind-Value=Model.Password />
                             </div>
                             <div class="mb-3">
                                 <label for="Id" class="form-label mx-1">Id</label>
-                                <input type="text" class="form-control mb-3" id="Id">
+                                <InputText type="text" class="form-control mb-3" id="Id" @bind-Value=Model.IdNumber />
                             </div>
                         </div>
                     </div>
-                </form>
+                </EditForm>
             </div>
         </div>
     </div>

@@ -14,18 +14,29 @@ namespace Models
         [Column(TypeName = "Varchar(10)")]
         public string AccountCode { get; set; }
 
+        [Required(ErrorMessage = "Full name is required")]
         public string FullName { get; set; }
 
+        [Required(ErrorMessage = "Age is required")]
+        [Range(18, 60, ErrorMessage = "Age must be between 18 and 60")]
         public int Age { get; set; }
 
+        [Required(ErrorMessage = "Phone number is required")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Phone number does not include letters, special characters")]
+        [StringLength(10, ErrorMessage = "Phone number must be 10 digits", MinimumLength = 10)]
         [Column(TypeName = "Char(10)")]
         public string PhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Id number is required")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Id number does not include letters, special characters")]
+        [StringLength(12, ErrorMessage = "Id number must be 12 digits", MinimumLength = 12)]
         [Column(TypeName = "Char(12)")]
         public string IdNumber { get; set; }
 
+        [Required(ErrorMessage = "Living at is required")]
         public string LivingAt { get; set; }
 
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
         [Column(TypeName = "Varchar(10)")]
@@ -49,5 +60,13 @@ namespace Models
         //public Salary? salary { get; set; }
 
         //public ICollection<EmployeeSalary>? employeeSalaries { get; set; }
+
+        [NotMapped]
+        [Required(ErrorMessage = "Role is required")]
+        public string GetRoleName { get; set; }
+
+        [NotMapped]
+        [Required(ErrorMessage = "Salary type is required")]
+        public string GetSalaryType { get; set; }
     }
 }
