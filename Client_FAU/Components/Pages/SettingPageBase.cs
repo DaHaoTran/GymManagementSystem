@@ -1,4 +1,5 @@
 ﻿using Client_FAU.Business.Interfaces;
+using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Models;
@@ -19,13 +20,12 @@ namespace Client_FAU.Components.Pages
         protected ServicePackage? Model2 { get; set; } = new();
 
         protected List<ServicePackage>? servicePackages;
-        protected string sessionName2 = "servicePackages";
         protected bool isLoading2 = false;
         protected string message2 = string.Empty;
 
         protected async Task LoadServicePackageList()
         {
-            var data = HttpContextAccessor2!.HttpContext!.Session.GetString(sessionName2);
+            var data = HttpContextAccessor2!.HttpContext!.Session.GetString(SessionNames.ServicePackages);
             if (data != null)
             {
                 servicePackages = JsonConvert.DeserializeObject<List<ServicePackage>>(data);
@@ -33,7 +33,7 @@ namespace Client_FAU.Components.Pages
             }
             var getServicePackages = await SPBsn!.GetServicePackageList(12);
             servicePackages = getServicePackages;
-            HttpContextAccessor2!.HttpContext!.Session.SetString(sessionName2, JsonConvert.SerializeObject(getServicePackages));
+            HttpContextAccessor2!.HttpContext!.Session.SetString(SessionNames.ServicePackages, JsonConvert.SerializeObject(getServicePackages));
         }
 
         protected void ClearForm2() => Model2 = new();
@@ -77,7 +77,7 @@ namespace Client_FAU.Components.Pages
             isLoading2 = true;
 
             //Get the service packages from the session and check if the service package is not null and has changed
-            var sessionSPs = HttpContextAccessor2!.HttpContext!.Session.GetString(sessionName2);
+            var sessionSPs = HttpContextAccessor2!.HttpContext!.Session.GetString(SessionNames.ServicePackages);
             if (sessionSPs != null)
             {
                 var temSPs = JsonConvert.DeserializeObject<List<ServicePackage>>(sessionSPs);
@@ -138,7 +138,7 @@ namespace Client_FAU.Components.Pages
                 servicePackages[index] = servicePackage;
             }
 
-            HttpContextAccessor2!.HttpContext!.Session.SetString(sessionName2, JsonConvert.SerializeObject(servicePackages));
+            HttpContextAccessor2!.HttpContext!.Session.SetString(SessionNames.ServicePackages, JsonConvert.SerializeObject(servicePackages));
         }
     }
 }

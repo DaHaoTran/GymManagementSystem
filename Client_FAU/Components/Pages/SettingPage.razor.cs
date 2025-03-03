@@ -1,4 +1,5 @@
 ﻿using Client_FAU.Business.Interfaces;
+using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -24,7 +25,6 @@ namespace Client_FAU.Components.Pages
         private Salary? Model { get; set; } = new();
 
         private List<Salary>? salaries;
-        private string sessionName = "salaries";
         private string message = string.Empty;
         private bool isLoading = false;
 
@@ -40,7 +40,7 @@ namespace Client_FAU.Components.Pages
 
         private async Task LoadSalaryList()
         {
-            var data = HttpContextAccessor!.HttpContext!.Session.GetString(sessionName);
+            var data = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Salaries);
             if(data!= null)
             {
                 salaries = JsonConvert.DeserializeObject<List<Salary>>(data);
@@ -48,7 +48,7 @@ namespace Client_FAU.Components.Pages
             }
             var getSalaries = await SalaryBsn!.GetSalaryList(12);
             salaries = getSalaries;
-            HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(getSalaries));
+            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Salaries, JsonConvert.SerializeObject(getSalaries));
         }
 
         private void ClearForm() => Model = new();
@@ -92,7 +92,7 @@ namespace Client_FAU.Components.Pages
             isLoading = true;
 
             //Get the salaries from session and check if the values salary
-            var sessionSalaries = HttpContextAccessor!.HttpContext!.Session.GetString(sessionName);
+            var sessionSalaries = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Salaries);
             if(sessionSalaries != null)
             {
                 var temSalaries  = JsonConvert.DeserializeObject<List<Salary>>(sessionSalaries);
@@ -179,7 +179,7 @@ namespace Client_FAU.Components.Pages
                 salaries[index] = salary;
             }
 
-            HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(salaries));
+            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Salaries, JsonConvert.SerializeObject(salaries));
         }
 
         private void RemoveSalariesFromData(Salary salary)
@@ -188,7 +188,7 @@ namespace Client_FAU.Components.Pages
             var getSalary = salaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
             if (getSalary == null || getSalary == default) { return; }
             salaries!.Remove(getSalary);
-            HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(salaries));
+            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Salaries, JsonConvert.SerializeObject(salaries));
         }
 
         private void ShowInvalidMessage()
