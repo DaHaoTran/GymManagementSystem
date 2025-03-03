@@ -36,6 +36,7 @@ namespace API.Migrations
 
                     b.Property<string>("IdNumber")
                         .IsRequired()
+                        .HasMaxLength(12)
                         .HasColumnType("Char(12)");
 
                     b.Property<bool>("IsDeleted")
@@ -51,6 +52,7 @@ namespace API.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("Char(10)");
 
                     b.Property<int>("RoleId")
@@ -68,8 +70,7 @@ namespace API.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("SalaryCode")
-                        .IsUnique();
+                    b.HasIndex("SalaryCode");
 
                     b.ToTable("Accounts");
                 });
@@ -403,8 +404,8 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.HasOne("Models.Salary", "salary")
-                        .WithOne("account")
-                        .HasForeignKey("Models.Account", "SalaryCode")
+                        .WithMany("account")
+                        .HasForeignKey("SalaryCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

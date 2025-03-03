@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class GymlgDB : Migration
+    public partial class GymLGDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,8 +62,8 @@ namespace API.Migrations
                     AccountCode = table.Column<string>(type: "Varchar(10)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "Char(10)", nullable: false),
-                    IdNumber = table.Column<string>(type: "Char(12)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "Char(10)", maxLength: 10, nullable: false),
+                    IdNumber = table.Column<string>(type: "Char(12)", maxLength: 12, nullable: false),
                     LivingAt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdateBy = table.Column<string>(type: "Varchar(10)", nullable: false),
@@ -269,8 +269,7 @@ namespace API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_SalaryCode",
                 table: "Accounts",
-                column: "SalaryCode",
-                unique: true);
+                column: "SalaryCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Branches_AdminUpdate",
