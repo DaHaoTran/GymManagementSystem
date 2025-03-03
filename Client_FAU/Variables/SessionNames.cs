@@ -7,5 +7,7 @@
         public static string Salaries = "salaries";
 
         public static string ServicePackages = "servicePackages";
+
+        public static string Accounts = "accounts";
     }
 }
