@@ -5,7 +5,7 @@
 
 <div class="row mt-3">
     <div class="col-6">
-        <button class="btn w-25" data-bs-toggle="modal" data-bs-target="#editmodal">+</button>
+        <button class="btn w-25" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick=SetAddState>+</button>
     </div>
     <div class="d-flex justify-content-end col-6">
         <input type="text" class="form-control me-3" />
@@ -43,7 +43,7 @@
     {
         foreach(var account in accounts)
         {
-            <div class="nav-link link-dark col-3 mb-5 account" data-bs-toggle="modal" data-bs-target="#@account.AccountCode">
+            <div class="nav-link link-dark col-3 mb-5 account">
                 <div class="head-container d-grid">
                     <div class="role">
                         @{
@@ -55,11 +55,27 @@
                         <h4 class="fw-bolder">@account.AccountCode.Substring(0, 2)..</h4>
                     </div>
                 </div>
-                <div class="w-100">
-                    <img class="w-100" src="./images/user.png" alt="A User" />
+                <div class="w-100" data-bs-toggle="modal" data-bs-target="#@account.AccountCode">
+                    @if (account.IsDeleted)
+                    {
+                        <img class="w-100" src="./images/user_unactive.png" alt="A User" />
+                    }else
+                    {
+                        <img class="w-100" src="./images/user.png" alt="A User" />
+                    }
                 </div>
                 <div class="user-name text-center mt-3">
                     <h4 class="fw-bolder">@account.FullName</h4>
+                </div>
+                <div class="input-check form-switch d-flex justify-content-center">
+                    @if (account.IsDeleted)
+                    {
+                        <input class="form-check-input w-50" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked @onchange="() => EditAccountStateDataBase(account)">
+                    }
+                    else
+                    {
+                        <input class="form-check-input w-50" type="checkbox" role="switch" id="flexSwitchCheckChecked" @onchange="() => EditAccountStateDataBase(account)">
+                    }
                 </div>
             </div>
             <!-- detail modal -->
@@ -67,7 +83,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content bg-transparent">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Account Detail</h1>
+                            <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Account Detail</h1>
                         </div>
                         <div class="modal-body d-flex justify-content-center align-items-center">
                             <div class="card card-body user-detail">
@@ -89,19 +105,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row col-1 d-grid a-container">
-                                        <div class="delete d-flex justify-content-center align-items-center col-12">
-                                            <a class="image w-100">
-                                                <img class="w-100" src="images/trash.png" alt="Trash" />
-                                            </a>
-                                        </div>
-
-                                        <div class="edit d-flex justify-content-center align-items-center col-12">
-                                            <a class="image w-100" data-bs-toggle="modal" data-bs-target="#editmodal">
+                                    @if (account.IsDeleted == false)
+                                    {
+                                        <div class="col-1 a-container edit d-flex justify-content-center align-items-center">
+                                            <div class="image w-100" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick="() => SetModelEdit(account)">
                                                 <img class="w-100" src="images/edit.png" alt="Edit" />
-                                            </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -118,7 +129,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <EditForm Model=Model FormName="Edit Account" OnValidSubmit="AddAccountDataBase">
+                <EditForm Model=Model FormName="Edit Account" OnValidSubmit="UpdateAccountDataBase">
                     <DataAnnotationsValidator />
                     <div class="row">
                         <div class="col-6">
@@ -139,8 +150,8 @@
                                     <div class="col-8 d-flex align-items-center">
                                         <label for="Role" class="form-label mx-1">Role</label>
                                         <div class="input-group mb-3">
-                                            <InputSelect class="form-select" id="Role" @bind-Value=Model.GetRoleName >
-                                                <option selected>-- Choose --</option>
+                                            <InputSelect class="form-select" id="Role" @bind-Value=Model.GetRoleName>
+                                                <option value="" selected>-- Choose --</option>
                                                 @foreach (var role in roles!)
                                                 {
                                                     <option value="@role.RoleName">@role.RoleName</option>
@@ -153,7 +164,7 @@
                             <div class="mb-3 d-flex justify-content-start">
                                 <label for="Salary" class="form-label mx-1">Salary</label>
                                 <InputSelect class="form-select" id="Salary" @bind-Value=Model.GetSalaryType>
-                                    <option selected>-- Choose --</option>
+                                    <option value="" selected>-- Choose --</option>
                                     @foreach (var salary in salaries!)
                                     {
                                         <option value="@salary.SalaryType">@salary.SalaryType</option>

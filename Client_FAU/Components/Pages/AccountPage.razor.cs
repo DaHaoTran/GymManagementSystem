@@ -66,6 +66,35 @@ namespace Client_FAU.Components.Pages
             HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Accounts, JsonConvert.SerializeObject(getAccounts));
         }
 
+        private void SetModelState(ModalState.State state)
+        {
+            ModalState.current_state = state;
+        }
+
+        private void SetModelEdit(Account account)
+        {
+            Model!.AccountCode = account.AccountCode;
+            Model.FullName = account.FullName;
+            Model.IdNumber = account.IdNumber;
+            Model.RoleId = account.RoleId;
+            Model.Age = account.Age;
+            Model.PhoneNumber = account.PhoneNumber;
+            Model.LivingAt = account.LivingAt;
+            Model.Password = account.Password;
+            Model.UpdateBy = account.UpdateBy;
+            Model.SalaryCode = account.SalaryCode;
+            Model.IsDeleted = account.IsDeleted;
+            Model.GetRoleName = account.GetRoleName;
+            Model.GetSalaryType = account.GetSalaryType;
+            SetModelState(ModalState.State.Edit);
+        }
+
+        private void SetAddState()
+        {
+            Model = new();
+            SetModelState(ModalState.State.Add);
+        }
+
         private void SetAccountProperties()
         {
             Model!.AccountCode = Model.GetRoleName.Trim().Substring(0, 2).ToUpper();
@@ -93,6 +122,78 @@ namespace Client_FAU.Components.Pages
             Model.SalaryCode = getSalary.SalaryCode;
         }
 
+        private void SetAccountProperties2()
+        {
+            Model!.FullName = Model.FullName.Trim();
+            Model.PhoneNumber = Model.PhoneNumber.Trim();
+            Model.IdNumber = Model.IdNumber.Trim();
+            Model.LivingAt = Model.LivingAt.Trim();
+            SetPasswordModelWithChangedValue();
+            Model.UpdateBy = "AD00000001";
+
+            var getRole = roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
+            if (getRole == null || getRole == default)
+            {
+                message = "Role is missing !";
+                return;
+            }
+            Model.RoleId = getRole.OrderNumber;
+
+            var getSalary = salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
+            if (getSalary == null || getSalary == default)
+            {
+                message = "Salary type is missing !";
+                return;
+            }
+            Model.SalaryCode = getSalary.SalaryCode;
+        }
+
+        private void SetPasswordModelWithChangedValue()
+        {
+            var data = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Accounts);
+            if (data == null) { return; }
+
+            var getAccounts = JsonConvert.DeserializeObject<List<Account>>(data);
+            var getAccount = getAccounts!.Where(x => x.AccountCode == Model!.AccountCode).FirstOrDefault();
+            if (getAccount == null || getAccount == default) { return; }
+
+            if(Model!.Password == getAccount.Password) { return; }
+
+            if (getAccount.Password == PasswordManipulates.EncryptPassword(Model!.Password.Trim())) 
+            {
+                Model.Password = getAccount.Password;
+                return; 
+            }
+
+            Model.Password = PasswordManipulates.EncryptPassword(Model!.Password.Trim());
+
+        }
+
+        private async Task EditAccountStateDataBase(Account account)
+        {
+            account.IsDeleted = !account.IsDeleted;
+            isLoading = true;
+            try
+            {
+                var result = await AccountBsn!.EditAnExistAccount(account);
+                if (result != null)
+                {
+                    message = $"Edit {account.AccountCode} successfully !";
+                    UpdateAccountsData(result);
+                }
+                else
+                {
+                    message = $"Edit {account.AccountCode} failed. Problems arise !";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            ClearForm();
+            isLoading = false;
+        }
+
         private async Task AddAccountDataBase()
         {
             isLoading = true;
@@ -117,6 +218,47 @@ namespace Client_FAU.Components.Pages
             ClearForm();
             isLoading = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
+        }
+
+        private async Task EditAccountDataBase()
+        {
+            isLoading = true;
+            try
+            {
+                SetAccountProperties2();
+                var result = await AccountBsn!.EditAnExistAccount(Model!);
+                if (result != null)
+                {
+                    message = $"Edit {Model!.AccountCode} successfully !";
+                    UpdateAccountsData(result);
+                }
+                else
+                {
+                    message = $"Edit {Model!.AccountCode} failed. Problems arise !";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            ClearForm();
+            isLoading = false;
+            await JSRuntime!.InvokeVoidAsync("CloseEditModal");
+        }
+
+        private async Task UpdateAccountDataBase()
+        {
+            switch(ModalState.current_state)
+            {
+                case ModalState.State.Add:
+                    await AddAccountDataBase();
+                    break;
+                case ModalState.State.Edit:
+                    await EditAccountDataBase();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void UpdateAccountsData(Account account)

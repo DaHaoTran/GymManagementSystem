@@ -50,7 +50,7 @@ label {
 }
 
 .edit {
-    border-radius: 0 0 10px 0;
+    border-radius: 0 10px 10px 0;
     background-color: #00FF4F !important;
 }
 
@@ -64,4 +64,13 @@ a:hover {
 
 .sub-detail {
     font-size: 18px !important;
-} 
+}
+
+.form-check-input {
+    height: 4vh;
+}
+
+.form-switch {
+    position: relative;
+    opacity: 1;
+}
