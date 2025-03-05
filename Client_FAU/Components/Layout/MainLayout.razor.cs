@@ -23,7 +23,13 @@ namespace Client_FAU.Components.Layout
         {
             if(firstRender)
             {
-                await LocalStorage!.ClearAsync();
+                //Clear session storage for the first load
+                if (Load.IsFirstLoad)
+                {
+                    await LocalStorage!.ClearAsync();
+                    Load.IsFirstLoad = false;
+                }
+
                 await GetRoleList();
                 await GetSalaryList();
                 await GetServicePackageList();

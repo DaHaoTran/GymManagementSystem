@@ -290,7 +290,7 @@ namespace Client_FAU.Components.Pages
                 accounts[index] = account;
             }
 
-            await LocalStorage!.SetItemAsync(SessionNames.Accounts, JsonConvert.SerializeObject(accounts));
+            await LocalStorage!.SetItemAsync(SessionNames.Accounts, accounts);
         }
     }
 }
