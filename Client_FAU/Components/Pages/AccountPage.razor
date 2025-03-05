@@ -69,13 +69,16 @@
                     <h4 class="fw-bolder">@account.FullName</h4>
                 </div>
                 <div class="input-check form-switch d-flex justify-content-center">
-                    @if (account.IsDeleted)
+                    @if(!Load.IsLoading)
                     {
-                        <input class="form-check-input w-50" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked @onchange="() => EditAccountStateDataBase(account)">
-                    }
-                    else
-                    {
-                        <input class="form-check-input w-50" type="checkbox" role="switch" id="flexSwitchCheckChecked" @onchange="() => EditAccountStateDataBase(account)">
+                        @if (account.IsDeleted)
+                        {
+                            <input class="form-check-input w-50" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked @onchange="() => EditAccountStateDataBase(account)">
+                        }
+                        else
+                        {
+                            <input class="form-check-input w-50" type="checkbox" role="switch" id="flexSwitchCheckChecked" @onchange="() => EditAccountStateDataBase(account)">
+                        }
                     }
                 </div>
             </div>

@@ -148,7 +148,6 @@ namespace Client_FAU.Components.Pages
             ClearForm();
             Thread.Sleep(500);
             Load.IsLoading  = false;
-            StateHasChanged();
         }
 
         private async Task AddAccountDataBase()
@@ -176,7 +175,6 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
-            StateHasChanged();
         }
 
         private async Task EditAccountDataBase()
@@ -204,7 +202,6 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
-            StateHasChanged();
         }
 
         private async Task UpdateAccountDataBase()
