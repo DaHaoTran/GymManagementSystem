@@ -15,64 +15,13 @@ namespace Client_FAU.Components.Pages
         [Inject]
         private Account_Int? AccountBsn { get; set; }
         [Inject]
-        private ILocalStorageService? LocalStorage { get; set; }
-        [Inject]
         private IJSRuntime? JSRuntime { get; set; }
         [SupplyParameterFromForm]
         private Account? Model { get; set; } = new();
 
-        private IEnumerable<Role>? roles = new List<Role>();
-        private IEnumerable<Salary>? salaries = new List<Salary>();
-        private List<Account>? accounts;
         private string message = string.Empty;
 
-        protected override void OnInitialized()
-        {
-            Load.IsLoading = true;
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if(firstRender)
-            {
-                await LoadAccountList();
-                await LoadRoleList();
-                await LoadSalaryList();
-
-                Thread.Sleep(1000);
-                Load.IsLoading = false;
-                StateHasChanged();
-            }
-        }
-
         private void ClearForm() => Model = new();
-
-        private async Task LoadRoleList()
-        {
-            var data = await LocalStorage!.GetItemAsync<IEnumerable<Role>>(SessionNames.Roles);
-            if(data == null) { return; }
-            roles = data;
-        }
-
-        private async Task LoadSalaryList()
-        {
-            var data = await LocalStorage!.GetItemAsync<IEnumerable<Salary>>(SessionNames.Salaries);
-            if (data == null) { return; }
-            salaries = data;
-        }
-
-        private async Task LoadAccountList()
-        {
-            var data = await LocalStorage!.GetItemAsync<List<Account>>(SessionNames.Accounts);
-            if(data != null)
-            {
-                accounts = data;
-                return;
-            }
-            var getAccounts = await AccountBsn!.GetAccountList(9);
-            accounts = getAccounts;
-            await LocalStorage.SetItemAsync(SessionNames.Accounts, getAccounts);
-        }
 
         private void SetModelState(ModalState.State state)
         {
@@ -113,7 +62,7 @@ namespace Client_FAU.Components.Pages
             Model.Password = PasswordManipulates.EncryptPassword(Model.Password.Trim());
             Model.UpdateBy = "AD00000001";
 
-            var getRole = roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
+            var getRole = Lists.roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
             if(getRole == null || getRole == default) 
             {
                 message = "Role is missing !";
@@ -121,7 +70,7 @@ namespace Client_FAU.Components.Pages
             }
             Model.RoleId = getRole.OrderNumber;
 
-            var getSalary = salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
+            var getSalary = Lists.salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
             if (getSalary == null || getSalary == default)
             {
                 message = "Salary type is missing !";
@@ -130,16 +79,16 @@ namespace Client_FAU.Components.Pages
             Model.SalaryCode = getSalary.SalaryCode;
         }
 
-        private async Task SetAccountProperties2()
+        private void SetAccountProperties2()
         {
             Model!.FullName = Model.FullName.Trim();
             Model.PhoneNumber = Model.PhoneNumber.Trim();
             Model.IdNumber = Model.IdNumber.Trim();
             Model.LivingAt = Model.LivingAt.Trim();
-            await SetPasswordModelWithChangedValue();
+            SetPasswordModelWithChangedValue();
             Model.UpdateBy = "AD00000001";
 
-            var getRole = roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
+            var getRole = Lists.roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
             if (getRole == null || getRole == default)
             {
                 message = "Role is missing !";
@@ -147,7 +96,7 @@ namespace Client_FAU.Components.Pages
             }
             Model.RoleId = getRole.OrderNumber;
 
-            var getSalary = salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
+            var getSalary = Lists.salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
             if (getSalary == null || getSalary == default)
             {
                 message = "Salary type is missing !";
@@ -156,13 +105,11 @@ namespace Client_FAU.Components.Pages
             Model.SalaryCode = getSalary.SalaryCode;
         }
 
-        private async Task SetPasswordModelWithChangedValue()
+        private void SetPasswordModelWithChangedValue()
         {
-            var data = await LocalStorage!.GetItemAsync<List<Account>>(SessionNames.Accounts);
-            if (data == null) { return; }
+            if (Lists.accounts == null) { return; }
 
-            var getAccounts = data;
-            var getAccount = getAccounts!.Where(x => x.AccountCode == Model!.AccountCode).FirstOrDefault();
+            var getAccount = Lists.accounts.Where(x => x.AccountCode == Model!.AccountCode).FirstOrDefault();
             if (getAccount == null || getAccount == default) { return; }
 
             if(Model!.Password == getAccount.Password) { return; }
@@ -187,7 +134,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message = $"Edit {account.AccountCode} successfully !";
-                    await UpdateAccountsData(result);
+                    UpdateAccountsData(result);
                 }
                 else
                 {
@@ -214,7 +161,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message = "Add new account successfully !";
-                    await UpdateAccountsData(result);
+                    UpdateAccountsData(result);
                 }
                 else
                 {
@@ -237,12 +184,12 @@ namespace Client_FAU.Components.Pages
             Load.IsLoading  = true;
             try
             {
-                await SetAccountProperties2();
+                SetAccountProperties2();
                 var result = await AccountBsn!.EditAnExistAccount(Model!);
                 if (result != null)
                 {
                     message = $"Edit {Model!.AccountCode} successfully !";
-                    await UpdateAccountsData(result);
+                    UpdateAccountsData(result);
                 }
                 else
                 {
@@ -275,22 +222,20 @@ namespace Client_FAU.Components.Pages
             }
         }
 
-        private async Task UpdateAccountsData(Account account)
+        private void UpdateAccountsData(Account account)
         {
             if(account == null) { return; }
-            var getAccount = accounts!.Where(x => x.AccountCode == account.AccountCode).FirstOrDefault();
+            var getAccount = Lists.accounts!.Where(x => x.AccountCode == account.AccountCode).FirstOrDefault();
             if(getAccount  == default || getAccount == null)
             {
-                accounts!.Insert(0, account);
-                if (accounts.Count() >= 9) { accounts.RemoveAt(accounts.Count() - 1); }
+                Lists.accounts!.Insert(0, account);
+                if (Lists.accounts.Count() >= 9) { Lists.accounts.RemoveAt(Lists.accounts.Count() - 1); }
             }
             else
             {
-                var index = accounts!.IndexOf(getAccount);
-                accounts[index] = account;
+                var index = Lists.accounts!.IndexOf(getAccount);
+                Lists.accounts[index] = account;
             }
-
-            await LocalStorage!.SetItemAsync(SessionNames.Accounts, accounts);
         }
     }
 }

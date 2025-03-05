@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Models;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Client_FAU.Components.Layout
 {
@@ -17,49 +18,52 @@ namespace Client_FAU.Components.Layout
         [Inject]
         private ServicePackage_Int? SPBsn { get; set; }
         [Inject]
-        private ILocalStorageService? LocalStorage { get; set; }
+        private Account_Int? AccountBsn { get; set; }
+        [Inject]
+        private Branch_Int? BranchBsn { get; set; }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnInitializedAsync()
         {
-            if(firstRender)
-            {
-                //Clear session storage for the first load
-                if (Load.IsFirstLoad)
-                {
-                    await LocalStorage!.ClearAsync();
-                    Load.IsFirstLoad = false;
-                }
-
-                await GetRoleList();
-                await GetSalaryList();
-                await GetServicePackageList();
-                StateHasChanged();
-            }
+            await GetBranchList();
+            await GetRoleList();
+            await GetSalaryList();
+            await GetServicePackageList();
+            await GetAccountList();
         }
 
         private async Task GetRoleList()
         {
-            var data = await LocalStorage!.GetItemAsync<List<Role>>(SessionNames.Roles);
-            if(data != null) { return; }
-
-            var roles = await RoleBsn!.GetRoleList(0);
-            await LocalStorage.SetItemAsync(SessionNames.Roles, roles);
+            if(Lists.roles.Count() > 0) { return; }
+            var getRoles = await RoleBsn!.GetRoleList(0);
+            Lists.roles = getRoles;
         }
 
         private async Task GetSalaryList()
         {
-            var data = await LocalStorage!.GetItemAsync<List<Salary>>(SessionNames.Salaries);
-            if (data != null) { return; }
-            var salaries = await SalaryBsn!.GetSalaryList(0);
-            await LocalStorage.SetItemAsync(SessionNames.Salaries, salaries);
+            if (Lists.salaries.Count() > 0) { return; }
+            var getSalaries = await SalaryBsn!.GetSalaryList(0);
+            Lists.salaries = getSalaries;
         }
 
         private async Task GetServicePackageList()
         {
-            var data = await LocalStorage!.GetItemAsync<List<ServicePackage>>(SessionNames.ServicePackages);
-            if (data != null) { return; }
-            var servicePackages = await SPBsn!.GetServicePackageList(0);
-            await LocalStorage.SetItemAsync(SessionNames.ServicePackages, servicePackages);
+            if (Lists.servicePackages.Count() > 0) { return; }
+            var getSPs = await SPBsn!.GetServicePackageList(0);
+            Lists.servicePackages = getSPs;
+        }
+
+        private async Task GetAccountList()
+        {
+            if (Lists.accounts.Count() > 0) { return; }
+            var getAccounts = await AccountBsn!.GetAccountList(9);
+            Lists.accounts = getAccounts;
+        }
+
+        private async Task GetBranchList()
+        {
+            if (Lists.branches != null) { return; }
+            var getBranches = await BranchBsn!.GetBranchList(9);
+            Lists.branches = getBranches;
         }
     }
 }

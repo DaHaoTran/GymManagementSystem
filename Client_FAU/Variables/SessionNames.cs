@@ -9,5 +9,7 @@
         public static string ServicePackages = "servicePackages";
 
         public static string Accounts = "accounts";
+
+        public static string sessionName = "branches";
     }
 }

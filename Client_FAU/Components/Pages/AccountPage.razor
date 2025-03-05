@@ -33,22 +33,22 @@
 
 <!-- detail -->
 <div class="row mt-5">
-    @if (accounts == null)
+    @if (Lists.accounts == null)
     {
         <h5>There are a problem !</h5>
-    } else if(accounts.Count() <= 0)
+    } else if(Lists.accounts.Count() <= 0)
     {
         <h5>There are no record to display</h5>
     }
     else
     {
-        foreach(var account in accounts)
+        foreach(var account in Lists.accounts)
         {
             <div class="nav-link link-dark col-3 mb-5 account">
                 <div class="head-container d-grid">
                     <div class="role">
                         @{
-                            account.GetRoleName = roles!.Where(x => x.OrderNumber == account.RoleId).FirstOrDefault()!.RoleName;
+                            account.GetRoleName = Lists.roles!.Where(x => x.OrderNumber == account.RoleId).FirstOrDefault()!.RoleName;
                         }
                         <h4 class="fw-bolder">@account.GetRoleName.Substring(0, 2)</h4>
                     </div>
@@ -98,7 +98,7 @@
                                             <div class="text-start col-12">Phone number: <span class="sub-detail">@account.PhoneNumber</span></div>
                                             <div class="text-start col-12">Id: <span class="sub-detail">@account.IdNumber</span></div>
                                             @{
-                                                account.GetSalaryType = salaries!.Where(x => x.SalaryCode == account.SalaryCode).FirstOrDefault()!.SalaryType;
+                                                account.GetSalaryType = Lists.salaries!.Where(x => x.SalaryCode == account.SalaryCode).FirstOrDefault()!.SalaryType;
                                             }
                                             <div class="text-start col-12">Salary type: <span class="sub-detail">@account.GetSalaryType</span></div>
 
@@ -153,7 +153,7 @@
                                         <div class="input-group mb-3">
                                             <InputSelect class="form-select" id="Role" @bind-Value=Model.GetRoleName>
                                                 <option value="" selected>-- Choose --</option>
-                                                @foreach (var role in roles!)
+                                                @foreach (var role in Lists.roles!)
                                                 {
                                                     <option value="@role.RoleName">@role.RoleName</option>
                                                 }
@@ -166,7 +166,7 @@
                                 <label for="Salary" class="form-label mx-1">Salary</label>
                                 <InputSelect class="form-select" id="Salary" @bind-Value=Model.GetSalaryType>
                                     <option value="" selected>-- Choose --</option>
-                                    @foreach (var salary in salaries!)
+                                    @foreach (var salary in Lists.salaries!)
                                     {
                                         <option value="@salary.SalaryType">@salary.SalaryType</option>
                                     }

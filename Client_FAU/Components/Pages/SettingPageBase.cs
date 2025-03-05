@@ -14,27 +14,11 @@ namespace Client_FAU.Components.Pages
         [Inject]
         protected ServicePackage_Int? SPBsn { get; set; }
         [Inject]
-        protected ILocalStorageService? LocalStorage2 { get; set; }
-        [Inject]
         protected IJSRuntime? JSRuntime2 { get; set; }
         [SupplyParameterFromForm]
         protected ServicePackage? Model2 { get; set; } = new();
 
-        protected List<ServicePackage>? servicePackages;
         protected string message2 = string.Empty;
-
-        protected async Task LoadServicePackageList()
-        {
-            var data = await LocalStorage2!.GetItemAsync<List<ServicePackage>>(SessionNames.ServicePackages);
-            if (data != null)
-            {
-                servicePackages = data;
-                return;
-            }
-            var getServicePackages = await SPBsn!.GetServicePackageList(0);
-            servicePackages = getServicePackages;
-            await LocalStorage2.SetItemAsync(SessionNames.ServicePackages, getServicePackages);
-        }
 
         protected void ClearForm2() => Model2 = new();
 
@@ -57,7 +41,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message2 = "Add new service package successfully";
-                    await UpdateServicePackagesData(result);
+                    UpdateServicePackagesData(result);
                 }
                 else
                 {
@@ -78,12 +62,9 @@ namespace Client_FAU.Components.Pages
         {
             Load.IsLoading  = true;
 
-            //Get the service packages from the session and check if the service package is not null and has changed
-            var data = await LocalStorage2!.GetItemAsync<List<ServicePackage>>(SessionNames.ServicePackages);
-            if (data != null)
+            if (Lists.servicePackages != null)
             {
-                var temSPs = data;
-                var getSP = temSPs!.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
+                var getSP = Lists.servicePackages.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
                 if (getSP != null || getSP != default)
                 {
                     if(getSP.IsDeleted != servicePackage.IsDeleted) { }
@@ -105,7 +86,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message2 = $"Edit {result.PackageCode} successfully";
-                    await UpdateServicePackagesData(result);
+                    UpdateServicePackagesData(result);
                 }
                 else
                 {
@@ -128,21 +109,19 @@ namespace Client_FAU.Components.Pages
             await EditServiceDataBase(servicePackage);
         }
 
-        protected async Task UpdateServicePackagesData(ServicePackage servicePackage)
+        protected void UpdateServicePackagesData(ServicePackage servicePackage)
         {
             if(servicePackage == null) { return; }
-            var getSP = servicePackages!.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
+            var getSP = Lists.servicePackages!.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
             if(getSP == default || getSP == null)
             {
-                servicePackages!.Insert(0, servicePackage);
+                Lists.servicePackages.Insert(0, servicePackage);
             }
             else
             {
-                int index = servicePackages!.IndexOf(getSP);
-                servicePackages[index] = servicePackage;
+                int index = Lists.servicePackages.IndexOf(getSP);
+                Lists.servicePackages[index] = servicePackage;
             }
-
-            await LocalStorage2!.SetItemAsync(SessionNames.ServicePackages, servicePackages);
         }
     }
 }

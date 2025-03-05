@@ -17,47 +17,13 @@ namespace Client_FAU.Components.Pages
         [Inject]
         private Salary_Int? SalaryBsn { get; set; }
         [Inject]
-        private ILocalStorageService? LocalStorage { get; set; }
-        [Inject]
         private IJSRuntime? JSRuntime { get; set; }
         [Inject]
         private ISweetAlertService? Swal { get; set; }
         [SupplyParameterFromForm]
         private Salary? Model { get; set; } = new();
 
-        private List<Salary>? salaries;
         private string message = string.Empty;
-
-        protected override void OnInitialized()
-        {
-            Load.IsLoading = true;
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if(firstRender)
-            {
-                await LoadSalaryList();
-                await LoadServicePackageList();
-
-                Thread.Sleep(1000);
-                Load.IsLoading = false;
-                StateHasChanged();
-            }
-        }
-
-        private async Task LoadSalaryList()
-        {
-            var data = await LocalStorage!.GetItemAsync<List<Salary>>(SessionNames.Salaries);
-            if(data!= null)
-            {
-                salaries = data;
-                return;
-            }
-            var getSalaries = await SalaryBsn!.GetSalaryList(0);
-            salaries = getSalaries;
-            await LocalStorage.SetItemAsync(SessionNames.Salaries, getSalaries);
-        }
 
         private void ClearForm() => Model = new();
 
@@ -80,7 +46,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message = "Add new salary successfully";
-                    await UpdateSalariesData(result);
+                    UpdateSalariesData(result);
                 }
                 else
                 {
@@ -101,12 +67,9 @@ namespace Client_FAU.Components.Pages
         {
             Load.IsLoading  = true;
 
-            //Get the salaries from session and check if the values salary
-            var data = await LocalStorage!.GetItemAsync<List<Salary>>(SessionNames.Salaries);
-            if(data != null)
+            if(Lists.salaries != null)
             {
-                var temSalaries = data;
-                var getSalary = temSalaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
+                var getSalary = Lists.salaries.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
                 if (getSalary != null)
                 {
                     if(getSalary.PricesApply == salary.PricesApply)
@@ -125,7 +88,7 @@ namespace Client_FAU.Components.Pages
                 if(result != null)
                 {
                     message = $"Edit {salary.SalaryType} Successfully";
-                    await UpdateSalariesData(salary);
+                    UpdateSalariesData(salary);
                 }
                 else
                 {
@@ -162,7 +125,7 @@ namespace Client_FAU.Components.Pages
                     if (result != null)
                     {
                         message = $"Delete {result.SalaryType} Successfully";
-                        await RemoveSalariesFromData(result);
+                        RemoveSalariesFromData(result);
                     }
                     else
                     {
@@ -179,30 +142,27 @@ namespace Client_FAU.Components.Pages
             }
         }
 
-        private async Task UpdateSalariesData(Salary salary)
+        private void UpdateSalariesData(Salary salary)
         {
             if(salary == null) { return; }
-            var getSalary = salaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
+            var getSalary = Lists.salaries.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
             if(getSalary == default || getSalary == null)
             {
-                salaries!.Insert(0, salary);
+                Lists.salaries.Insert(0, salary);
             }
             else
             {
-                int index = salaries!.IndexOf(getSalary);
-                salaries[index] = salary;
+                int index = Lists.salaries.IndexOf(getSalary);
+                Lists.salaries[index] = salary;
             }
-
-            await LocalStorage!.SetItemAsync(SessionNames.Salaries, salaries);
         }
 
-        private async Task RemoveSalariesFromData(Salary salary)
+        private void RemoveSalariesFromData(Salary salary)
         {
             if (salary == null) { return; }
-            var getSalary = salaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
+            var getSalary = Lists.salaries.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
             if (getSalary == null || getSalary == default) { return; }
-            salaries!.Remove(getSalary);
-            await LocalStorage!.SetItemAsync(SessionNames.Salaries, salaries);
+            Lists.salaries.Remove(getSalary);
         }
 
         private void ShowInvalidMessage()

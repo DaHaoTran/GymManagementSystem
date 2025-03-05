@@ -38,11 +38,11 @@
     <!-- salary tab -->
     <div class="tab-pane fade show active" id="pills-salary" role="tabpanel" aria-labelledby="pills-salary-tab" tabindex="0">
         <div class="row mb-5">
-            @if(salaries == null) { <h5>There are a problem !</h5>} 
-            else if(salaries.Count() <= 0) {<h5>There are no record to display</h5>}
+            @if(Lists.salaries == null) { <h5>There are a problem !</h5>} 
+            else if(Lists.salaries.Count() <= 0) {<h5>There are no record to display</h5>}
             else
             {
-                @foreach(var salary in salaries)
+                @foreach(var salary in Lists.salaries)
                 {
                     <div class="setting col-6 my-3 mx-4">
                         <div class="row">
@@ -119,17 +119,17 @@
     <!-- service tab -->
     <div class="tab-pane fade" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab" tabindex="1">
         <div class="row mb-5">
-            @if (servicePackages == null)
+            @if (Lists.servicePackages == null)
             {
                 <h5>There are a problem !</h5>
             }
-            else if (servicePackages.Count() <= 0)
+            else if (Lists.servicePackages.Count() <= 0)
             {
                 <h5>There are no record to display</h5>
             }
             else
             {
-                @foreach(var service in servicePackages)
+                @foreach(var service in Lists.servicePackages)
                 {
                     <div class="setting col-6 my-3 mx-4">
                         <div class="title2 row">

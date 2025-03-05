@@ -15,35 +15,10 @@ namespace Client_FAU.Components.Pages
     {
         [Inject]
         private Branch_Int? BranchBsn { get; set; }
-        [Inject]
-        private ILocalStorageService? LocalStorage { get; set; }
         [SupplyParameterFromForm]
         private Branch? Model { get; set; } = new();
 
-        private List<Branch>? branches;
-        private static string sessionName = "branches";
         private string message = string.Empty;
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if(firstRender)
-            {
-                await LoadBranchList();
-            }
-        }
-
-        private async Task LoadBranchList()
-        {
-            var data = await LocalStorage!.GetItemAsync<List<Branch>>(sessionName);
-            if(data != null) 
-            {
-                branches = data;
-                return;
-            }
-            var getBranches = await BranchBsn!.GetBranchList(12);
-            branches = getBranches;
-            await LocalStorage.SetItemAsync(sessionName, getBranches);
-        }
 
         private void ClearForm() => Model = new();
 
@@ -84,7 +59,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message = "Add new Branch Successfully";
-                    await UpdateData(result);
+                    UpdateBranchData(result);
                 }
                 else
                 {
@@ -98,20 +73,18 @@ namespace Client_FAU.Components.Pages
             ClearForm();
         }
 
-        private async Task UpdateData(Branch branch)
+        private void UpdateBranchData(Branch branch)
         {
-            if(branches == null) { return; }
-            var getBranch = branches.Where(x => x.BranchCode == branch.BranchCode).FirstOrDefault();
+            if(Lists.branches == null) { return; }
+            var getBranch = Lists.branches.Where(x => x.BranchCode == branch.BranchCode).FirstOrDefault();
             if(getBranch == default || getBranch == null)
             {
-                branches.Insert(0, branch);
+                Lists.branches.Insert(0, branch);
             } else
             {
-                int index = branches.IndexOf(getBranch);
-                branches[index] = branch;
+                int index = Lists.branches.IndexOf(getBranch);
+                Lists.branches[index] = branch;
             }
-
-            await LocalStorage!.SetItemAsync(sessionName, branches);
         }
 
         private void ShowInvalidMessage()

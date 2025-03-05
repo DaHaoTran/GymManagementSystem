@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Client_FAU.Variables
 @using Microsoft.AspNetCore.Antiforgery
 @attribute [RequireAntiforgeryToken(required: true)]
 @using System.ComponentModel.DataAnnotations
@@ -17,7 +18,7 @@
     </div>
 }
 
-@if(branches != null)
+@if(Lists.branches != null)
 {
     <div class="row mt-3">
         <div class="col-6">
@@ -32,10 +33,10 @@
 }
 
 <div class="row mt-5">
-    @if (branches == null) { <h5>There are a problem !</h5>}
-    else if(branches.Count() <= 0) {<h5>There are no record to display</h5>}
+    @if (Lists.branches == null) { <h5>There are a problem !</h5>}
+    else if(Lists.branches.Count() <= 0) {<h5>There are no record to display</h5>}
     else {
-        foreach (var branch in branches)
+        foreach (var branch in Lists.branches)
         {
             <div class="nav-link link-dark col-3 branch" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
                 <div class="head-container d-grid">
