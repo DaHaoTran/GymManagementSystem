@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface Branch_Int
     {
-        Task<List<Branch>> GetBranchList();
+        Task<List<Branch>> GetBranchList(int limit);
         Task<Branch> GetTheBranchByBranchCode(string branchCode);
         Task<List<Branch>> GetTheBranchesByBranchName(string branchName);
         Task<List<Branch>> GetTheBranchesByAddress(string address);

@@ -50,9 +50,10 @@ namespace API.Services.Implements
             return getFine;
         }
 
-        public async Task<List<Fine>> GetFineList()
+        public async Task<List<Fine>> GetFineList(int limit)
         {
-            return await _dBContext.Fines.ToListAsync();
+            if(limit <= 0) { return await _dBContext.Fines.ToListAsync(); }
+            return await _dBContext.Fines.Take(limit).ToListAsync();
         }
 
         public async Task<Fine> GetTheFineByFineCode(Guid fineCode)

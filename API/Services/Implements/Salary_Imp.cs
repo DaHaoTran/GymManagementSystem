@@ -46,9 +46,10 @@ namespace API.Services.Implements
             return getSalary;
         }
 
-        public async Task<List<Salary>> GetSalaryList()
+        public async Task<List<Salary>> GetSalaryList(int limit)
         {
-            return await _dBContext.Salaries.ToListAsync();
+            if(limit <= 0) { return await _dBContext.Salaries.ToListAsync(); }
+            return await _dBContext.Salaries.Take(limit).ToListAsync();
         }
 
         public async Task<Salary> GetTheSalaryBySalaryCode(string salaryCode)

@@ -43,9 +43,10 @@ namespace API.Services.Implements
             return getCustomer;
         }
 
-        public async Task<List<Customer>> GetCustomerList()
+        public async Task<List<Customer>> GetCustomerList(int limit)
         {
-            return await _dBContext.Customers.ToListAsync();
+            if(limit <= 0) { return await _dBContext.Customers.ToListAsync(); }
+            return await _dBContext.Customers.Take(limit).ToListAsync();
         }
 
         public async Task<Customer> GetTheCustomerByCustomerCode(string customerCode)

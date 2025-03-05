@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface Fine_Int
     {
-        Task<List<Fine>> GetFineList();
+        Task<List<Fine>> GetFineList(int limit);
         Task<Fine> GetTheFineByFineCode(Guid fineCode);
         Task<List<Fine>> GetTheFinesByCustomerCode(string customerCode);
         Task<Fine> AddANewFine(Fine fine);

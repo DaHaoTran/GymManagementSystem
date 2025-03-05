@@ -54,9 +54,10 @@ namespace API.Services.Implements
             return getBranch;
         }
 
-        public async Task<List<Branch>> GetBranchList()
+        public async Task<List<Branch>> GetBranchList(int limit)
         {
-            return await _dBContext.Branches.ToListAsync();
+            if(limit <= 0) { return await _dBContext.Branches.ToListAsync(); }
+            return await _dBContext.Branches.Take(limit).ToListAsync();
         }
 
         public async Task<Branch> GetTheBranchByBranchCode(string branchCode)

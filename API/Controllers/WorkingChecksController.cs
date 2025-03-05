@@ -24,9 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<WorkingCheck>> GetWorkingCheckList([FromQuery] string sort, [FromQuery] int limit)
         {
-            IEnumerable<WorkingCheck> workingChecks = await _WKSvc.GetWorkingCheckList();
-            
-            if(limit > 0) { workingChecks = workingChecks.Take(limit); }
+            IEnumerable<WorkingCheck> workingChecks = await _WKSvc.GetWorkingCheckList(limit);
 
             switch(sort)
             {

@@ -43,9 +43,10 @@ namespace API.Services.Implements
             return getRole;
         }
 
-        public async Task<List<Role>> GetRoleList()
+        public async Task<List<Role>> GetRoleList(int limit)
         {
-            return await _dBContext.Roles.ToListAsync();
+            if(limit <= 0) { return await _dBContext.Roles.ToListAsync(); }
+            return await _dBContext.Roles.Take(limit).ToListAsync();
         }
 
         public async Task<Role> GetTheRoleByOrderNumber(int orderNumber)

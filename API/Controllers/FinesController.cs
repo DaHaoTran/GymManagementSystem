@@ -24,8 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Fine>> GetFineList([FromQuery] string sort, [FromQuery] int limit)
         {
-            IEnumerable<Fine> fines = await _fineSvc.GetFineList();
-            if(limit > 0) { fines = fines.Take(limit); }
+            IEnumerable<Fine> fines = await _fineSvc.GetFineList(limit);
 
             switch(sort)
             {

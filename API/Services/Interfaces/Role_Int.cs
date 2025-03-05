@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface Role_Int
     {
-        Task<List<Role>> GetRoleList();
+        Task<List<Role>> GetRoleList(int limit);
         Task<Role> GetTheRoleByOrderNumber(int orderNumber);
         Task<List<Role>> GetTheRoleByRoleName(string roleName);
         Task<Role> AddANewRole(Role role);

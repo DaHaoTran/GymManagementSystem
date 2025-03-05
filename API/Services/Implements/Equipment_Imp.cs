@@ -51,9 +51,10 @@ namespace API.Services.Implements
             return getEquipment;
         }
 
-        public async Task<List<Equipment>> GetEquipmentList()
+        public async Task<List<Equipment>> GetEquipmentList(int limit)
         {
-            return await _dBContext.Equipment.ToListAsync();
+            if(limit <= 0) { return await _dBContext.Equipment.ToListAsync(); }
+            return await _dBContext.Equipment.Take(limit).ToListAsync();
         }
 
         public async Task<Equipment> GetTheEquipmentByEquipCode(string equipCode)

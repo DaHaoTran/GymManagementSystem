@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface Account_Int
     {
-        Task<List<Account>> GetAccountList();
+        Task<List<Account>> GetAccountList(int limit);
         Task<Account> GetTheAccountByAccountCode(string accountCode);
         Task<List<Account>> GetTheAccountsByFullName(string fullName);
         Task<List<Account>> GetTheAccountsByPhoneNumber(string phoneNumber);

@@ -24,9 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Branch>> GetBranchList([FromQuery] int limit)
         {
-            var branches = await _branchSvc.GetBranchList();
-            if(limit <= 0) { return branches; }
-            return branches.Take(limit);
+            return await _branchSvc.GetBranchList(limit);
         }
 
         /// <summary>

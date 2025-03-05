@@ -48,9 +48,10 @@ namespace API.Services.Implements
             return getSP;
         }
 
-        public async Task<List<ServicePackage>> GetServicePackageList()
+        public async Task<List<ServicePackage>> GetServicePackageList(int limit)
         {
-            return await _dBContext.ServicePackages.ToListAsync();
+            if(limit <= 0) { return await _dBContext.ServicePackages.ToListAsync(); }
+            return await _dBContext.ServicePackages.Take(limit).ToListAsync();
         }
 
         public async Task<ServicePackage> GetTheServicePackageByPackageCode(string packageCode)

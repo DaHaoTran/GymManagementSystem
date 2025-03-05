@@ -23,9 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<ServicePackage>> GetServicePackageList([FromQuery] int limit)
         {
-            var sPs = await _sPSvc.GetServicePackageList();
-            if(limit <= 0) { return sPs; }
-            return sPs.Take(limit);
+            return await _sPSvc.GetServicePackageList(limit);
         }
 
         /// <summary>

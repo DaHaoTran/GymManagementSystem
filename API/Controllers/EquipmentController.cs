@@ -23,9 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Equipment>> GetEquipmentList([FromQuery] int limit)
         {
-            var equipment = await _equipmentSvc.GetEquipmentList();
-            if(limit <= 0) { return equipment; }
-            return equipment.Take(limit);
+            return await _equipmentSvc.GetEquipmentList(limit);
         }
 
         /// <summary>

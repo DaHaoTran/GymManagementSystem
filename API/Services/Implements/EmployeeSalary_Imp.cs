@@ -51,9 +51,10 @@ namespace API.Services.Implements
             return getES;
         }
 
-        public async Task<List<EmployeeSalary>> GetEmployeeSalaryList()
+        public async Task<List<EmployeeSalary>> GetEmployeeSalaryList(int limit)
         {
-            return await _dBContext.EmployeeSalaries.ToListAsync();
+            if(limit <= 0) { return await _dBContext.EmployeeSalaries.ToListAsync(); }
+            return await _dBContext.EmployeeSalaries.Take(limit).ToListAsync();
         }
 
         public async Task<List<EmployeeSalary>> GetTheEmployeeSalariesByAccountCode(string accountCode)

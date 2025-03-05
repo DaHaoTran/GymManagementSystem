@@ -55,9 +55,10 @@ namespace API.Services.Implements
             return await _dBContext.WorkingChecks.Where(x => x.CheckOf == accountCode).ToListAsync();
         }
 
-        public async Task<List<WorkingCheck>> GetWorkingCheckList()
+        public async Task<List<WorkingCheck>> GetWorkingCheckList(int limit)
         {
-            return await _dBContext.WorkingChecks.ToListAsync();
+            if(limit <= 0) { return await _dBContext.WorkingChecks.ToListAsync(); }
+            return await _dBContext.WorkingChecks.Take(limit).ToListAsync();
         }
     }
 }

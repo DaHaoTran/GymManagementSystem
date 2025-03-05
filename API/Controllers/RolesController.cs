@@ -23,9 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Role>> GetRoleList([FromQuery] int limit)
         {
-            var roles = await _roleSvc.GetRoleList();
-            if (limit <= 0) { return roles; }
-            return roles.Take(limit);
+            return await _roleSvc.GetRoleList(limit);
         }
 
         /// <summary>

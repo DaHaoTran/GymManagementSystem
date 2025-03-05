@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface ServicePackage_Int
     {
-        Task<List<ServicePackage>> GetServicePackageList();
+        Task<List<ServicePackage>> GetServicePackageList(int limit);
         Task<ServicePackage> GetTheServicePackageByPackageCode(string packageCode);
         Task<List<ServicePackage>> GetTheServicePackagesByPackageName(string packageName);
         Task<ServicePackage> AddANewServicePackage(ServicePackage servicePackage);

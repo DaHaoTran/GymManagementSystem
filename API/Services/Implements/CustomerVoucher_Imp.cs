@@ -48,9 +48,10 @@ namespace API.Services.Implements
             return getCV;
         }
 
-        public async Task<List<CustomersVoucher>> GetCustomersVoucherList()
+        public async Task<List<CustomersVoucher>> GetCustomersVoucherList(int limit)
         {
-            return await _dBContext.CustomersVouchers.ToListAsync();
+            if(limit <= 0) { return await _dBContext.CustomersVouchers.ToListAsync(); }
+            return await _dBContext.CustomersVouchers.Take(limit).ToListAsync();
         }
 
         public async Task<CustomersVoucher> GetTheCustomersVoucherByOrderNumber(int orderNumber)

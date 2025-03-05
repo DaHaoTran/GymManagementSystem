@@ -23,9 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Customer>> GetCustomerList([FromQuery] int limit)
         {
-            var customers = await _customerSvc.GetCustomerList();
-            if(limit <= 0) { return customers; }
-            return customers.Take(limit);
+            return await _customerSvc.GetCustomerList(limit);
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface CustomersVoucher_Int
     {
-        Task<List<CustomersVoucher>> GetCustomersVoucherList();
+        Task<List<CustomersVoucher>> GetCustomersVoucherList(int limit);
         Task<CustomersVoucher> GetTheCustomersVoucherByOrderNumber(int orderNumber);
         Task<List<CustomersVoucher>> GetTheCustomersVouchersByCustomerCode(string customerCode);
         Task<CustomersVoucher> AddANewCustomersVoucher(CustomersVoucher customersVoucher);

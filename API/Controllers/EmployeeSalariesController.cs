@@ -24,8 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<EmployeeSalary>> GetEmployeeSalaryList([FromQuery] string sort, [FromQuery] int limit)
         {
-            IEnumerable<EmployeeSalary> ESs = await _ESSvc.GetEmployeeSalaryList();
-            if(limit > 0) { ESs = ESs.Take(limit); }
+            IEnumerable<EmployeeSalary> ESs = await _ESSvc.GetEmployeeSalaryList(limit);
 
             switch(sort)
             {

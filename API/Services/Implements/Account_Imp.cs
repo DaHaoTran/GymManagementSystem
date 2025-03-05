@@ -52,9 +52,10 @@ namespace API.Services.Implements
             return getAccount;
         }
 
-        public Task<List<Account>> GetAccountList()
+        public Task<List<Account>> GetAccountList(int limit)
         {
-            return _dBContext.Accounts.ToListAsync();
+            if(limit <= 0) { return _dBContext.Accounts.ToListAsync(); } 
+            return _dBContext.Accounts.Take(limit).ToListAsync();
         }
 
         public async Task<Account> GetTheAccountByAccountCode(string accountCode)

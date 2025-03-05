@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface Customer_Int
     {
-        Task<List<Customer>> GetCustomerList();
+        Task<List<Customer>> GetCustomerList(int limit);
         Task<Customer> GetTheCustomerByCustomerCode(string customerCode);
         Task<List<Customer>> GetTheCustomersByCustomerName(string customerName);
         Task<List<Customer>> GetTheCustomerByPhoneNumber(string phoneNumber);

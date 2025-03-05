@@ -24,9 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Account>> GetAccountList([FromQuery] int limit)
         {
-            var accounts = await _accountSvc.GetAccountList();
-            if(limit <= 0) { return accounts; }
-            return accounts.Take(limit);
+            return await _accountSvc.GetAccountList(limit);
         }
 
         /// <summary>

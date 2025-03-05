@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface WorkingCheck_Int
     {
-        Task<List<WorkingCheck>> GetWorkingCheckList();
+        Task<List<WorkingCheck>> GetWorkingCheckList(int limit);
         Task<WorkingCheck> GetTheWorkingCheckByOrderNumber(int orderNumber);
         Task<WorkingCheck> AddANewWorkingCheck(WorkingCheck workingCheck);
         Task<WorkingCheck> EditAnExistWorkingCheck(WorkingCheck workingCheck);

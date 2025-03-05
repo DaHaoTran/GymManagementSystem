@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface Equipment_Int
     {
-        Task<List<Equipment>> GetEquipmentList();
+        Task<List<Equipment>> GetEquipmentList(int limit);
         Task<Equipment> GetTheEquipmentByEquipCode(string equipCode);
         Task<List<Equipment>> GetTheEquipmentByEquipName(string equipName);
         Task<Equipment> AddANewEquipment(Equipment equipment);

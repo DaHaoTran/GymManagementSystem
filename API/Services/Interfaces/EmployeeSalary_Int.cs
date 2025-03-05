@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface EmployeeSalary_Int
     {
-        Task<List<EmployeeSalary>> GetEmployeeSalaryList();
+        Task<List<EmployeeSalary>> GetEmployeeSalaryList(int limit);
         Task<EmployeeSalary> GetTheEmployeeSalaryByEmployeeSalaryCode(Guid employeeSalaryCode);
         Task<List<EmployeeSalary>> GetTheEmployeeSalariesByFullName(string fullName);
         Task<List<EmployeeSalary>> GetTheEmployeeSalariesByBranchName(string branchName);

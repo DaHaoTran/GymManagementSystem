@@ -23,9 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Salary>> GetSalaryList([FromQuery] int limit)
         {
-            var salaries = await _salarySvc.GetSalaryList();
-            if(limit <= 0) { return salaries; }
-            return salaries.Take(limit);
+            return await _salarySvc.GetSalaryList(limit);
         }
 
         /// <summary>
