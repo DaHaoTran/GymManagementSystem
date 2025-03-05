@@ -3,5 +3,6 @@
     public static class Load
     {
         public static bool IsLoading { get; set; }
+        public static bool IsFirstLoad { get; set; } = true;
     }
 }
