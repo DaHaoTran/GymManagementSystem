@@ -1,4 +1,5 @@
-﻿using Client_FAU.Business.Interfaces;
+﻿using Blazored.LocalStorage;
+using Client_FAU.Business.Interfaces;
 using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -16,7 +17,7 @@ namespace Client_FAU.Components.Pages
         [Inject]
         private Salary_Int? SalaryBsn { get; set; }
         [Inject]
-        private IHttpContextAccessor? HttpContextAccessor { get; set; }
+        private ILocalStorageService? LocalStorage { get; set; }
         [Inject]
         private IJSRuntime? JSRuntime { get; set; }
         [Inject]
@@ -26,29 +27,36 @@ namespace Client_FAU.Components.Pages
 
         private List<Salary>? salaries;
         private string message = string.Empty;
-        private bool isLoading = false;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            isLoading = true;
+            Load.IsLoading = true;
+        }
 
-            await LoadSalaryList();
-            await LoadServicePackageList();
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if(firstRender)
+            {
+                await LoadSalaryList();
+                await LoadServicePackageList();
 
-            isLoading = false;
+                Thread.Sleep(1000);
+                Load.IsLoading = false;
+                StateHasChanged();
+            }
         }
 
         private async Task LoadSalaryList()
         {
-            var data = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Salaries);
+            var data = await LocalStorage!.GetItemAsync<List<Salary>>(SessionNames.Salaries);
             if(data!= null)
             {
-                salaries = JsonConvert.DeserializeObject<List<Salary>>(data);
+                salaries = data;
                 return;
             }
             var getSalaries = await SalaryBsn!.GetSalaryList(0);
             salaries = getSalaries;
-            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Salaries, JsonConvert.SerializeObject(getSalaries));
+            await LocalStorage.SetItemAsync(SessionNames.Salaries, getSalaries);
         }
 
         private void ClearForm() => Model = new();
@@ -63,7 +71,7 @@ namespace Client_FAU.Components.Pages
 
         private async Task AddSalaryDataBase()
         {
-            isLoading = true;
+            Load.IsLoading  = true;
             try
             {
                 SetSalaryProperties();
@@ -72,7 +80,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message = "Add new salary successfully";
-                    UpdateSalariesData(result);
+                    await UpdateSalariesData(result);
                 }
                 else
                 {
@@ -83,25 +91,27 @@ namespace Client_FAU.Components.Pages
                 message = ex.Message;
             }
             ClearForm();
-            isLoading = false;
+            Thread.Sleep(500);
+            Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("UndisplaySalarySample");
+            StateHasChanged();
         }
 
         private async Task EditSalaryDataBase(Salary salary)
         {
-            isLoading = true;
+            Load.IsLoading  = true;
 
             //Get the salaries from session and check if the values salary
-            var sessionSalaries = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Salaries);
-            if(sessionSalaries != null)
+            var data = await LocalStorage!.GetItemAsync<List<Salary>>(SessionNames.Salaries);
+            if(data != null)
             {
-                var temSalaries  = JsonConvert.DeserializeObject<List<Salary>>(sessionSalaries);
+                var temSalaries = data;
                 var getSalary = temSalaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
                 if (getSalary != null)
                 {
                     if(getSalary.PricesApply == salary.PricesApply)
                     {
-                        isLoading = false;
+                        Load.IsLoading  = false;
                         return;
                     }
                 }
@@ -115,7 +125,7 @@ namespace Client_FAU.Components.Pages
                 if(result != null)
                 {
                     message = $"Edit {salary.SalaryType} Successfully";
-                    UpdateSalariesData(salary);
+                    await UpdateSalariesData(salary);
                 }
                 else
                 {
@@ -126,7 +136,9 @@ namespace Client_FAU.Components.Pages
                 message = ex.Message;
             }
             ClearForm();
-            isLoading = false;
+            Thread.Sleep(500);
+            Load.IsLoading  = false;
+            StateHasChanged();
         }
         
         private async Task DeleteSalaryDataBase(string salaryCode)
@@ -143,14 +155,14 @@ namespace Client_FAU.Components.Pages
 
             if(swalResult.IsConfirmed)
             {
-                isLoading = true;
+                Load.IsLoading  = true;
                 try
                 {
                     var result = await SalaryBsn!.DeleteAnExistSalary(salaryCode);
                     if (result != null)
                     {
                         message = $"Delete {result.SalaryType} Successfully";
-                        RemoveSalariesFromData(result);
+                        await RemoveSalariesFromData(result);
                     }
                     else
                     {
@@ -161,11 +173,13 @@ namespace Client_FAU.Components.Pages
                 {
                     message = ex.Message;
                 }
-                isLoading = false;
+                Thread.Sleep(500);
+                Load.IsLoading  = false;
+                StateHasChanged();
             }
         }
 
-        private void UpdateSalariesData(Salary salary)
+        private async Task UpdateSalariesData(Salary salary)
         {
             if(salary == null) { return; }
             var getSalary = salaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
@@ -179,16 +193,16 @@ namespace Client_FAU.Components.Pages
                 salaries[index] = salary;
             }
 
-            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Salaries, JsonConvert.SerializeObject(salaries));
+            await LocalStorage!.SetItemAsync(SessionNames.Salaries, salaries);
         }
 
-        private void RemoveSalariesFromData(Salary salary)
+        private async Task RemoveSalariesFromData(Salary salary)
         {
             if (salary == null) { return; }
             var getSalary = salaries!.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
             if (getSalary == null || getSalary == default) { return; }
             salaries!.Remove(getSalary);
-            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Salaries, JsonConvert.SerializeObject(salaries));
+            await LocalStorage!.SetItemAsync(SessionNames.Salaries, salaries);
         }
 
         private void ShowInvalidMessage()

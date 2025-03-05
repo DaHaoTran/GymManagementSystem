@@ -1,10 +1,11 @@
 ﻿@page "/setting"
 @using Client_FAU.Components.Ingredients
+@using Client_FAU.Variables;
 @inherits SettingPageBase
 
 <PageTitle>Setting</PageTitle>
 
-@if(isLoading || isLoading2)
+@if(Load.IsLoading)
 {
     <Loading></Loading>
 }

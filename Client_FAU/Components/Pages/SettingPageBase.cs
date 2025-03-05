@@ -1,4 +1,5 @@
-﻿using Client_FAU.Business.Interfaces;
+﻿using Blazored.LocalStorage;
+using Client_FAU.Business.Interfaces;
 using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -13,27 +14,26 @@ namespace Client_FAU.Components.Pages
         [Inject]
         protected ServicePackage_Int? SPBsn { get; set; }
         [Inject]
-        protected IHttpContextAccessor? HttpContextAccessor2 { get; set; }
+        protected ILocalStorageService? LocalStorage2 { get; set; }
         [Inject]
         protected IJSRuntime? JSRuntime2 { get; set; }
         [SupplyParameterFromForm]
         protected ServicePackage? Model2 { get; set; } = new();
 
         protected List<ServicePackage>? servicePackages;
-        protected bool isLoading2 = false;
         protected string message2 = string.Empty;
 
         protected async Task LoadServicePackageList()
         {
-            var data = HttpContextAccessor2!.HttpContext!.Session.GetString(SessionNames.ServicePackages);
+            var data = await LocalStorage2!.GetItemAsync<List<ServicePackage>>(SessionNames.ServicePackages);
             if (data != null)
             {
-                servicePackages = JsonConvert.DeserializeObject<List<ServicePackage>>(data);
+                servicePackages = data;
                 return;
             }
             var getServicePackages = await SPBsn!.GetServicePackageList(0);
             servicePackages = getServicePackages;
-            HttpContextAccessor2!.HttpContext!.Session.SetString(SessionNames.ServicePackages, JsonConvert.SerializeObject(getServicePackages));
+            await LocalStorage2.SetItemAsync(SessionNames.ServicePackages, getServicePackages);
         }
 
         protected void ClearForm2() => Model2 = new();
@@ -48,7 +48,7 @@ namespace Client_FAU.Components.Pages
 
         protected async Task AddServiceDataBase()
         {
-            isLoading2 = true;
+            Load.IsLoading  = true;
             try
             {
                 SetServicePackageProperties();
@@ -57,7 +57,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message2 = "Add new service package successfully";
-                    UpdateServicePackagesData(result);
+                    await UpdateServicePackagesData(result);
                 }
                 else
                 {
@@ -68,19 +68,21 @@ namespace Client_FAU.Components.Pages
                 message2 = ex.Message;
             }
             ClearForm2();
-            isLoading2 = false;
+            Thread.Sleep(500);
+            Load.IsLoading  = false;
             await JSRuntime2!.InvokeVoidAsync("UndisplayServiceSample");
+            StateHasChanged();
         }
 
         protected async Task EditServiceDataBase(ServicePackage servicePackage)
         {
-            isLoading2 = true;
+            Load.IsLoading  = true;
 
             //Get the service packages from the session and check if the service package is not null and has changed
-            var sessionSPs = HttpContextAccessor2!.HttpContext!.Session.GetString(SessionNames.ServicePackages);
-            if (sessionSPs != null)
+            var data = await LocalStorage2!.GetItemAsync<List<ServicePackage>>(SessionNames.ServicePackages);
+            if (data != null)
             {
-                var temSPs = JsonConvert.DeserializeObject<List<ServicePackage>>(sessionSPs);
+                var temSPs = data;
                 var getSP = temSPs!.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
                 if (getSP != null || getSP != default)
                 {
@@ -90,7 +92,7 @@ namespace Client_FAU.Components.Pages
                     else if (getSP.NumberOfDays != servicePackage.NumberOfDays) { }
                     else
                     {
-                        isLoading2 = false;
+                        Load.IsLoading  = false;
                         return;
                     }
                 }
@@ -103,7 +105,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message2 = $"Edit {result.PackageCode} successfully";
-                    UpdateServicePackagesData(result);
+                    await UpdateServicePackagesData(result);
                 }
                 else
                 {
@@ -115,7 +117,9 @@ namespace Client_FAU.Components.Pages
                 message2 = ex.Message;
             }
             ClearForm2();
-            isLoading2 = false;
+            Thread.Sleep(500);
+            Load.IsLoading  = false;
+            StateHasChanged();
         }
 
         protected async Task SetDeleteStateForEditDataBase(ServicePackage servicePackage)
@@ -124,7 +128,7 @@ namespace Client_FAU.Components.Pages
             await EditServiceDataBase(servicePackage);
         }
 
-        protected void UpdateServicePackagesData(ServicePackage servicePackage)
+        protected async Task UpdateServicePackagesData(ServicePackage servicePackage)
         {
             if(servicePackage == null) { return; }
             var getSP = servicePackages!.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
@@ -138,7 +142,7 @@ namespace Client_FAU.Components.Pages
                 servicePackages[index] = servicePackage;
             }
 
-            HttpContextAccessor2!.HttpContext!.Session.SetString(SessionNames.ServicePackages, JsonConvert.SerializeObject(servicePackages));
+            await LocalStorage2!.SetItemAsync(SessionNames.ServicePackages, servicePackages);
         }
     }
 }

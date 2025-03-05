@@ -1,9 +1,12 @@
-﻿using Client_FAU.Business.Implements;
+﻿using Blazored.LocalStorage;
+using Client_FAU.Business.Implements;
 using Client_FAU.Business.Interfaces;
 using Client_FAU.Components;
 using Microsoft.AspNetCore.ResponseCompression;
 using Radzen;
 using SweetAlert2;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +15,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddHttpClient();
 builder.Services.AddSignalR();
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddRadzenComponents();
 builder.Services.AddSweetAlert2();
 builder.Services.AddResponseCompression(opts =>
@@ -21,12 +24,22 @@ builder.Services.AddResponseCompression(opts =>
         new[] { "application/octet-stream" });
 });
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
+builder.Services.AddBlazoredLocalStorage(config =>
 {
-    options.IdleTimeout = TimeSpan.FromHours(8);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
+    config.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    config.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    config.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
+    config.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    config.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    config.JsonSerializerOptions.ReadCommentHandling = JsonCommentHandling.Skip;
+    config.JsonSerializerOptions.WriteIndented = false;
 });
+//builder.Services.AddSession(options =>
+//{
+//    options.IdleTimeout = TimeSpan.FromHours(8);
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.IsEssential = true;
+//});
 
 
 //
@@ -51,7 +64,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.UseSession();
+//app.UseSession();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

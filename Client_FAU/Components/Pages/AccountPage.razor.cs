@@ -1,4 +1,5 @@
-﻿using Client_FAU.Business.Interfaces;
+﻿using Blazored.LocalStorage;
+using Client_FAU.Business.Interfaces;
 using Client_FAU.Extensions;
 using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
@@ -14,7 +15,7 @@ namespace Client_FAU.Components.Pages
         [Inject]
         private Account_Int? AccountBsn { get; set; }
         [Inject]
-        private IHttpContextAccessor? HttpContextAccessor { get; set; }
+        private ILocalStorageService? LocalStorage { get; set; }
         [Inject]
         private IJSRuntime? JSRuntime { get; set; }
         [SupplyParameterFromForm]
@@ -23,47 +24,54 @@ namespace Client_FAU.Components.Pages
         private IEnumerable<Role>? roles = new List<Role>();
         private IEnumerable<Salary>? salaries = new List<Salary>();
         private List<Account>? accounts;
-        private bool isLoading = false;
         private string message = string.Empty;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            isLoading = true;
+            Load.IsLoading = true;
+        }
 
-            await LoadAccountList();
-            LoadRoleList();
-            LoadSalaryList();
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if(firstRender)
+            {
+                await LoadAccountList();
+                await LoadRoleList();
+                await LoadSalaryList();
 
-            isLoading = false;
+                Thread.Sleep(1000);
+                Load.IsLoading = false;
+                StateHasChanged();
+            }
         }
 
         private void ClearForm() => Model = new();
 
-        private void LoadRoleList()
+        private async Task LoadRoleList()
         {
-            var data = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Roles);
+            var data = await LocalStorage!.GetItemAsync<IEnumerable<Role>>(SessionNames.Roles);
             if(data == null) { return; }
-            roles = JsonConvert.DeserializeObject<IEnumerable<Role>>(data);
+            roles = data;
         }
 
-        private void LoadSalaryList()
+        private async Task LoadSalaryList()
         {
-            var data = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Salaries);
+            var data = await LocalStorage!.GetItemAsync<IEnumerable<Salary>>(SessionNames.Salaries);
             if (data == null) { return; }
-            salaries = JsonConvert.DeserializeObject<IEnumerable<Salary>>(data);
+            salaries = data;
         }
 
         private async Task LoadAccountList()
         {
-            var data = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Accounts);
+            var data = await LocalStorage!.GetItemAsync<List<Account>>(SessionNames.Accounts);
             if(data != null)
             {
-                accounts = JsonConvert.DeserializeObject<List<Account>>(data);
+                accounts = data;
                 return;
             }
             var getAccounts = await AccountBsn!.GetAccountList(9);
             accounts = getAccounts;
-            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Accounts, JsonConvert.SerializeObject(getAccounts));
+            await LocalStorage.SetItemAsync(SessionNames.Accounts, getAccounts);
         }
 
         private void SetModelState(ModalState.State state)
@@ -122,13 +130,13 @@ namespace Client_FAU.Components.Pages
             Model.SalaryCode = getSalary.SalaryCode;
         }
 
-        private void SetAccountProperties2()
+        private async Task SetAccountProperties2()
         {
             Model!.FullName = Model.FullName.Trim();
             Model.PhoneNumber = Model.PhoneNumber.Trim();
             Model.IdNumber = Model.IdNumber.Trim();
             Model.LivingAt = Model.LivingAt.Trim();
-            SetPasswordModelWithChangedValue();
+            await SetPasswordModelWithChangedValue();
             Model.UpdateBy = "AD00000001";
 
             var getRole = roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
@@ -148,12 +156,12 @@ namespace Client_FAU.Components.Pages
             Model.SalaryCode = getSalary.SalaryCode;
         }
 
-        private void SetPasswordModelWithChangedValue()
+        private async Task SetPasswordModelWithChangedValue()
         {
-            var data = HttpContextAccessor!.HttpContext!.Session.GetString(SessionNames.Accounts);
+            var data = await LocalStorage!.GetItemAsync<List<Account>>(SessionNames.Accounts);
             if (data == null) { return; }
 
-            var getAccounts = JsonConvert.DeserializeObject<List<Account>>(data);
+            var getAccounts = data;
             var getAccount = getAccounts!.Where(x => x.AccountCode == Model!.AccountCode).FirstOrDefault();
             if (getAccount == null || getAccount == default) { return; }
 
@@ -172,14 +180,14 @@ namespace Client_FAU.Components.Pages
         private async Task EditAccountStateDataBase(Account account)
         {
             account.IsDeleted = !account.IsDeleted;
-            isLoading = true;
+            Load.IsLoading  = true;
             try
             {
                 var result = await AccountBsn!.EditAnExistAccount(account);
                 if (result != null)
                 {
                     message = $"Edit {account.AccountCode} successfully !";
-                    UpdateAccountsData(result);
+                    await UpdateAccountsData(result);
                 }
                 else
                 {
@@ -191,12 +199,14 @@ namespace Client_FAU.Components.Pages
                 message = ex.Message;
             }
             ClearForm();
-            isLoading = false;
+            Thread.Sleep(500);
+            Load.IsLoading  = false;
+            StateHasChanged();
         }
 
         private async Task AddAccountDataBase()
         {
-            isLoading = true;
+            Load.IsLoading  = true;
             try
             {
                 SetAccountProperties();
@@ -204,7 +214,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message = "Add new account successfully !";
-                    UpdateAccountsData(result);
+                    await UpdateAccountsData(result);
                 }
                 else
                 {
@@ -216,21 +226,23 @@ namespace Client_FAU.Components.Pages
                 message = ex.Message;
             }
             ClearForm();
-            isLoading = false;
+            Thread.Sleep(500);
+            Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
+            StateHasChanged();
         }
 
         private async Task EditAccountDataBase()
         {
-            isLoading = true;
+            Load.IsLoading  = true;
             try
             {
-                SetAccountProperties2();
+                await SetAccountProperties2();
                 var result = await AccountBsn!.EditAnExistAccount(Model!);
                 if (result != null)
                 {
                     message = $"Edit {Model!.AccountCode} successfully !";
-                    UpdateAccountsData(result);
+                    await UpdateAccountsData(result);
                 }
                 else
                 {
@@ -242,8 +254,10 @@ namespace Client_FAU.Components.Pages
                 message = ex.Message;
             }
             ClearForm();
-            isLoading = false;
+            Thread.Sleep(500);
+            Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
+            StateHasChanged();
         }
 
         private async Task UpdateAccountDataBase()
@@ -261,7 +275,7 @@ namespace Client_FAU.Components.Pages
             }
         }
 
-        private void UpdateAccountsData(Account account)
+        private async Task UpdateAccountsData(Account account)
         {
             if(account == null) { return; }
             var getAccount = accounts!.Where(x => x.AccountCode == account.AccountCode).FirstOrDefault();
@@ -276,7 +290,7 @@ namespace Client_FAU.Components.Pages
                 accounts[index] = account;
             }
 
-            HttpContextAccessor!.HttpContext!.Session.SetString(SessionNames.Accounts, JsonConvert.SerializeObject(accounts));
+            await LocalStorage!.SetItemAsync(SessionNames.Accounts, JsonConvert.SerializeObject(accounts));
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Models;
 using Client_FAU.Variables;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Blazored.LocalStorage;
 
 namespace Client_FAU.Components.Pages
 {
@@ -15,7 +16,7 @@ namespace Client_FAU.Components.Pages
         [Inject]
         private Branch_Int? BranchBsn { get; set; }
         [Inject]
-        private IHttpContextAccessor? HttpContextAccessor { get; set; }
+        private ILocalStorageService? LocalStorage { get; set; }
         [SupplyParameterFromForm]
         private Branch? Model { get; set; } = new();
 
@@ -23,22 +24,25 @@ namespace Client_FAU.Components.Pages
         private static string sessionName = "branches";
         private string message = string.Empty;
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await LoadBranchList();
+            if(firstRender)
+            {
+                await LoadBranchList();
+            }
         }
 
         private async Task LoadBranchList()
         {
-            var data = HttpContextAccessor!.HttpContext!.Session.GetString(sessionName);
+            var data = await LocalStorage!.GetItemAsync<List<Branch>>(sessionName);
             if(data != null) 
             {
-                branches = JsonConvert.DeserializeObject<List<Branch>>(data)!;
+                branches = data;
                 return;
             }
             var getBranches = await BranchBsn!.GetBranchList(12);
             branches = getBranches;
-            HttpContextAccessor.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(getBranches));
+            await LocalStorage.SetItemAsync(sessionName, getBranches);
         }
 
         private void ClearForm() => Model = new();
@@ -80,7 +84,7 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     message = "Add new Branch Successfully";
-                    UpdateData(result);
+                    await UpdateData(result);
                 }
                 else
                 {
@@ -94,7 +98,7 @@ namespace Client_FAU.Components.Pages
             ClearForm();
         }
 
-        private void UpdateData(Branch branch)
+        private async Task UpdateData(Branch branch)
         {
             if(branches == null) { return; }
             var getBranch = branches.Where(x => x.BranchCode == branch.BranchCode).FirstOrDefault();
@@ -107,7 +111,7 @@ namespace Client_FAU.Components.Pages
                 branches[index] = branch;
             }
 
-            HttpContextAccessor!.HttpContext!.Session.SetString(sessionName, JsonConvert.SerializeObject(branches));
+            await LocalStorage!.SetItemAsync(sessionName, branches);
         }
 
         private void ShowInvalidMessage()

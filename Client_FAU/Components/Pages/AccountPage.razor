@@ -1,5 +1,6 @@
 ﻿@page "/account"
 @using Client_FAU.Components.Ingredients;
+@using Client_FAU.Variables
 
 <PageTitle>Account</PageTitle>
 
@@ -13,7 +14,7 @@
     </div>
 </div>
 
-@if(isLoading)
+@if(Load.IsLoading)
 {
     <Loading></Loading>
 }
