@@ -1,0 +1,63 @@
+﻿button {
+    background-color: #00FF4F;
+    font-size: 220%;
+    font-weight: bolder;
+    padding: 0% 3% 0 3%;
+}
+
+.branch {
+    width: 15%;
+    margin: 0 5% 0 5% !important;
+    border-radius: 10px;
+}
+
+.head-container {
+    align-items: end;
+    grid-template-areas: "bell code";
+}
+
+.bell {
+    grid-area: bell;
+}
+
+.branch-code {
+    grid-area: code;
+    text-align: end;
+}
+
+label {
+    font-size: 130%;
+    font-weight: bolder;
+}
+
+.branch-detail {
+    font-size: 130%;
+    font-weight: bolder;
+    background-color: gainsboro;
+    width: 30%;
+    border-radius: 10px;
+    border: 1px solid #00FF4F;
+}
+
+.delete {
+    border-radius: 0 10px 0 0;
+    background-color: red;
+}
+
+.address > h5 {
+    height: 10vh;
+    word-wrap: break-word;
+}
+
+.edit {
+    border-radius: 0 0 10px 0;
+    background-color: #00FF4F !important;
+}
+
+.submit-button {
+    width: 30% !important;
+}
+
+a:hover {
+    cursor: pointer;
+}

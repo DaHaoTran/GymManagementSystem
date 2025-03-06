@@ -1,0 +1,307 @@
+﻿@page "/setting"
+@using Client_FAU.Components.Ingredients
+@using Client_FAU.Variables;
+@inherits SettingPageBase
+
+<PageTitle>Setting</PageTitle>
+
+@if(Load.IsLoading)
+{
+    <Loading></Loading>
+}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-salary-tab" data-bs-toggle="pill" data-bs-target="#pills-salary" role="tab" aria-controls="pills-salary" aria-selected="true" aria-current="page" onclick="SetActiveClass(this)">Salary</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-service-tab" data-bs-toggle="pill" data-bs-target="#pills-service" role="tab" aria-controls="pills-service" aria-selected="true" aria-current="page" onclick="SetActiveClass(this)">Service</a>
+    </li>
+</ul>
+
+@if (!string.IsNullOrEmpty(message) || !string.IsNullOrEmpty(message2))
+{
+    // Code
+    var messageSet = !string.IsNullOrEmpty(message) ? message : message2;
+
+    <div class="alert alert-info mt-2 d-flex">
+        <div class="w-50">
+            @messageSet
+        </div>
+        <div class="w-100 d-flex justify-content-end align-items-center">
+            <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />
+        </div>
+    </div>
+}
+
+<div class="tab-content mt-5" id="pills-tabContent">
+    <!-- salary tab -->
+    <div class="tab-pane fade show active" id="pills-salary" role="tabpanel" aria-labelledby="pills-salary-tab" tabindex="0">
+        <div class="row mb-5">
+            @if(Lists.salaries == null) { <h5>There are a problem !</h5>} 
+            else if(Lists.salaries.Count() <= 0) {<h5>There are no record to display</h5>}
+            else
+            {
+                @foreach(var salary in Lists.salaries)
+                {
+                    <div class="setting col-6 my-3 mx-4">
+                        <div class="row">
+                            <div class="left-section col-11">
+                                <div class="title row">
+                                    <h4 class="col-6 text text-start mt-1">@salary.SalaryType</h4>
+                                    <h5 class="col-6 text text-end">@salary.UpdateDate</h5>
+                                </div>
+                                <form class="mt-1">
+                                    <div class="mb-3">
+                                        <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
+                                        <div class="d-flex justify-content-start">
+                                            @{
+                                                salary.GetPricesApply = salary.PricesApply.ToString();
+                                            }
+                                            <input type="text" class="form-control" id="PriceApply" @bind-value=salary.PricesApply />
+                                            <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="right-section col-1 d-grid justify-content-center align-items-center">
+                                <div class="image w-75 mt-2" @onclick="() => DeleteSalaryDataBase(salary.SalaryCode)" >
+                                    <img class="w-100" src="/images/trash.png" alt="A Trash" />
+                                </div>
+                                <hr />
+                                <div class="image w-75 mb-2" @onclick="() => EditSalaryDataBase(salary)">
+                                    <img class="w-100" src="/images/edit.png" alt="An Edit" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+            <!-- sample -->
+            <hr class="d-none line-down"/>
+            <div class="setting setting-sample col-6 my-3 mx-4 d-none">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="title row">
+                            <h5 class="col-6 text text-start mt-1">@DateTime.Now</h5>
+                        </div>
+                        <EditForm Model=@Model FormName="Add Salary" class="mt-1" OnValidSubmit="AddSalaryDataBase">
+                            <DataAnnotationsValidator/>
+                            <div class="mb-3">
+                                <label for="salaryType" class="form-label text fs-4">Salary Type</label>
+                                <div class="d-flex justify-content-start">
+                                    <InputText type="text" class="form-control" id="salaryType" @bind-Value=Model!.SalaryType />
+                                </div>
+                                <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
+                                <div class="d-flex justify-content-start">
+                                    <InputText type="text" class="form-control" id="PriceApply" @bind-Value=Model.GetPricesApply/>
+                                    <h4 class="text mt-2 col-3 text-center">Vn dong</h4>
+                                </div>
+                            </div>
+                            <ValidationSummary />
+
+                            <div class="mb-2">
+                                <button type="submit" class="btn btn-success">Confirm</button>
+                                <button type="reset" class="btn btn-danger" onclick="UndisplaySalarySample()">Cancel</button>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+            <!-- end sample -->
+
+            <div class="setting setting-plus col-6 my-3 mx-4 d-flex justify-content-center align-items-center">
+                <a class="nav nav-link" onclick="AddSalarySample()"><h1 class="text">+</h1></a>
+            </div>
+        </div>
+    </div>
+    <!-- service tab -->
+    <div class="tab-pane fade" id="pills-service" role="tabpanel" aria-labelledby="pills-service-tab" tabindex="1">
+        <div class="row mb-5">
+            @if (Lists.servicePackages == null)
+            {
+                <h5>There are a problem !</h5>
+            }
+            else if (Lists.servicePackages.Count() <= 0)
+            {
+                <h5>There are no record to display</h5>
+            }
+            else
+            {
+                @foreach(var service in Lists.servicePackages)
+                {
+                    <div class="setting col-6 my-3 mx-4">
+                        <div class="title2 row">
+                            <h4 class="col-6 text text-start mt-1">@service.PackageName</h4>
+                            <h5 class="col-6 text text-end">@service.AdminUpdate</h5>
+                        </div>
+                        <form class="mt-1">
+                            <div class="mb-3">
+                                <div class="row">
+                                    <label for="PriceApply" class="form-label text fs-4 col-6">Price Apply</label>
+                                    <div class="form-check form-switch col-6 d-flex justify-content-end">
+                                        @if(service.IsDeleted)
+                                        {
+                                            <input class="form-check-input h-75 w-25" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked @onchange="() => SetDeleteStateForEditDataBase(service)">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input h-75 w-25" type="checkbox" role="switch" id="flexSwitchCheckChecked" @onchange="() => SetDeleteStateForEditDataBase(service)">
+                                        }
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start">
+                                    @{
+                                        service.GetPrice = service.Price.ToString();
+                                    }
+                                    @if (service.IsDeleted)
+                                    {
+                                        <input type="text" class="form-control" id="PriceApply" @bind-value=service.Price disabled />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" id="PriceApply" @bind-value=service.Price />
+                                    }
+                                    <h4 class="text mt-2 ms-2 col-3 text-start">Vn dong</h4>
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex justify-content-start">
+                                <label for="Member" class="form-label text fs-4 me-2">Member</label>
+                                @if(service.IsDeleted)
+                                {
+                                    <input type="number" class="form-control" id="Member" @bind-value=service.MemberQuantity disabled>
+                                }
+                                else
+                                {
+                                    <input type="number" class="form-control" id="Member" @bind-value=service.MemberQuantity>
+                                }
+                                <label for="Days" class="form-label text fs-4 m-2">Days</label>
+                                @if (service.IsDeleted)
+                                {
+                                    <input type="number" class="form-control" id="Days" @bind-value=service.NumberOfDays disabled>
+                                }
+                                else
+                                {
+                                    <input type="number" class="form-control" id="Days" @bind-value=service.NumberOfDays>
+                                }
+                            </div>
+                        </form>
+                        <div class="bottom-section d-flex justify-content-center align-items-center">
+                            <div class="image w-25 d-flex justify-content-center" @onclick="() => EditServiceDataBase(service)" >
+                                <img class="w-25" src="/images/edit.png" alt="An Edit" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+            <!-- sample -->
+            <hr class="d-none line-down2" />
+            <div class="setting setting-sample2 col-6 my-3 mx-4 d-none">
+                <div class="title2 row">
+                    <h5 class="col-6 text text-start">Updated by ...</h5>
+                </div>
+                <EditForm Model=Model2 FormName="Add Service" class="mt-1" OnValidSubmit="AddServiceDataBase">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <label for="PackageName" class="form-label text fs-4">Package name</label>
+                        <InputText type="text" class="form-control" id="PackageName" @bind-Value=Model2!.PackageName />
+                    </div>
+                    <div class="mb-3">
+                        <label for="PriceApply" class="form-label text fs-4">Price Apply</label>
+                        <div class="d-flex justify-content-start">
+                            <InputText type="text" class="form-control" id="PriceApply" @bind-Value=Model2.GetPrice />
+                            <h4 class="text mt-2 ms-2 col-3 text-start">Vn dong</h4>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-start">
+                        <label for="Member" class="form-label text fs-4 me-2">Member</label>
+                        <InputNumber type="number" class="form-control" id="Member" @bind-Value=Model2.MemberQuantity />
+                        <label for="Days" class="form-label text fs-4 m-2">Days</label>
+                        <InputNumber type="number" class="form-control" id="Days" @bind-Value=Model2.NumberOfDays />
+                    </div>
+                    <ValidationSummary />
+
+                    <div class="mb-2">
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                        <button type="reset" class="btn btn-danger" onclick="UndisplayServiceSample()">Cancel</button>
+                    </div>
+                </EditForm>
+            </div>
+            <!-- end sample -->
+
+            <div class="setting setting-plus2 col-6 my-3 mx-4 d-flex justify-content-center align-items-center">
+                <a class="nav nav-link" onclick="AddServiceSample()"><h1 class="text">+</h1></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function SetActiveClass(element) {
+        var navLinkActive = document.querySelector('.active');
+        if (navLinkActive != null) {
+        navLinkActive.classList.remove('active');
+        }
+        if (element != null) {
+        element.classList.add('active');
+        }
+    };
+
+    function AddSalarySample() {
+        var settingPlus = document.querySelector('.setting-plus');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.add('d-none');
+
+        var settingSample = document.querySelector('.setting-sample');
+        if(settingSample == null) {return;}
+        settingSample.classList.remove('d-none');
+
+        var lineDown = document.querySelector('.line-down');
+        if(lineDown == null) {return;}
+        lineDown.classList.remove('d-none');
+    }
+
+    function UndisplaySalarySample() {
+        var settingPlus = document.querySelector('.setting-plus');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.remove('d-none');
+
+        var settingSample = document.querySelector('.setting-sample');
+        if(settingSample == null) {return;}
+        settingSample.classList.add('d-none');
+
+        var lineDown = document.querySelector('.line-down');
+        if(lineDown == null) {return;}
+        lineDown.classList.add('d-none');
+    }
+
+    function AddServiceSample() {
+        var settingPlus = document.querySelector('.setting-plus2');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.add('d-none');
+
+        var settingSample = document.querySelector('.setting-sample2');
+        if(settingSample == null) {return;}
+        settingSample.classList.remove('d-none');
+
+        var lineDown = document.querySelector('.line-down2');
+        if(lineDown == null) {return;}
+        lineDown.classList.remove('d-none');
+    }
+
+    function UndisplayServiceSample() {
+        var settingPlus = document.querySelector('.setting-plus2');
+        if(settingPlus == null) { return; }
+        settingPlus.classList.remove('d-none');
+
+        var settingSample = document.querySelector('.setting-sample2');
+        if(settingSample == null) {return;}
+        settingSample.classList.add('d-none');
+
+        var lineDown = document.querySelector('.line-down2');
+        if(lineDown == null) {return;}
+        lineDown.classList.add('d-none');
+    }
+</script>

@@ -1,0 +1,31 @@
+﻿
+#login_text{
+    font-size: 80px;
+}
+
+.login_cpn {
+    background-color: #B4FBCA;
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    height: 100vh; /* Đảm bảo chiều cao của container là 100% chiều cao của viewport */
+}
+
+.image_login{
+    width: 35%;
+}
+
+@media only screen and (max-width: 1200px) {
+    #login_text {
+        font-size: 60px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #login_text {
+        font-size: 40px;
+    }
+}

@@ -1,0 +1,76 @@
+﻿button {
+    background-color: #00FF4F;
+    font-size: 220%;
+    font-weight: bolder;
+    padding: 0% 3% 0 3%;
+}
+
+.account{
+    width: 15%;
+    margin: 0 5% 0 5% !important;
+    border-radius: 10px;
+}
+
+.head-container {
+    align-items: end;
+    grid-template-areas: "role code";
+}
+
+.role {
+    grid-area: role;
+}
+
+.code {
+    grid-area: code;
+    text-align: end;
+}
+
+label {
+    font-size: 130%;
+    font-weight: bolder;
+}
+
+.user-detail {
+    font-size: 130%;
+    font-weight: bolder;
+    background-color: gainsboro;
+    width: 75%;
+    border-radius: 10px;
+    border: 1px solid #00FF4F;
+}
+
+.delete {
+    border-radius: 0 10px 0 0;
+    background-color: red;
+}
+
+.address > h5 {
+    height: 10vh;
+    word-wrap: break-word;
+}
+
+.edit {
+    border-radius: 0 10px 10px 0;
+    background-color: #00FF4F !important;
+}
+
+.submit-button {
+    width: 35% !important;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.sub-detail {
+    font-size: 18px !important;
+}
+
+.form-check-input {
+    height: 4vh;
+}
+
+.form-switch {
+    position: relative;
+    opacity: 1;
+}

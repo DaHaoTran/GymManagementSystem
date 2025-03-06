@@ -1,0 +1,43 @@
+﻿a {
+    font-size: 130% !important;
+    font-weight: bolder !important;
+    color: black !important;
+}
+
+a:hover {
+    cursor: pointer !important;
+}
+
+.text {
+    font-weight: bolder !important;
+}
+
+.setting {
+    border-radius: 10px;
+    background-color: lightgray;
+    width: 45%;
+}
+
+.title {
+    background-color: #00F811;
+    border-radius: 10px 0 0 0;
+}
+
+.title2 {
+    background-color: #00F811;
+    border-radius: 10px 10px 0 0;
+}
+
+.right-section {
+    background-color: greenyellow;
+    border-radius: 0 10px 10px 0;
+}
+
+.bottom-section {
+    background-color: greenyellow;
+    border-radius: 0 0 10px 10px;
+}
+
+.form-control {
+    border-radius: 10px !important;
+}
