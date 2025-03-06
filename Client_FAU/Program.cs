@@ -14,14 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddHttpClient();
-//builder.Services.AddSignalR();
+builder.Services.AddSignalR();
 builder.Services.AddRadzenComponents();
 builder.Services.AddSweetAlert2();
-//builder.Services.AddResponseCompression(opts =>
-//{
-//    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-//        new[] { "application/octet-stream" });
-//});
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 builder.Services.AddDistributedMemoryCache();
 //builder.Services.AddBlazoredLocalStorage(config =>
 //{
@@ -59,7 +59,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseWebSockets();
 
 //app.UseStaticFiles();
 app.MapStaticAssets();
