@@ -12,9 +12,10 @@ namespace Models
     public class Salary
     {
         [Key]
-        [Column(TypeName = "Varchar(5)")]
+        [Column(TypeName = "Varchar(5)", Order = 0)]
         public string SalaryCode { get; set; }
 
+        [Key, Column(Order = 1)]
         [Required(ErrorMessage = "Salary type is required")]
         public string SalaryType { get; set; }
 

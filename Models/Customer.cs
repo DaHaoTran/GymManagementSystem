@@ -11,12 +11,12 @@ namespace Models
     public class Customer
     {
         [Key]
-        [Column(TypeName = "Varchar(12)")]
+        [Column(TypeName = "Varchar(12)", Order = 0)]
         public string CustomerCode { get; set; }
 
         public string CustomerName { get; set; }
 
-        [Column(TypeName = "Char(10)")]
+        [Key, Column(TypeName = "Char(10)", Order = 1)]
         public string PhoneNumber { get; set; }
 
         public bool IsBanned { get; set; }

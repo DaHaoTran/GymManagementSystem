@@ -11,9 +11,10 @@ namespace Models
     public class ServicePackage
     {
         [Key]
-        [Column(TypeName = "Varchar(5)")]
+        [Column(TypeName = "Varchar(5)", Order = 0)]
         public string PackageCode { get; set; }
 
+        [Key, Column(Order = 1)]
         [Required(ErrorMessage = "Package name is required")]
         public string PackageName { get; set; }
 

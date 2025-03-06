@@ -11,7 +11,7 @@ namespace Models
     public class Account
     {
         [Key]
-        [Column(TypeName = "Varchar(10)")]
+        [Column(TypeName = "Varchar(10)", Order = 0)]
         public string AccountCode { get; set; }
 
         [Required(ErrorMessage = "Full name is required")]
@@ -24,13 +24,13 @@ namespace Models
         [Required(ErrorMessage = "Phone number is required")]
         [RegularExpression(@"^\d+$", ErrorMessage = "Phone number does not include letters, special characters")]
         [StringLength(10, ErrorMessage = "Phone number must be 10 digits", MinimumLength = 10)]
-        [Column(TypeName = "Char(10)")]
+        [Key, Column(TypeName = "Char(10)", Order = 1)]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Id number is required")]
         [RegularExpression(@"^\d+$", ErrorMessage = "Id number does not include letters, special characters")]
         [StringLength(12, ErrorMessage = "Id number must be 12 digits", MinimumLength = 12)]
-        [Column(TypeName = "Char(12)")]
+        [Key, Column(TypeName = "Char(12)", Order = 2)]
         public string IdNumber { get; set; }
 
         [Required(ErrorMessage = "Living at is required")]

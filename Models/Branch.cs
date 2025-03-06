@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,12 +12,13 @@ namespace Models
     public class Branch
     {
         [Key]
-        [Column(TypeName = "Varchar(6)")]
+        [Column(TypeName = "Varchar(6)", Order = 0)]
         public string BranchCode { get; set; }
 
         [Required(ErrorMessage = "Branch name is required")]
         public string BranchName { get; set; }
 
+        [Key, Column(Order = 1)]
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
 
