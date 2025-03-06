@@ -88,7 +88,11 @@ namespace API.Controllers
         {
             if(customer == null) { return BadRequest(); }
             var newCustomer = await _customerSvc.AddANewCustomer(customer);
-            return Ok(newCustomer);
+            
+            var getCustomer = await _customerSvc.GetTheCustomerByPhoneNumber(customer.PhoneNumber);
+            if (getCustomer.Count() <= 0) { return NotFound(); }
+
+            return Ok(getCustomer.First());
         }
 
         /// <summary>

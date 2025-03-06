@@ -81,7 +81,12 @@ namespace API.Controllers
         {
             if(account == null) { return BadRequest(); }
             var newAccount = await _accountSvc.AddANewAccount(account);
-            return Ok(newAccount);
+            
+            var getAccount = await _accountSvc.GetTheAccountsByIdNumber(account.IdNumber);
+            if(getAccount.Count() <= 0) { getAccount = await _accountSvc.GetTheAccountsByPhoneNumber(account.PhoneNumber); }
+            if (getAccount.Count() <= 0) { return NotFound(); }
+
+            return Ok(getAccount.First());
         }
 
         /// <summary>

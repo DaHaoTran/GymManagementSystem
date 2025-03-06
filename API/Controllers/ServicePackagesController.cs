@@ -65,7 +65,11 @@ namespace API.Controllers
         {
             if(servicePackage == null) { return BadRequest(); }
             var newSP = await _sPSvc.AddANewServicePackage(servicePackage);
-            return Ok(newSP);
+            
+            var getPackage = await _sPSvc.GetTheServicePackagesByPackageName(servicePackage.PackageName);
+            if (getPackage.Count() <= 0) { return NotFound(); }
+
+            return Ok(getPackage.First());
         }
 
         /// <summary>

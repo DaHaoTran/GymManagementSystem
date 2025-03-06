@@ -50,7 +50,11 @@ namespace API.Controllers
         {
             if(salary == null) { return BadRequest(); }
             var newSalary = await _salarySvc.AddANewSalary(salary);
-            return Ok(newSalary);
+            
+            var getSalary = await _salarySvc.GetTheSalaryBySalaryType(salary.SalaryType);
+            if (getSalary.Count() <= 0) { return NotFound(); }
+
+            return Ok(getSalary.First());
         }
 
         /// <summary>

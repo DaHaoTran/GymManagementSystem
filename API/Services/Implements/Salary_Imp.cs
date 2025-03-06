@@ -56,5 +56,10 @@ namespace API.Services.Implements
         {
             return await _dBContext.Salaries.Where(x => x.SalaryCode == salaryCode).FirstOrDefaultAsync();
         }
+
+        public async Task<List<Salary>> GetTheSalaryBySalaryType(string salaryType)
+        {
+            return await _dBContext.Salaries.Where(x => x.SalaryType.Contains(salaryType, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+        }
     }
 }
