@@ -148,6 +148,9 @@ namespace Client_FAU.Components.Pages
             ClearForm();
             Thread.Sleep(500);
             Load.IsLoading  = false;
+
+            Thread.Sleep(500);
+            await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
         private async Task AddAccountDataBase()
@@ -175,6 +178,9 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
+
+            Thread.Sleep(500);
+            await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
         private async Task EditAccountDataBase()
@@ -202,6 +208,9 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
+
+            Thread.Sleep(500);
+            await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
         private async Task UpdateAccountDataBase()

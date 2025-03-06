@@ -55,6 +55,9 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
             await JSRuntime2!.InvokeVoidAsync("UndisplayServiceSample");
+
+            Thread.Sleep(500);
+            await JSRuntime2!.InvokeVoidAsync("Reload");
         }
 
         protected async Task EditServiceDataBase(ServicePackage servicePackage)
@@ -99,6 +102,9 @@ namespace Client_FAU.Components.Pages
             ClearForm2();
             Thread.Sleep(500);
             Load.IsLoading  = false;
+
+            Thread.Sleep(500);
+            await JSRuntime2!.InvokeVoidAsync("Reload");
         }
 
         protected async Task SetDeleteStateForEditDataBase(ServicePackage servicePackage)

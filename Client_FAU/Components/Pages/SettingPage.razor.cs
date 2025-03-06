@@ -60,6 +60,9 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("UndisplaySalarySample");
+
+            Thread.Sleep(500);
+            await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
         private async Task EditSalaryDataBase(Salary salary)
@@ -100,6 +103,9 @@ namespace Client_FAU.Components.Pages
             ClearForm();
             Thread.Sleep(500);
             Load.IsLoading  = false;
+
+            Thread.Sleep(500);
+            await JSRuntime!.InvokeVoidAsync("Reload");
         }
         
         private async Task DeleteSalaryDataBase(string salaryCode)
@@ -136,6 +142,9 @@ namespace Client_FAU.Components.Pages
                 }
                 Thread.Sleep(500);
                 Load.IsLoading  = false;
+
+                Thread.Sleep(500);
+                await JSRuntime!.InvokeVoidAsync("Reload");
             }
         }
 
