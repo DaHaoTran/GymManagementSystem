@@ -75,7 +75,7 @@ namespace API.Controllers
             if(branch == null) { return BadRequest(); }
             var newBranch = await _branchSvc.AddANewBranch(branch);
             
-            var getBranch = await _branchSvc.GetTheBranchesByBranchName(branch.Address);
+            var getBranch = await _branchSvc.GetTheBranchesByAddress(branch.Address);
             if (getBranch.Count() <= 0) { return NotFound(); }
 
             return Ok(getBranch.First());

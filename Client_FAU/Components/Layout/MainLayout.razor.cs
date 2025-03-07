@@ -61,7 +61,7 @@ namespace Client_FAU.Components.Layout
 
         private async Task GetBranchList()
         {
-            if (Lists.branches != null) { return; }
+            if (Lists.branches.Count() > 0) { return; }
             var getBranches = await BranchBsn!.GetBranchList(9);
             Lists.branches = getBranches;
         }
