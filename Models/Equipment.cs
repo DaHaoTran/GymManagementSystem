@@ -14,13 +14,17 @@ namespace Models
         [Column(TypeName = "Varchar(10)")]
         public string EquipCode { get; set; }
 
+        [Required(ErrorMessage = "Branch code is required")]
         [Column(TypeName = "Varchar(6)")]
         public string BranchCode { get; set; }
 
+        [Required(ErrorMessage = "Equip name is required")]
         public string EquipName { get; set; }
 
+        [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
 
+        [Required(ErrorMessage = "Note is required")]
         public string? Note { get; set; }
 
         [Column(TypeName = "Varchar(10)")]

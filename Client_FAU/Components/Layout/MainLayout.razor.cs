@@ -21,6 +21,8 @@ namespace Client_FAU.Components.Layout
         private Account_Int? AccountBsn { get; set; }
         [Inject]
         private Branch_Int? BranchBsn { get; set; }
+        [Inject]
+        private Equipment_Int? EquipBsn { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -64,6 +66,13 @@ namespace Client_FAU.Components.Layout
             if (Lists.branches.Count() > 0) { return; }
             var getBranches = await BranchBsn!.GetBranchList(9);
             Lists.branches = getBranches;
+        }
+
+        private async Task GetEquipmentList()
+        {
+            if(Lists.equipment.Count() > 0) { return; }
+            var getEquipment = await EquipBsn!.GetEquipmentList(0);
+            Lists.equipment = getEquipment;
         }
     }
 }
