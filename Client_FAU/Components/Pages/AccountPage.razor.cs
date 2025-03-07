@@ -133,12 +133,12 @@ namespace Client_FAU.Components.Pages
                 var result = await AccountBsn!.EditAnExistAccount(account);
                 if (result != null)
                 {
-                    Notification.message = $"Edit {account.AccountCode} successfully !";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateAccountsData(result);
                 }
                 else
                 {
-                    Notification.message = $"Edit {account.AccountCode} failed. Problems arise !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             }
             catch (Exception ex)
@@ -149,7 +149,7 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
@@ -162,12 +162,12 @@ namespace Client_FAU.Components.Pages
                 var result = await AccountBsn!.AddANewAccount(Model!);
                 if (result != null)
                 {
-                    Notification.message = "Add new account successfully !";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateAccountsData(result);
                 }
                 else
                 {
-                    Notification.message = "Add new account failed. Problems arise !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             }
             catch (Exception ex)
@@ -179,7 +179,7 @@ namespace Client_FAU.Components.Pages
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
@@ -192,12 +192,12 @@ namespace Client_FAU.Components.Pages
                 var result = await AccountBsn!.EditAnExistAccount(Model!);
                 if (result != null)
                 {
-                    Notification.message = $"Edit {Model!.AccountCode} successfully !";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateAccountsData(result);
                 }
                 else
                 {
-                    Notification.message = $"Edit {Model!.AccountCode} failed. Problems arise !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             }
             catch (Exception ex)
@@ -209,7 +209,7 @@ namespace Client_FAU.Components.Pages
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 

@@ -16,6 +16,12 @@
 
 <body>
     <Routes @rendermode=InteractiveServer/>
+    <audio id="success-audio">
+        <source src="/audios/success.mp3" type="audio/mp3">
+    </audio>
+    <audio id="error-audio">
+        <source src="/audios/error.mp3" type="audio/mp3">
+    </audio>
     <noscript class="text-bg-danger">There are not connect js !</noscript>
     <script src="_framework/blazor.web.js"></script>
     <script src="/dist/js/bootstrap.min.js"></script>
@@ -31,6 +37,14 @@
             var modal = document.getElementById('editmodal');
             var bsModal = bootstrap.Modal.getInstance(modal);
             bsModal.hide();
+        }
+        function PlaySuccessAudio() {
+            var audio =document.getElementById('success-audio');
+            audio.play();
+        }
+        function PlayErrorAudio() {
+            var audio =document.getElementById('error-audio');
+            audio.play();
         }
     </script>
 </body>

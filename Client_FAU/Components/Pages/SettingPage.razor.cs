@@ -43,12 +43,12 @@ namespace Client_FAU.Components.Pages
 
                 if (result != null)
                 {
-                    Notification.message = "Add new salary successfully";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateSalariesData(result);
                 }
                 else
                 {
-                    Notification.message = "Add new salary failed. Problems arise !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             } catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace Client_FAU.Components.Pages
             Load.IsLoading  = false;
             await JSRuntime!.InvokeVoidAsync("UndisplaySalarySample");
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
@@ -87,12 +87,12 @@ namespace Client_FAU.Components.Pages
 
                 if(result != null)
                 {
-                    Notification.message = $"Edit {salary.SalaryType} Successfully";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateSalariesData(salary);
                 }
                 else
                 {
-                    Notification.message = "Edit salary failed. Problems arise !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             } catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
         
@@ -126,12 +126,12 @@ namespace Client_FAU.Components.Pages
                     var result = await SalaryBsn!.DeleteAnExistSalary(salaryCode);
                     if (result != null)
                     {
-                        Notification.message = $"Delete {result.SalaryType} Successfully";
+                        await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                         RemoveSalariesFromData(result);
                     }
                     else
                     {
-                        Notification.message = "Delete salary failed. Problems arise !";
+                        await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                     }
                 }
                 catch (Exception ex)
@@ -141,7 +141,7 @@ namespace Client_FAU.Components.Pages
                 Thread.Sleep(500);
                 Load.IsLoading  = false;
 
-                Thread.Sleep(500);
+                Thread.Sleep(100);
                 await JSRuntime!.InvokeVoidAsync("Reload");
             }
         }

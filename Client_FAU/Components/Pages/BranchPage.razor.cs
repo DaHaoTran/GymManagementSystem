@@ -21,12 +21,6 @@ namespace Client_FAU.Components.Pages
         [SupplyParameterFromForm]
         private Branch? Model { get; set; } = new();
 
-        protected override void OnInitialized() 
-        {
-            Thread.Sleep(200);
-            Notification.message = string.Empty;
-        }
-
         private void ClearForm() => Model = new();
 
         private void SetModelState(ModalState.State state)
@@ -78,12 +72,12 @@ namespace Client_FAU.Components.Pages
 
                 if (result != null)
                 {
-                    Notification.message = "Add new Branch Successfully";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateBranchesData(result);
                 }
                 else
                 {
-                    Notification.message = "Add new Branch failed. There may be problem !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             } catch (Exception ex)
             {
@@ -94,7 +88,7 @@ namespace Client_FAU.Components.Pages
             Load.IsLoading = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
@@ -108,12 +102,12 @@ namespace Client_FAU.Components.Pages
 
                 if (result != null)
                 {
-                    Notification.message = $"Edit {Model!.BranchCode} successfully";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateBranchesData(result);
                 }
                 else
                 {
-                    Notification.message = $"Edit {Model!.BranchCode} failed. Problems arise !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             } catch(Exception ex)
             {
@@ -124,7 +118,7 @@ namespace Client_FAU.Components.Pages
             Load.IsLoading = false;
             await JSRuntime!.InvokeVoidAsync("CloseEditModal");
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
@@ -137,10 +131,11 @@ namespace Client_FAU.Components.Pages
                 var result = await BranchBsn!.EditAnExistBranch(branch);
                 if(result != null)
                 {
-                    Notification.message = $"Edit {branch.BranchCode} successfully";
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
+                    UpdateBranchesData(result);
                 } else
                 {
-                    Notification.message = $"Edit {branch.BranchCode} failed. Problems arise !";
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
                 }
             } catch (Exception ex)
             {
@@ -150,7 +145,7 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading = false;
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 

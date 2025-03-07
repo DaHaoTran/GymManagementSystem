@@ -38,12 +38,12 @@ namespace Client_FAU.Components.Pages
 
                 if (result != null)
                 {
-                    Notification.message = "Add new service package successfully";
+                    await JSRuntime2!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateServicePackagesData(result);
                 }
                 else
                 {
-                    Notification.message = "Add new service package failed. Problems arise !";
+                    await JSRuntime2!.InvokeVoidAsync("PlayErrorAudio");
                 }
             } catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace Client_FAU.Components.Pages
             Load.IsLoading  = false;
             await JSRuntime2!.InvokeVoidAsync("UndisplayServiceSample");
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime2!.InvokeVoidAsync("Reload");
         }
 
@@ -85,12 +85,12 @@ namespace Client_FAU.Components.Pages
                 var result = await SPBsn!.EditAnExistServicePackage(servicePackage);
                 if (result != null)
                 {
-                    Notification.message = $"Edit {result.PackageCode} successfully";
+                    await JSRuntime2!.InvokeVoidAsync("PlaySuccessAudio");
                     UpdateServicePackagesData(result);
                 }
                 else
                 {
-                    Notification.message = "Edit service package failed. Problems arise !";
+                    await JSRuntime2!.InvokeVoidAsync("PlayErrorAudio");
                 }
             }
             catch (Exception ex)
@@ -101,7 +101,7 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading  = false;
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime2!.InvokeVoidAsync("Reload");
         }
 
