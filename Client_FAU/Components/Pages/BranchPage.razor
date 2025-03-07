@@ -23,7 +23,7 @@
             @Notification.message
         </div>
         <div class="w-100 d-flex justify-content-end align-items-center">
-            <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />
+            <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="() => Notification.message = string.Empty" />
         </div>
     </div>
 }
