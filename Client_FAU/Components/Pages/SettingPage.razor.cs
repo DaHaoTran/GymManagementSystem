@@ -29,7 +29,7 @@ namespace Client_FAU.Components.Pages
         {
             Model!.SalaryType = Model.SalaryType!.Trim();
             Model!.SalaryCode = "SA";
-            Model.PricesApply = double.Parse(Model.GetPricesApply);
+            Model.PricesApply = double.Parse(Model.GetPricesApply.Trim());
             Model.UpdateDate = DateTime.UtcNow;
         }
 

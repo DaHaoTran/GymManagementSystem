@@ -28,7 +28,7 @@ namespace Client_FAU.Components.Pages
             ModalState.current_state = state;
         }
 
-        private void SetModelEdit(Account account)
+        private void SetEditState(Account account)
         {
             Model!.AccountCode = account.AccountCode;
             Model.FullName = account.FullName;

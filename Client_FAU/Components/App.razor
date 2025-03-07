@@ -26,6 +26,13 @@
             window.location.reload();
         }
     </script>
+    <script type="text/javascript">
+        function CloseEditModal() {
+            var modal = document.getElementById('editmodal');
+            var bsModal = bootstrap.Modal.getInstance(modal);
+            bsModal.hide();
+        }
+    </script>
 </body>
 
 </html>

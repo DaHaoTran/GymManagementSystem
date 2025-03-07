@@ -112,7 +112,7 @@
                                     @if (account.IsDeleted == false)
                                     {
                                         <div class="col-1 a-container edit d-flex justify-content-center align-items-center">
-                                            <div class="image w-100" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick="() => SetModelEdit(account)">
+                                            <div class="image w-100" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick="() => SetEditState(account)">
                                                 <img class="w-100" src="images/edit.png" alt="Edit" />
                                             </div>
                                         </div>
@@ -199,12 +199,4 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    function CloseEditModal() {
-        var modal = document.getElementById('editmodal');
-        var bsModal = bootstrap.Modal.getInstance(modal);
-        bsModal.hide();
-    }
-</script>
 
