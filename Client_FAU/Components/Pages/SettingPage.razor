@@ -19,14 +19,11 @@
     </li>
 </ul>
 
-@if (!string.IsNullOrEmpty(message) || !string.IsNullOrEmpty(message2))
+@if (!string.IsNullOrEmpty(Notification.message))
 {
-    // Code
-    var messageSet = !string.IsNullOrEmpty(message) ? message : message2;
-
     <div class="alert alert-info mt-2 d-flex">
         <div class="w-50">
-            @messageSet
+            @Notification.message
         </div>
         <div class="w-100 d-flex justify-content-end align-items-center">
             <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" />

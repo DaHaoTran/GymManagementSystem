@@ -18,8 +18,6 @@ namespace Client_FAU.Components.Pages
         [SupplyParameterFromForm]
         protected ServicePackage? Model2 { get; set; } = new();
 
-        protected string message2 = string.Empty;
-
         protected void ClearForm2() => Model2 = new();
 
         protected void SetServicePackageProperties()
@@ -40,16 +38,16 @@ namespace Client_FAU.Components.Pages
 
                 if (result != null)
                 {
-                    message2 = "Add new service package successfully";
+                    Notification.message = "Add new service package successfully";
                     UpdateServicePackagesData(result);
                 }
                 else
                 {
-                    message2 = "Add new service package failed. Problems arise !";
+                    Notification.message = "Add new service package failed. Problems arise !";
                 }
             } catch (Exception ex)
             {
-                message2 = ex.Message;
+                Notification.message = ex.Message;
             }
             ClearForm2();
             Thread.Sleep(500);
@@ -87,17 +85,17 @@ namespace Client_FAU.Components.Pages
                 var result = await SPBsn!.EditAnExistServicePackage(servicePackage);
                 if (result != null)
                 {
-                    message2 = $"Edit {result.PackageCode} successfully";
+                    Notification.message = $"Edit {result.PackageCode} successfully";
                     UpdateServicePackagesData(result);
                 }
                 else
                 {
-                    message2 = "Edit service package failed. Problems arise !";
+                    Notification.message = "Edit service package failed. Problems arise !";
                 }
             }
             catch (Exception ex)
             {
-                message2 = ex.Message;
+                Notification.message = ex.Message;
             }
             ClearForm2();
             Thread.Sleep(500);

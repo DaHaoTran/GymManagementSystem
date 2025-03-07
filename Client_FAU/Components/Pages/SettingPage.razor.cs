@@ -23,8 +23,6 @@ namespace Client_FAU.Components.Pages
         [SupplyParameterFromForm]
         private Salary? Model { get; set; } = new();
 
-        private string message = string.Empty;
-
         private void ClearForm() => Model = new();
 
         private void SetSalaryProperties()
@@ -45,16 +43,16 @@ namespace Client_FAU.Components.Pages
 
                 if (result != null)
                 {
-                    message = "Add new salary successfully";
+                    Notification.message = "Add new salary successfully";
                     UpdateSalariesData(result);
                 }
                 else
                 {
-                    message = "Add new salary failed. Problems arise !";
+                    Notification.message = "Add new salary failed. Problems arise !";
                 }
             } catch (Exception ex)
             {
-                message = ex.Message;
+                Notification.message = ex.Message;
             }
             ClearForm();
             Thread.Sleep(500);
@@ -89,16 +87,16 @@ namespace Client_FAU.Components.Pages
 
                 if(result != null)
                 {
-                    message = $"Edit {salary.SalaryType} Successfully";
+                    Notification.message = $"Edit {salary.SalaryType} Successfully";
                     UpdateSalariesData(salary);
                 }
                 else
                 {
-                    message = "Edit salary failed. Problems arise !";
+                    Notification.message = "Edit salary failed. Problems arise !";
                 }
             } catch (Exception ex)
             {
-                message = ex.Message;
+                Notification.message = ex.Message;
             }
             ClearForm();
             Thread.Sleep(500);
@@ -128,17 +126,17 @@ namespace Client_FAU.Components.Pages
                     var result = await SalaryBsn!.DeleteAnExistSalary(salaryCode);
                     if (result != null)
                     {
-                        message = $"Delete {result.SalaryType} Successfully";
+                        Notification.message = $"Delete {result.SalaryType} Successfully";
                         RemoveSalariesFromData(result);
                     }
                     else
                     {
-                        message = "Delete salary failed. Problems arise !";
+                        Notification.message = "Delete salary failed. Problems arise !";
                     }
                 }
                 catch (Exception ex)
                 {
-                    message = ex.Message;
+                    Notification.message = ex.Message;
                 }
                 Thread.Sleep(500);
                 Load.IsLoading  = false;
@@ -173,7 +171,7 @@ namespace Client_FAU.Components.Pages
 
         private void ShowInvalidMessage()
         {
-            message = "The inputs are invalid, check again !";
+            Notification.message = "The inputs are invalid, check again !";
         }
     }
 }
