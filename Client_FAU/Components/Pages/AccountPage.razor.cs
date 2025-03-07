@@ -19,7 +19,7 @@ namespace Client_FAU.Components.Pages
         [SupplyParameterFromForm]
         private Account? Model { get; set; } = new();
 
-        private string message = string.Empty;
+        private string str = string.Empty;
 
         private void ClearForm() => Model = new();
 
@@ -65,7 +65,7 @@ namespace Client_FAU.Components.Pages
             var getRole = Lists.roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
             if(getRole == null || getRole == default) 
             {
-                message = "Role is missing !";
+                Notification.message = "Role is missing !";
                 return; 
             }
             Model.RoleId = getRole.OrderNumber;
@@ -73,7 +73,7 @@ namespace Client_FAU.Components.Pages
             var getSalary = Lists.salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
             if (getSalary == null || getSalary == default)
             {
-                message = "Salary type is missing !";
+                Notification.message = "Salary type is missing !";
                 return;
             }
             Model.SalaryCode = getSalary.SalaryCode;
@@ -91,7 +91,7 @@ namespace Client_FAU.Components.Pages
             var getRole = Lists.roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
             if (getRole == null || getRole == default)
             {
-                message = "Role is missing !";
+                Notification.message = "Role is missing !";
                 return;
             }
             Model.RoleId = getRole.OrderNumber;
@@ -99,7 +99,7 @@ namespace Client_FAU.Components.Pages
             var getSalary = Lists.salaries!.Where(x => x.SalaryType == Model.GetSalaryType).FirstOrDefault();
             if (getSalary == null || getSalary == default)
             {
-                message = "Salary type is missing !";
+                Notification.message = "Salary type is missing !";
                 return;
             }
             Model.SalaryCode = getSalary.SalaryCode;
@@ -133,17 +133,17 @@ namespace Client_FAU.Components.Pages
                 var result = await AccountBsn!.EditAnExistAccount(account);
                 if (result != null)
                 {
-                    message = $"Edit {account.AccountCode} successfully !";
+                    Notification.message = $"Edit {account.AccountCode} successfully !";
                     UpdateAccountsData(result);
                 }
                 else
                 {
-                    message = $"Edit {account.AccountCode} failed. Problems arise !";
+                    Notification.message = $"Edit {account.AccountCode} failed. Problems arise !";
                 }
             }
             catch (Exception ex)
             {
-                message = ex.Message;
+                Notification.message = ex.Message;
             }
             ClearForm();
             Thread.Sleep(500);
@@ -162,17 +162,17 @@ namespace Client_FAU.Components.Pages
                 var result = await AccountBsn!.AddANewAccount(Model!);
                 if (result != null)
                 {
-                    message = "Add new account successfully !";
+                    Notification.message = "Add new account successfully !";
                     UpdateAccountsData(result);
                 }
                 else
                 {
-                    message = "Add new account failed. Problems arise !";
+                    Notification.message = "Add new account failed. Problems arise !";
                 }
             }
             catch (Exception ex)
             {
-                message = ex.Message;
+                Notification.message = ex.Message;
             }
             ClearForm();
             Thread.Sleep(500);
@@ -192,17 +192,17 @@ namespace Client_FAU.Components.Pages
                 var result = await AccountBsn!.EditAnExistAccount(Model!);
                 if (result != null)
                 {
-                    message = $"Edit {Model!.AccountCode} successfully !";
+                    Notification.message = $"Edit {Model!.AccountCode} successfully !";
                     UpdateAccountsData(result);
                 }
                 else
                 {
-                    message = $"Edit {Model!.AccountCode} failed. Problems arise !";
+                    Notification.message = $"Edit {Model!.AccountCode} failed. Problems arise !";
                 }
             }
             catch (Exception ex)
             {
-                message = ex.Message;
+                Notification.message = ex.Message;
             }
             ClearForm();
             Thread.Sleep(500);
@@ -226,6 +226,32 @@ namespace Client_FAU.Components.Pages
                 default:
                     break;
             }
+        }
+
+        private async Task FindAccountInDatabaseBySeachString()
+        {
+            Load.IsLoading = true;
+            try
+            {
+                var result = await AccountBsn!.GetTheAccountsBySearchString(str.Trim(), 9);
+                if (result != null)
+                {
+                    Lists.accounts = result;
+                    Notification.message = "Founded !";
+                }
+                else
+                {
+                    Notification.message = "Problem arise !";
+                }
+            }
+            catch (Exception ex)
+            {
+                Notification.message = ex.Message;
+            }
+            Load.IsLoading = false;
+
+            Thread.Sleep(500);
+            await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
         private void UpdateAccountsData(Account account)
