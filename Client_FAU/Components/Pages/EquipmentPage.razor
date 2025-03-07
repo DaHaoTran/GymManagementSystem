@@ -1,14 +1,33 @@
 ﻿@page "/equipment"
 @using Models
+@using Client_FAU.Variables
 
 <PageTitle>Equipment</PageTitle>
+
+@if(Load.IsLoading)
+{
+    <Loading></Loading>
+}
+
+@if (!string.IsNullOrEmpty(Notification.message))
+{
+    <div class="alert alert-info mt-2 d-flex">
+        <div class="w-50">
+            @Notification.message
+        </div>
+        <div class="w-100 d-flex justify-content-end align-items-center">
+            <a class="btn btn-close" data-bs-dismiss="alert" aria-label="Close" @onclick="() => Notification.message = string.Empty"/>
+        </div>
+    </div>
+}
 
 <!-- Modal -->
 <div class="modal fade" id="editmodal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <EditForm Model="@Model" FormName="Edit Equipment">
+                <EditForm Model="@Model" FormName="Edit Equipment" OnValidSubmit="UpdateEquipmentDataBase">
+                    <DataAnnotationsValidator />
                     <div class="row">
                         <div class="col-6">
                             <div class="mb-3">
@@ -21,7 +40,7 @@
                                         <option value="3">Three</option>
                                     </InputSelect> *@
                                     <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
-                                        <RadzenDropDown @ref=@radzenDropDown @bind-SearchText=sip FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                        <RadzenDropDown @ref=@radzenDropDown @bind-SearchText=sip FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowVirtualization="true"
                                                         Data=@_branches TextProperty="@nameof(Equipment.BranchCode)" ValueProperty="@nameof(Equipment.BranchCode)" AllowClear="true" @bind-Value=Model!.BranchCode Style="width: 100%; max-width: 400px;" Name="DropDownFiltering" />
                                     </RadzenStack>
                                 </div>
@@ -41,6 +60,7 @@
                                 <label for="Note" class="form-label">Note</label>
                                 <InputTextArea type="text" class="form-control" id="Note" @bind-Value=Model.Note />
                             </div>
+                            <ValidationSummary />
                         </div>
                     </div>
                 </EditForm>
@@ -59,7 +79,7 @@
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
             <RadzenText TextStyle="TextStyle.H3">Customer Management</RadzenText>
             <!-- create new button -->
-            <RadzenButton data-bs-toggle="modal" data-bs-target="#editmodal"
+            <RadzenButton data-bs-toggle="modal" data-bs-target="#editmodal" @onclick=SetAddState
                           Icon="add_circle" Size="ButtonSize.Medium" class="float-left rz-float-left rz-mt-2 rz-ml-2" />
             <!-- form field -->
             <RadzenFormField AllowFloatingLabel="true" Text="Search" Variant="Variant.Text" class="float-end rz-float-right">
@@ -96,6 +116,7 @@
         <RadzenDataGridColumn Property="@nameof(Equipment.BranchCode)" Filterable="false" Title="BranchCode" Frozen="true" Width="160px" TextAlign="TextAlign.Left" />
         <RadzenDataGridColumn Property="@nameof(Equipment.EquipName)" Title="EquipName" Width="160px" />
         <RadzenDataGridColumn Property="@nameof(Equipment.Status)" Title="Status" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(Equipment.Note)" Title="Status" Width="160px" />
         <RadzenDataGridColumn Property="@nameof(Equipment.StaffUpdate)" Title="StaffUpdate" Width="160px" />
         <RadzenDataGridColumn Property="@nameof(Equipment.AdminUpdate)" Title="AdminUpdate" Width="160px" />
     </Columns>
