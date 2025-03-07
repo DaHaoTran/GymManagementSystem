@@ -61,7 +61,7 @@ namespace API.Services.Implements
 
         public async Task<List<ServicePackage>> GetTheServicePackagesByPackageName(string packageName)
         {
-            return await _dBContext.ServicePackages.Where(x => x.PackageName.Contains(packageName, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.ServicePackages.Where(x => x.PackageName.Contains(packageName)).ToListAsync();
         }
     }
 }

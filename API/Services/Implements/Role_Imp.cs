@@ -56,7 +56,7 @@ namespace API.Services.Implements
 
         public Task<List<Role>> GetTheRoleByRoleName(string roleName)
         {
-            return _dBContext.Roles.Where(x => x.RoleName.Contains(roleName, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return _dBContext.Roles.Where(x => x.RoleName.Contains(roleName)).ToListAsync();
         }
     }
 }

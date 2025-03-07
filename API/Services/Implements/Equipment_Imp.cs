@@ -64,7 +64,7 @@ namespace API.Services.Implements
 
         public async Task<List<Equipment>> GetTheEquipmentByEquipName(string equipName)
         {
-            return await _dBContext.Equipment.Where(x => x.EquipName.Contains(equipName, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.Equipment.Where(x => x.EquipName.Contains(equipName)).ToListAsync();
         }
     }
 }

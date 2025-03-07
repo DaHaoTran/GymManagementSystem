@@ -59,7 +59,7 @@ namespace API.Services.Implements
 
         public async Task<List<Salary>> GetTheSalaryBySalaryType(string salaryType)
         {
-            return await _dBContext.Salaries.Where(x => x.SalaryType.Contains(salaryType, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.Salaries.Where(x => x.SalaryType.Contains(salaryType)).ToListAsync();
         }
     }
 }

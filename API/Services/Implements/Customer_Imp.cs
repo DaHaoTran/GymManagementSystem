@@ -66,7 +66,7 @@ namespace API.Services.Implements
 
         public async Task<List<Customer>> GetTheCustomersByCustomerName(string customerName)
         {
-            return await _dBContext.Customers.Where(x => x.CustomerName.Contains(customerName, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.Customers.Where(x => x.CustomerName.Contains(customerName)).ToListAsync();
         }
     }
 }

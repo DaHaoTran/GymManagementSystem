@@ -75,12 +75,12 @@ namespace API.Services.Implements
 
         public async Task<List<Account>> GetTheAccountsByAddress(string address)
         {
-            return await _dBContext.Accounts.Where(x => x.LivingAt.Contains(address, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.Accounts.Where(x => x.LivingAt.Contains(address)).ToListAsync();
         }
 
         public async Task<List<Account>> GetTheAccountsByFullName(string fullName)
         {
-            return await _dBContext.Accounts.Where(x => x.FullName.Contains(fullName, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.Accounts.Where(x => x.FullName.Contains(fullName)).ToListAsync();
         }
     }
 }

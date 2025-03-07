@@ -64,12 +64,12 @@ namespace API.Services.Implements
 
         public async Task<List<EmployeeSalary>> GetTheEmployeeSalariesByBranchName(string branchName)
         {
-            return await _dBContext.EmployeeSalaries.Where(x => x.BranchName.Contains(branchName, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.EmployeeSalaries.Where(x => x.BranchName.Contains(branchName)).ToListAsync();
         }
 
         public async Task<List<EmployeeSalary>> GetTheEmployeeSalariesByFullName(string fullName)
         {
-            return await _dBContext.EmployeeSalaries.Where(x => x.FullName.Contains(fullName, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _dBContext.EmployeeSalaries.Where(x => x.FullName.Contains(fullName)).ToListAsync();
         }
 
         public async Task<EmployeeSalary> GetTheEmployeeSalaryByEmployeeSalaryCode(Guid employeeSalaryCode)
