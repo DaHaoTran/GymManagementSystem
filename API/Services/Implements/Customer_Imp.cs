@@ -8,6 +8,11 @@ namespace API.Services.Implements
     public class Customer_Imp : Customer_Int
     {
         private readonly GymManagementSystemDBContext _dBContext;
+        public Customer_Imp(GymManagementSystemDBContext dBContext)
+        {
+            _dBContext = dBContext;
+        }
+
         public async Task<Customer> AddANewCustomer(Customer customer)
         {
             await _dBContext.Customers.AddAsync(customer);
@@ -18,7 +23,7 @@ namespace API.Services.Implements
         public async Task<Customer> DeleteAnExistCustomer(string customerCode)
         {
             var getCustomer = await GetTheCustomerByCustomerCode(customerCode);
-            if(getCustomer == null) { return getCustomer; }
+            if(getCustomer == null) { return getCustomer!; }
 
             _dBContext.Customers.Remove(getCustomer);
             await _dBContext.SaveChangesAsync();
@@ -29,7 +34,7 @@ namespace API.Services.Implements
         public async Task<Customer> EditAnExistCustomer(Customer customer)
         {
             var getCustomer = await GetTheCustomerByCustomerCode(customer.CustomerCode);
-            if(getCustomer == null) { return getCustomer; }
+            if(getCustomer == null) { return getCustomer!; }
 
             getCustomer.CustomerName = customer.CustomerName;
             getCustomer.PhoneNumber = customer.PhoneNumber;
