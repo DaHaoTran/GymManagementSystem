@@ -66,7 +66,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<List<Branch>> GetTheBranchesBySearchString(string str, int limit)
         {
-            var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}?str={str}&limit={limit}");
+            var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/filter?str={str}&limit={limit}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Branch>>(apiResponse)!;
