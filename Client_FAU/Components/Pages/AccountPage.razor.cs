@@ -228,8 +228,9 @@ namespace Client_FAU.Components.Pages
             }
         }
 
-        private async Task FindAccountInDatabaseBySeachString()
+        private async Task FindAccountsInDatabase()
         {
+            if(string.IsNullOrEmpty(str)) { return; }
             Load.IsLoading = true;
             try
             {
@@ -237,11 +238,10 @@ namespace Client_FAU.Components.Pages
                 if (result != null)
                 {
                     Lists.accounts = result;
-                    Notification.message = "Founded !";
                 }
                 else
                 {
-                    Notification.message = "Problem arise !";
+                    Lists.accounts = new List<Account>();
                 }
             }
             catch (Exception ex)
@@ -250,7 +250,7 @@ namespace Client_FAU.Components.Pages
             }
             Load.IsLoading = false;
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 

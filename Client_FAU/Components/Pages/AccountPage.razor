@@ -1,6 +1,8 @@
 ﻿@page "/account"
 @using Client_FAU.Components.Ingredients;
 @using Client_FAU.Variables
+@using Microsoft.AspNetCore.Antiforgery
+@attribute [RequireAntiforgeryToken(required: true)]
 
 <PageTitle>Account</PageTitle>
 
@@ -9,8 +11,8 @@
         <button class="btn w-25" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick=SetAddState>+</button>
     </div>
     <div class="d-flex justify-content-end col-6">
-        <input type="text" class="form-control me-3" @bind=str />
-        <button class="btn" @onclick=FindAccountInDatabaseBySeachString>Search</button>
+        <input type="text" class="form-control me-3" @bind=str placeholder="Typing full name, address, phone number or id number"/>
+        <button class="btn" @onclick=FindAccountsInDatabase>Search</button>
     </div>
 </div>
 

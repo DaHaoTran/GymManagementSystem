@@ -11,8 +11,8 @@
         <button class="btn w-25" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick=SetAddState>+</button>
     </div>
     <div class="d-flex justify-content-end col-6">
-        <input type="text" class="form-control me-3" />
-        <button class="btn">Search</button>
+        <input type="text" class="form-control me-3" @bind=str placeholder="Typing branch name or address"/>
+        <button class="btn" @onclick=FindBranchesInDatabase>Search</button>
     </div>
 </div>
 

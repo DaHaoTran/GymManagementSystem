@@ -1,6 +1,8 @@
 ﻿@page "/setting"
 @using Client_FAU.Components.Ingredients
 @using Client_FAU.Variables;
+@using Microsoft.AspNetCore.Antiforgery
+@attribute [RequireAntiforgeryToken(required: true)]
 @inherits SettingPageBase
 
 <PageTitle>Setting</PageTitle>

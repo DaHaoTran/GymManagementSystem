@@ -21,6 +21,8 @@ namespace Client_FAU.Components.Pages
         [SupplyParameterFromForm]
         private Branch? Model { get; set; } = new();
 
+        private string str = string.Empty;
+
         private void ClearForm() => Model = new();
 
         private void SetModelState(ModalState.State state)
@@ -162,6 +164,30 @@ namespace Client_FAU.Components.Pages
                 default:
                     break;
             }
+        }
+
+        private async Task FindBranchesInDatabase()
+        {
+            if (string.IsNullOrEmpty(str)) { return; }
+            Load.IsLoading = true;
+            try
+            {
+                var result = await BranchBsn!.GetTheBranchesBySearchString(str.Trim(), 9);
+                if(result != null)
+                {
+                    Lists.branches = result;
+                } else
+                {
+                    Lists.branches = new List<Branch>();
+                }
+            } catch(Exception ex)
+            {
+                Notification.message = ex.Message;
+            }
+            Load.IsLoading = false;
+
+            Thread.Sleep(100);
+            await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
         private void UpdateBranchesData(Branch branch)
