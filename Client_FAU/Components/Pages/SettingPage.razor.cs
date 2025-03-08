@@ -66,21 +66,6 @@ namespace Client_FAU.Components.Pages
         private async Task EditSalaryDataBase(Salary salary)
         {
             Load.IsLoading  = true;
-
-            if(Lists.salaries != null)
-            {
-                var getSalary = Lists.salaries.Where(x => x.SalaryCode == salary.SalaryCode).FirstOrDefault();
-                if (getSalary != null)
-                {
-                    if(getSalary.PricesApply == salary.PricesApply)
-                    {
-                        Load.IsLoading  = false;
-                        return;
-                    }
-                }
-            }
-
-            //Else update the salary
             try
             {
                 var result = await SalaryBsn!.EditAnExistSalary(salary);

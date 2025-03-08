@@ -61,25 +61,6 @@ namespace Client_FAU.Components.Pages
         protected async Task EditServiceDataBase(ServicePackage servicePackage)
         {
             Load.IsLoading  = true;
-
-            if (Lists.servicePackages != null)
-            {
-                var getSP = Lists.servicePackages.Where(x => x.PackageCode == servicePackage.PackageCode).FirstOrDefault();
-                if (getSP != null || getSP != default)
-                {
-                    if(getSP.IsDeleted != servicePackage.IsDeleted) { }
-                    else if (getSP.Price != servicePackage.Price) { }
-                    else if (getSP.MemberQuantity != servicePackage.MemberQuantity) { }
-                    else if (getSP.NumberOfDays != servicePackage.NumberOfDays) { }
-                    else
-                    {
-                        Load.IsLoading  = false;
-                        return;
-                    }
-                }
-            }
-
-            //Else update the service package
             try
             {
                 var result = await SPBsn!.EditAnExistServicePackage(servicePackage);

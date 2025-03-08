@@ -37,6 +37,7 @@ namespace Client_FAU.Components.Pages
 
         private void SetAddState()
         {
+            Model = new();
             ModalState.current_state = ModalState.State.Add;
         }
 
