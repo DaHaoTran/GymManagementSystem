@@ -9,6 +9,7 @@ namespace API.Services.Interfaces
         Task<List<EmployeeSalary>> GetTheEmployeeSalariesByFullName(string fullName);
         Task<List<EmployeeSalary>> GetTheEmployeeSalariesByBranchName(string branchName);
         Task<List<EmployeeSalary>> GetTheEmployeeSalariesByAccountCode(string accountCode);
+        Task<List<EmployeeSalary>> GetTheEmployeeSalariesByMonth(int month, int year);
         Task<EmployeeSalary> AddANewEmployeeSalary(EmployeeSalary employeeSalary);
         Task<EmployeeSalary> EditAnExistEmployeeSalary(EmployeeSalary employeeSalary);
         Task<EmployeeSalary> DeleteAnExistEmployeeSalary(Guid employeeSalaryCode);

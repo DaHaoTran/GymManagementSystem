@@ -72,6 +72,11 @@ namespace API.Services.Implements
             return await _dBContext.EmployeeSalaries.Where(x => x.FullName.Contains(fullName)).ToListAsync();
         }
 
+        public async Task<List<EmployeeSalary>> GetTheEmployeeSalariesByMonth(int month, int year)
+        {
+            return await _dBContext.EmployeeSalaries.Where(x => x.Month.Month == month && x.Month.Year == year).ToListAsync();
+        }
+
         public async Task<EmployeeSalary> GetTheEmployeeSalaryByEmployeeSalaryCode(Guid employeeSalaryCode)
         {
             return await _dBContext.EmployeeSalaries.Where(x => x.EmpSalCode == employeeSalaryCode).FirstOrDefaultAsync();

@@ -81,7 +81,7 @@ namespace API.Controllers
         /// Get the employee salaries by account code
         /// </summary>
         /// <param name="account_code">account code</param>
-        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="sort">sort type (asc or desc) (by Month)</param>
         /// <param name="limit">data retrieval limit</param>
         /// <returns>valid employee salary list</returns>
         [HttpGet("{account_code}/accounts")]
@@ -104,6 +104,15 @@ namespace API.Controllers
                     break;
             }
 
+            return Ok(getESs);
+        }
+
+        [HttpGet("filter2")]
+        public async Task<IActionResult> GetTheEmployeeSalariesByMonth([FromQuery] int month, [FromQuery] int year)
+        {
+            if(month <= 0) { return BadRequest(); }
+            if(year <= 1999) { return BadRequest(); }
+            var getESs = await _ESSvc.GetTheEmployeeSalariesByMonth(month, year);
             return Ok(getESs);
         }
 
