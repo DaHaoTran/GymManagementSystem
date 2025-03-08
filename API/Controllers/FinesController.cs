@@ -18,7 +18,7 @@ namespace API.Controllers
         /// <summary>
         /// Get fine list
         /// </summary>
-        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="sort">sort type (asc or desc) (by Date)</param>
         /// <param name="limit">data retrieval limit</param>
         /// <returns>fine list</returns>
         [HttpGet]
@@ -58,7 +58,7 @@ namespace API.Controllers
         /// Get the fines by customer code
         /// </summary>
         /// <param name="customer_code">customer code</param>
-        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="sort">sort type (asc or desc) (by Date)</param>
         /// <param name="limit">data retrieval limit</param>
         /// <returns>valid customer list</returns>
         [HttpGet("{customer_code}/customers")]

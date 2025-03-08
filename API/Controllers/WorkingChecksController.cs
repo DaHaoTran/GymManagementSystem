@@ -18,7 +18,7 @@ namespace API.Controllers
         /// <summary>
         /// Get working check list
         /// </summary>
-        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="sort">sort type (asc or desc) (by CheckDate)</param>
         /// <param name="limit">data retrieval limit</param>
         /// <returns>working check list</returns>
         [HttpGet]
@@ -59,7 +59,7 @@ namespace API.Controllers
         /// Get the working checks by account code
         /// </summary>
         /// <param name="account_code">account code</param>
-        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="sort">sort type (asc or desc) (by CheckDate)</param>
         /// <param name="limit">data retrieval limit</param>
         /// <returns>valid working check list</returns>
         [HttpGet("working-checks/{account_code}/accounts/")]
