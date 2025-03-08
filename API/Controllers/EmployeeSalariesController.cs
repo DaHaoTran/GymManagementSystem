@@ -107,6 +107,12 @@ namespace API.Controllers
             return Ok(getESs);
         }
 
+        /// <summary>
+        /// Get the employee salaries by month
+        /// </summary>
+        /// <param name="month">month</param>
+        /// <param name="year">year</param>
+        /// <returns>valid employee salaries list</returns>
         [HttpGet("filter2")]
         public async Task<IActionResult> GetTheEmployeeSalariesByMonth([FromQuery] int month, [FromQuery] int year)
         {
