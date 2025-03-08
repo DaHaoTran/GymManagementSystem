@@ -77,7 +77,7 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
     <HeaderTemplate>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
-            <RadzenText TextStyle="TextStyle.H3">Customer Management</RadzenText>
+            <RadzenText TextStyle="TextStyle.H3">Equipment</RadzenText>
             <!-- create new button -->
             <RadzenButton data-bs-toggle="modal" data-bs-target="#editmodal" @onclick=SetAddState
                           Icon="add_circle" Size="ButtonSize.Medium" class="float-left rz-float-left rz-mt-2 rz-ml-2" />
@@ -109,7 +109,7 @@
         <!-- edit button -->
         <RadzenDataGridColumn Frozen="true" Filterable="false" Width="80px" Title="Edit">
             <Template Context="item">
-                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Small" class="mb-1 mt-1" @onclick:stopPropagation="true" />
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Small" class="mb-1 mt-1" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick:stopPropagation=true Click="@(arg => SetEditState(item))" />
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="@nameof(Equipment.EquipCode)" Filterable="false" Title="EquipCode" Frozen="true" Width="160px" TextAlign="TextAlign.Left" />

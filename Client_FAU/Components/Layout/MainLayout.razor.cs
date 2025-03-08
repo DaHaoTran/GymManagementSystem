@@ -31,6 +31,7 @@ namespace Client_FAU.Components.Layout
             await GetSalaryList();
             await GetServicePackageList();
             await GetAccountList();
+            await GetEquipmentList();
         }
 
         private async Task GetRoleList()

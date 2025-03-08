@@ -1,4 +1,5 @@
-﻿using Client_FAU.Business.Interfaces;
+﻿using Client_FAU.Business.Implements;
+using Client_FAU.Business.Interfaces;
 using Client_FAU.Components.Ingredients;
 using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
@@ -39,16 +40,39 @@ namespace Client_FAU.Components.Pages
             ModalState.current_state = ModalState.State.Add;
         }
 
+
+        private void SetEditState(Equipment equipment)
+        {
+            Model!.EquipCode = equipment.EquipCode;
+            Model.BranchCode = equipment.BranchCode;
+            Model.EquipName = equipment.EquipName;
+            Model.Status = equipment.Status;
+            Model.Note = equipment.Note;
+            Model.AdminUpdate = equipment.AdminUpdate;
+            Model.StaffUpdate = equipment.StaffUpdate;
+            Model.IsDeleted = equipment.IsDeleted;
+            Model.IsReceived = equipment.IsReceived;
+            ModalState.current_state = ModalState.State.Edit;
+        }
+
         private void SetEquipmentProperties()
         {
             int count = Lists.equipment.Count() + 1;
             Model!.EquipCode = "EQ" + "00000000".Substring(0,8 - count.ToString().Length) + count.ToString();
             Model.EquipName = Model.EquipName.Trim();
             Model.Status = Model.Status.Trim();
-            Model.Note = Model.Status.Trim();
+            Model.Note = Model.Note!.Trim();
             Model.AdminUpdate = "AD00000001";
             Model.IsDeleted = false;
             Model.IsReceived = false;
+        }
+
+        private void SetEquipmentProperties2()
+        {
+            Model!.EquipName = Model.EquipName.Trim();
+            Model.Status = Model.Status.Trim();
+            Model.Note = Model.Note!.Trim();
+            Model.AdminUpdate = Model.AdminUpdate.Trim();
         }
 
         private void ClearForm() => Model = new();
@@ -82,6 +106,35 @@ namespace Client_FAU.Components.Pages
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
+        private async Task EditEquipmentDatabase()
+        {
+            Load.IsLoading = true;
+            try
+            {
+                SetEquipmentProperties2();
+                var result = await EquipBsn!.EditAnExistEquipment(Model!);
+                if (result != null)
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
+                    UpdateEquipmentData(result);
+                }
+                else
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
+                }
+            }
+            catch (Exception ex)
+            {
+                Notification.message = ex.Message;
+            }
+            ClearForm();
+            Thread.Sleep(500);
+            Load.IsLoading = false;
+
+            Thread.Sleep(100);
+            await JSRuntime!.InvokeVoidAsync("Reload");
+        }
+
         private async Task UpdateEquipmentDataBase()
         {
             switch (ModalState.current_state)
@@ -89,9 +142,9 @@ namespace Client_FAU.Components.Pages
                 case ModalState.State.Add:
                     await AddEquipmentDatabase();
                     break;
-                //case ModalState.State.Edit:
-                //    await EditAccountDataBase();
-                //    break;
+                case ModalState.State.Edit:
+                    await EditEquipmentDatabase();
+                    break;
                 default:
                     break;
             }
@@ -107,7 +160,7 @@ namespace Client_FAU.Components.Pages
  
             } else
             {
-                var index = Lists.equipment.IndexOf(equipment);
+                var index = Lists.equipment.IndexOf(getEquipment);
                 Lists.equipment[index] = equipment;
             }
             
