@@ -18,7 +18,8 @@
 <div class="row mb-5">
     @for(int i = 1; i < 13; i++)
     {
-        <div class="nav-link link-dark col-3 month" @onclick="() => NavigateToList(i)">
+        int currentCount = i;
+        <div class="nav-link link-dark col-3 month" @onclick="() => NavigateToList(currentCount)">
             <div class="w-100">
                 <img class="w-100" src="./images/calendar.png" alt="A User" />
             </div>

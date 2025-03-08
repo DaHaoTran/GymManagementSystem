@@ -37,11 +37,11 @@ namespace Client_FAU.Components.Pages
             var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
             if (query.TryGetValue("month", out var value))
             {
-                month = string.IsNullOrEmpty(value) ? int.Parse(value!) : 0;
+                month = !string.IsNullOrEmpty(value) ? int.Parse(value!) : 0;
             }
             if (query.TryGetValue("year", out var value2))
             {
-                year = string.IsNullOrEmpty(value2) ? int.Parse(value2!) : 0;
+                year = !string.IsNullOrEmpty(value2) ? int.Parse(value2!) : 0;
             }
 
             if (month == 0 || year == 0) { return; }
@@ -71,8 +71,8 @@ namespace Client_FAU.Components.Pages
             Thread.Sleep(500);
             Load.IsLoading = false;
 
-            Thread.Sleep(100);
-            await JSRuntime!.InvokeVoidAsync("Reload");
+            //Thread.Sleep(100);
+            //await JSRuntime!.InvokeVoidAsync("Reload");
         }
     }
 }
