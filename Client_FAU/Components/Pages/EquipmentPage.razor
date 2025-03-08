@@ -97,13 +97,13 @@
         <!-- delete switch -->
         <RadzenDataGridColumn Frozen="true" Filterable="false" Width="80px" Title="Is Deleted">
             <Template Context="item">
-                <RadzenSwitch />
+                <RadzenSwitch @bind-Value=@item.IsDeleted Change="@(arg => EditEquipmentDeletedStateDatabase(item))"/>
             </Template>
         </RadzenDataGridColumn>
         <!-- recive switch -->
         <RadzenDataGridColumn Frozen="true" Filterable="false" Width="80px" Title="Is Receive">
             <Template Context="item">
-                <RadzenSwitch />
+                <RadzenSwitch @bind-Value=@item.IsReceived Change="@(arg => EditEquipmentRecievedStateDatabase(item))" />
             </Template>
         </RadzenDataGridColumn>
         <!-- edit button -->

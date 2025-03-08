@@ -150,6 +150,66 @@ namespace Client_FAU.Components.Pages
             }
         }
 
+        private async Task EditEquipmentDeletedStateDatabase(Equipment equipment)
+        {
+            //equipment.IsDeleted = !equipment.IsDeleted;
+            Load.IsLoading = true;
+            try
+            {
+                var result = await EquipBsn!.EditAnExistEquipment(equipment);
+                if (result != null)
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
+                    UpdateEquipmentData(result);
+                }
+                else
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
+                }
+            }
+            catch (Exception ex)
+            {
+                Notification.message = ex.Message;
+            }
+            ClearForm();
+            Thread.Sleep(500);
+            Load.IsLoading = false;
+
+            Thread.Sleep(100);
+            await JSRuntime!.InvokeVoidAsync("Reload");
+
+        }
+
+        private async Task EditEquipmentRecievedStateDatabase(Equipment equipment)
+        {
+            //equipment.IsReceived = !equipment.IsReceived;
+            Load.IsLoading = true;
+            try
+            {
+                var result = await EquipBsn!.EditAnExistEquipment(equipment);
+                if (result != null)
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
+                    UpdateEquipmentData(result);
+                }
+                else
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
+                }
+            }
+            catch (Exception ex)
+            {
+                Notification.message = ex.Message;
+            }
+            ClearForm();
+            Thread.Sleep(500);
+            Load.IsLoading = false;
+
+            Thread.Sleep(100);
+            await JSRuntime!.InvokeVoidAsync("Reload");
+
+        }
+
         private void UpdateEquipmentData(Equipment equipment)
         {
             if (equipment == null) { return; }
