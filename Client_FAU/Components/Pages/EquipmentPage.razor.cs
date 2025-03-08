@@ -171,7 +171,6 @@ namespace Client_FAU.Components.Pages
             {
                 Notification.message = ex.Message;
             }
-            ClearForm();
             Thread.Sleep(500);
             Load.IsLoading = false;
 
@@ -201,7 +200,6 @@ namespace Client_FAU.Components.Pages
             {
                 Notification.message = ex.Message;
             }
-            ClearForm();
             Thread.Sleep(500);
             Load.IsLoading = false;
 
