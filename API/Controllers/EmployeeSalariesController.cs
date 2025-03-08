@@ -18,7 +18,7 @@ namespace API.Controllers
         /// <summary>
         /// Get the employee salary list
         /// </summary>
-        /// <param name="sort">sort type (asc or desc)</param>
+        /// <param name="sort">sort type (asc or desc) (by Month)</param>
         /// <param name="limit">data retrieval limit</param>
         /// <returns>employee salary list</returns>
         [HttpGet]
