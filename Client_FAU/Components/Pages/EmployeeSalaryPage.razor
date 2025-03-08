@@ -5,25 +5,25 @@
     <div class="d-flex justify-content-center align-items-center">
         <label for="MY" class="form-label mx-2 mt-3">Year</label>
         <div class="input-group">
-            <select class="form-select" id="MY">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+            <InputSelect class="form-control" id="MY" @bind-Value="@currentYear" >
+                @for(int i = thisYear; i >= thisYear - 2;i--)
+                {
+                    <option value="@i">@i</option>
+                }
+            </InputSelect>
         </div>
     </div>
 </form>
 
-<div class="row">
-    @for(int i = 0; i < 5; i++)
+<div class="row mb-5">
+    @for(int i = 1; i < 13; i++)
     {
         <div class="nav-link link-dark col-3 month">
             <div class="w-100">
                 <img class="w-100" src="./images/calendar.png" alt="A User" />
             </div>
             <div class="title text-center">
-                <h4 class="fw-bolder">2/2024</h4>
+                <h4 class="fw-bolder">@i/@currentYear</h4>
             </div>
         </div>
     }
