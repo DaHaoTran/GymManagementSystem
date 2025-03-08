@@ -11,5 +11,6 @@ namespace Client_FAU.Business.Interfaces
         Task<EmployeeSalary> AddANewEmployeeSalary(EmployeeSalary employeeSalary);
         Task<EmployeeSalary> EditAnExistEmployeeSalary(EmployeeSalary employeeSalary);
         Task<EmployeeSalary> DeleteAnExistEmployeeSalary(Guid empSalCode);
+        Task<List<EmployeeSalary>> GetTheEmployeeSalariesByMonth(int month, int year);
     }
 }

@@ -10,5 +10,6 @@ namespace Client_FAU.Variables
         public static List<ServicePackage> servicePackages = new List<ServicePackage>();
         public static List<Branch> branches = new List<Branch>();
         public static List<Equipment> equipment = new List<Equipment>();
+        public static List<EmployeeSalary> employeeSalaries = new List<EmployeeSalary>();
     }
 }

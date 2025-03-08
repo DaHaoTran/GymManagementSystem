@@ -1,6 +1,7 @@
 ﻿using Client_FAU.Business.Interfaces;
 using Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Client_FAU.Business.Implements
@@ -56,6 +57,14 @@ namespace Client_FAU.Business.Implements
         public async Task<List<EmployeeSalary>> GetTheEmployeeSalariesByAccountCode(string accountCode, string sort, int limit)
         {
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/{accountCode}/accounts?sort={sort}&limit={limit}");
+            if (!apiRequest.IsSuccessStatusCode) { return null!; }
+            var apiResponse = await apiRequest.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<EmployeeSalary>>(apiResponse)!;
+        }
+
+        public async Task<List<EmployeeSalary>> GetTheEmployeeSalariesByMonth(int month, int year)
+        {
+            var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/filter2?month={month}&year={year}");
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<EmployeeSalary>>(apiResponse)!;
