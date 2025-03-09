@@ -17,6 +17,9 @@ namespace Client_FAU.Components.Pages
         private NavigationManager? Navigation { get; set; }
         [Inject]
         private IJSRuntime? JSRuntime { get; set; }
+        [SupplyParameterFromForm]
+        private EmployeeSalary? Model { get; set; } = new();
+
 
         private IEnumerable<EmployeeSalary>? data;
         private bool isLoading = false;
@@ -50,7 +53,6 @@ namespace Client_FAU.Components.Pages
 
         private async Task FindEmployeeSalariesDatabase(int month, int year)
         {
-            Load.IsLoading = true;
             try
             {
                 var result = await ESBsn!.GetTheEmployeeSalariesByMonth(month, year);
@@ -68,8 +70,6 @@ namespace Client_FAU.Components.Pages
             {
                 Notification.message = ex.Message;
             }
-            Thread.Sleep(500);
-            Load.IsLoading = false;
 
             //Thread.Sleep(100);
             //await JSRuntime!.InvokeVoidAsync("Reload");

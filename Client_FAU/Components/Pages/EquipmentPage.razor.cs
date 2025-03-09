@@ -80,7 +80,6 @@ namespace Client_FAU.Components.Pages
 
         private async Task AddEquipmentDatabase()
         {
-            Load.IsLoading = true;
             try
             {
                 SetEquipmentProperties();
@@ -100,8 +99,6 @@ namespace Client_FAU.Components.Pages
                 Notification.message = ex.Message;
             }
             ClearForm();
-            Thread.Sleep(500);
-            Load.IsLoading = false;
 
             Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
@@ -109,7 +106,6 @@ namespace Client_FAU.Components.Pages
 
         private async Task EditEquipmentDatabase()
         {
-            Load.IsLoading = true;
             try
             {
                 SetEquipmentProperties2();
@@ -129,8 +125,6 @@ namespace Client_FAU.Components.Pages
                 Notification.message = ex.Message;
             }
             ClearForm();
-            Thread.Sleep(500);
-            Load.IsLoading = false;
 
             Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
@@ -154,7 +148,6 @@ namespace Client_FAU.Components.Pages
         private async Task EditEquipmentDeletedStateDatabase(Equipment equipment)
         {
             //equipment.IsDeleted = !equipment.IsDeleted;
-            Load.IsLoading = true;
             try
             {
                 var result = await EquipBsn!.EditAnExistEquipment(equipment);
@@ -172,8 +165,6 @@ namespace Client_FAU.Components.Pages
             {
                 Notification.message = ex.Message;
             }
-            Thread.Sleep(500);
-            Load.IsLoading = false;
 
             Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");
@@ -183,7 +174,6 @@ namespace Client_FAU.Components.Pages
         private async Task EditEquipmentRecievedStateDatabase(Equipment equipment)
         {
             //equipment.IsReceived = !equipment.IsReceived;
-            Load.IsLoading = true;
             try
             {
                 var result = await EquipBsn!.EditAnExistEquipment(equipment);
@@ -201,8 +191,6 @@ namespace Client_FAU.Components.Pages
             {
                 Notification.message = ex.Message;
             }
-            Thread.Sleep(500);
-            Load.IsLoading = false;
 
             Thread.Sleep(100);
             await JSRuntime!.InvokeVoidAsync("Reload");

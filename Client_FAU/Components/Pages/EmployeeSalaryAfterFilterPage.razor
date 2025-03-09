@@ -4,11 +4,6 @@
 
 <PageTitle>EmployeeSalaryAfterFilterPage</PageTitle>
 
-@if(Load.IsLoading)
-{
-    <Loading></Loading>
-}
-
 @if (!string.IsNullOrEmpty(Notification.message))
 {
     <div class="alert alert-info mt-2 d-flex">
@@ -61,3 +56,47 @@
     </Columns>
 </RadzenDataGrid>
 <!-- end table -->
+
+<!-- Modal -->
+<div class="modal fade" id="editmodal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <EditForm Model=Model FormName="Edit Employee Salary">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <div class="col-6">
+                            <img class="w-25" src="/images/seal.png" alt="Seal" />
+                            <h4 class="fw-bolder">Full name: </h4>
+                            <h4 class="fw-bolder">Branch name: </h4>
+                            <h4 class="fw-bolder">Work ... days </h4>
+                        </div>
+                        <div class="col-6 text-center">
+                            <h3 class="fw-bolder">Total</h3>
+                            <h3 class="fw-bolder">000.000.000.000</h3>
+                            <h3 class="fw-bolder">VN Dong</h3>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="ProofImage" class="form-label"><h4 class="fw-bolder">Proof Image</h4></label>
+                                <InputFile type="text" class="form-control" id="ProofImage" @bind-Value=Model!.ProofImage />
+                            </div>
+                            <ValidationSummary />
+
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn submit-button fs-3 mt-3 fw-bolder">Paid</button>
+                                <button type="submit" class="btn submit-button fs-3 mt-3 bg-secondary fw-bolder">Unpaid</button>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="Note" class="form-label"><h4 class="fw-bolder">Note</h4></label>
+                                <InputTextArea class="form-control" id="Note" @bind-Value=Model.Note />
+                            </div>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
