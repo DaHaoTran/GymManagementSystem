@@ -100,7 +100,7 @@ namespace Client_FAU.Components.Pages
             }
             ClearForm();
 
-            Thread.Sleep(100);
+            Thread.Sleep(600);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
@@ -126,7 +126,7 @@ namespace Client_FAU.Components.Pages
             }
             ClearForm();
 
-            Thread.Sleep(100);
+            Thread.Sleep(600);
             await JSRuntime!.InvokeVoidAsync("Reload");
         }
 
@@ -166,7 +166,7 @@ namespace Client_FAU.Components.Pages
                 Notification.message = ex.Message;
             }
 
-            Thread.Sleep(100);
+            Thread.Sleep(600);
             await JSRuntime!.InvokeVoidAsync("Reload");
 
         }
@@ -192,7 +192,7 @@ namespace Client_FAU.Components.Pages
                 Notification.message = ex.Message;
             }
 
-            Thread.Sleep(100);
+            Thread.Sleep(600);
             await JSRuntime!.InvokeVoidAsync("Reload");
 
         }

@@ -107,11 +107,11 @@
                 <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Small" class="mb-1 mt-1" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick:stopPropagation=true Click="@(arg => SetEditState(item))" />
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn Property="@nameof(Equipment.EquipCode)" Filterable="false" Title="EquipCode" Frozen="true" Width="160px" TextAlign="TextAlign.Left" />
-        <RadzenDataGridColumn Property="@nameof(Equipment.BranchCode)" Filterable="false" Title="BranchCode" Frozen="true" Width="160px" TextAlign="TextAlign.Left" />
+        <RadzenDataGridColumn Property="@nameof(Equipment.EquipCode)" Title="EquipCode" Frozen="true" Width="160px" TextAlign="TextAlign.Left" />
+        <RadzenDataGridColumn Property="@nameof(Equipment.BranchCode)" Title="BranchCode" Frozen="true" Width="160px" TextAlign="TextAlign.Left" />
         <RadzenDataGridColumn Property="@nameof(Equipment.EquipName)" Title="EquipName" Width="160px" />
-        <RadzenDataGridColumn Property="@nameof(Equipment.Status)" Title="Status" Width="160px" />
-        <RadzenDataGridColumn Property="@nameof(Equipment.Note)" Title="Status" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(Equipment.Status)" Filterable=false Title="Status" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(Equipment.Note)" Filterable=false Title="Note" Width="160px" />
         <RadzenDataGridColumn Property="@nameof(Equipment.StaffUpdate)" Title="StaffUpdate" Width="160px" />
         <RadzenDataGridColumn Property="@nameof(Equipment.AdminUpdate)" Title="AdminUpdate" Width="160px" />
     </Columns>
