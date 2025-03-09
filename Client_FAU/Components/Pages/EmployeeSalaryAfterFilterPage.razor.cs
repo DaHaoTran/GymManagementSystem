@@ -2,6 +2,7 @@
 using Client_FAU.Components.Ingredients;
 using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.JSInterop;
 using Models;
@@ -51,6 +52,8 @@ namespace Client_FAU.Components.Pages
             await FindEmployeeSalariesDatabase(month, year);
         }
 
+        private void ClearForm() => Model = new();
+
         private async Task FindEmployeeSalariesDatabase(int month, int year)
         {
             try
@@ -73,6 +76,74 @@ namespace Client_FAU.Components.Pages
 
             //Thread.Sleep(100);
             //await JSRuntime!.InvokeVoidAsync("Reload");
+        }
+
+        private void SetEditState(EmployeeSalary employeeSalary)
+        {
+            Model!.EmpSalCode = employeeSalary.EmpSalCode;
+            Model.FullName = employeeSalary.FullName;
+            Model.BranchName = employeeSalary.BranchName;
+            Model.Month = employeeSalary.Month;
+            Model.WorkDays = employeeSalary.WorkDays;
+            Model.PriceTotals = employeeSalary.PriceTotals;
+            Model.Note = employeeSalary.Note;
+            Model.IsPaid = employeeSalary.IsPaid;
+            Model.AccountCode = employeeSalary.AccountCode;
+            Model.ProofImage = employeeSalary.ProofImage;
+        }
+
+        private async Task HandleFileSelected(InputFileChangeEventArgs e)
+        {
+            var file = e.File;
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadExactlyAsync(buffer);
+            Model!.ProofImage = buffer;
+        }
+
+        private void SetEmployeeSalaryProperties()
+        {
+            Model!.Note = !string.IsNullOrEmpty(Model.Note) ? Model.Note!.Trim() : string.Empty;
+        }
+
+        private async Task EditEmployeeSalaryDatabase()
+        {
+            try
+            {
+                SetEmployeeSalaryProperties();
+                var result = await ESBsn!.EditAnExistEmployeeSalary(Model!);
+                if (result != null)
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlaySuccessAudio");
+                    UpdateEmployeeSalariesData(result);
+                }
+                else
+                {
+                    await JSRuntime!.InvokeVoidAsync("PlayErrorAudio");
+                }
+            }
+            catch (Exception ex)
+            {
+                Notification.message = ex.Message;
+            }
+            ClearForm();
+
+            Thread.Sleep(600);
+            await JSRuntime!.InvokeVoidAsync("Reload");
+        }
+
+        private void UpdateEmployeeSalariesData(EmployeeSalary employeeSalary)
+        {
+            if (employeeSalary == null) { return; }
+            var getES = Lists.employeeSalaries!.Where(x => x.EmpSalCode == employeeSalary.EmpSalCode).FirstOrDefault();
+            if (getES == default || getES == null)
+            {
+                Lists.employeeSalaries!.Insert(0, employeeSalary);
+            }
+            else
+            {
+                var index = Lists.employeeSalaries!.IndexOf(getES);
+                Lists.employeeSalaries[index] = employeeSalary;
+            }
         }
     }
 }
