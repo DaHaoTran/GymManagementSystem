@@ -49,6 +49,8 @@ builder.Services.AddScoped<Account_Int, Account_Imp>();
 builder.Services.AddScoped<Role_Int, Role_Imp>();
 builder.Services.AddScoped<Equipment_Int, Equipment_Imp>();
 builder.Services.AddScoped<EmployeeSalary_Int, EmployeeSalary_Imp>();
+builder.Services.AddScoped<WorkingCheck_Int, WorkingCheck_Imp>();
+builder.Services.AddScoped<Fine_Int, Fine_Imp>();
 
 var app = builder.Build();
 
