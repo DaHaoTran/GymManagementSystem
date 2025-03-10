@@ -11,5 +11,7 @@ namespace Client_FAU.Variables
         public static List<Branch> branches = new List<Branch>();
         public static List<Equipment> equipment = new List<Equipment>();
         public static List<EmployeeSalary> employeeSalaries = new List<EmployeeSalary>();
+        public static List<Fine> fines = new List<Fine>();
+        public static List<WorkingCheck> workingChecks = new List<WorkingCheck>();
     }
 }

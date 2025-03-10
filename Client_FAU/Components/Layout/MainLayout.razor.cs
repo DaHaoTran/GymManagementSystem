@@ -23,6 +23,10 @@ namespace Client_FAU.Components.Layout
         private Branch_Int? BranchBsn { get; set; }
         [Inject]
         private Equipment_Int? EquipBsn { get; set; }
+        [Inject]
+        private Fine_Int? FineBsn { get; set; }
+        [Inject]
+        private WorkingCheck_Int? WKBsn { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -32,6 +36,8 @@ namespace Client_FAU.Components.Layout
             await GetServicePackageList();
             await GetAccountList();
             await GetEquipmentList();
+            await GetFineList();
+            await GetWorkingCheckList();
         }
 
         private async Task GetRoleList()
@@ -74,6 +80,20 @@ namespace Client_FAU.Components.Layout
             if(Lists.equipment.Count() > 0) { return; }
             var getEquipment = await EquipBsn!.GetEquipmentList(0);
             Lists.equipment = getEquipment;
+        }
+
+        private async Task GetFineList()
+        {
+            if (Lists.fines.Count() > 0) { return; }
+            var getFines = await FineBsn!.GetFineList("asc", 0);
+            Lists.fines = getFines;
+        }
+
+        private async Task GetWorkingCheckList()
+        {
+            if (Lists.workingChecks.Count() > 0) { return; }
+            var getWKs = await WKBsn!.GetWorkingCheckList("asc", 0);
+            Lists.workingChecks = getWKs;
         }
     }
 }
