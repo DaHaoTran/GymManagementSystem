@@ -16,6 +16,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddHttpClient();
 builder.Services.AddSignalR();
 builder.Services.AddRadzenComponents();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSweetAlert2();
 builder.Services.AddResponseCompression(opts =>
 {

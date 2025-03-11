@@ -1,28 +1,35 @@
 ﻿@inherits LayoutComponentBase
+@using Client_FAU.Variables
 
 <RadzenComponents @rendermode="InteractiveServer" />
 
-<div class="page">
-    <div class="new_sidebar">
-        <NavMenu />
-    </div>
+@if(!Load.IsFirstLoad)
+{
+    <div class="page">
+        <div class="new_sidebar">
+            <NavMenu />
+        </div>
 
-    <main>
-        <header>
-            <div class="display_name">
-                <h3 class="text-end me-3">Hi, ...</h3>
-            </div>
-        </header>
-        <article class="content px-4">
-            @Body
-        </article>
-        <footer>
-            <div class="title">
-                <h3 class="text-center my-2">Made By DaHaoTran</h3>
-            </div>
-        </footer>
-    </main>
-</div>
+        <main>
+            <header>
+                <div class="display_name">
+                    <h3 class="text-end me-3">Hi, ...</h3>
+                </div>
+            </header>
+            <article class="content px-4">
+                @Body
+            </article>
+            <footer>
+                <div class="title">
+                    <h3 class="text-center my-2">Made By DaHaoTran</h3>
+                </div>
+            </footer>
+        </main>
+    </div>
+} else
+{
+    <Client_FAU.Components.Pages.LoginPage></Client_FAU.Components.Pages.LoginPage>
+}
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
