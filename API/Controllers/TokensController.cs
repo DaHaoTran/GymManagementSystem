@@ -59,7 +59,7 @@ namespace API.Controllers
         /// <param name="token">jwt</param>
         /// <returns>Chars</returns>
         [HttpPost("solve")]
-        public IActionResult GetRoleFromToke([FromBody] string token)
+        public IActionResult SolveToken([FromBody] string token)
         {
             // Bộ giải mã JWT
             var handler = new JwtSecurityTokenHandler();
