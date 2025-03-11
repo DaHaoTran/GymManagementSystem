@@ -68,5 +68,15 @@ namespace Client_FAU.Business.Implements
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Account>>(apiResponse)!;
         }
+
+        public async Task<Account> ValidateAccount(Login login)
+        {
+            var json = JsonConvert.SerializeObject(login);
+            StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}/validate", stringContent);
+            if (!apiRequest.IsSuccessStatusCode) { return null!; }
+            var apiResponse = await apiRequest.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Account>(apiResponse)!;
+        }
     }
 }
