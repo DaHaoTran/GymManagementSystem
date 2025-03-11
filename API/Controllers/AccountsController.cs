@@ -116,5 +116,14 @@ namespace API.Controllers
             if(delAccount == null) { return NotFound(); }
             return Ok(delAccount);
         }
+
+        [HttpPost("validate")]
+        public async Task<IActionResult> ValidateAccount(Login login)
+        {
+            if(login == null) { return BadRequest(); };
+            var getAccount = await _accountSvc.ValidateAccount(login);
+            if(getAccount == null) { return NotFound(); }
+            return Ok(getAccount);
+        }
     }
 }

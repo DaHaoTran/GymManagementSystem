@@ -13,5 +13,6 @@ namespace API.Services.Interfaces
         Task<Account> AddANewAccount(Account account);
         Task<Account> EditAnExistAccount(Account account);
         Task<Account> DeleteAnExistAccount(string accountCode);
+        Task<Account> ValidateAccount(Login login);
     }
 }

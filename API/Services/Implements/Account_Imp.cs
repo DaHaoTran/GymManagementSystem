@@ -82,5 +82,13 @@ namespace API.Services.Implements
         {
             return await _dBContext.Accounts.Where(x => x.FullName.Contains(fullName)).ToListAsync();
         }
+
+        public async Task<Account> ValidateAccount(Login login)
+        {
+            var getAccount = await _dBContext.Accounts.Where(x => x.AccountCode == login.AccountCode).FirstOrDefaultAsync();
+            if(getAccount == null || getAccount == default) { return null!; }
+            if(getAccount.Password != login.Password) { return null!; }
+            return getAccount;
+        }
     }
 }
