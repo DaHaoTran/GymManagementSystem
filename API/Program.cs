@@ -3,6 +3,9 @@ using API.Services.Interfaces;
 using DBA.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +44,30 @@ builder.Services.AddDbContext<GymManagementSystemDBContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("GymConnection"));
 });
 
+// Config JWT Authentication
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secretKey = jwtSettings["SecretKey"];
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true, // Bật kiểm tra Issuer
+        ValidateAudience = true, // Bật kiểm tra Audience
+        ValidateLifetime = true, // Bật kiểm tra thời gian hết hạn
+        ValidateIssuerSigningKey = true, // Bật kiểm tra chữ ký (SecretKey)
+
+        ValidIssuer = jwtSettings["Issuer"], // Issuer mong đợi
+        ValidAudience = jwtSettings["Audience"], // Audience mong đợi
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)), // SecretKey để xác thực
+        ClockSkew = TimeSpan.Zero // Yêu cầu thời gian chính xác cho việc xác thực token
+    };
+});
+
 //Add services
 builder.Services.AddScoped<Branch_Int, Branch_Imp>();
 builder.Services.AddScoped<Equipment_Int, Equipment_Imp>();
@@ -68,5 +95,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

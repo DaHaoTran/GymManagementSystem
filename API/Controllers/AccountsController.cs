@@ -118,7 +118,7 @@ namespace API.Controllers
         }
 
         [HttpPost("validate")]
-        public async Task<IActionResult> ValidateAccount(Login login)
+        public async Task<IActionResult> ValidateAccount([FromBody] Login login)
         {
             if(login == null) { return BadRequest(); };
             var getAccount = await _accountSvc.ValidateAccount(login);
