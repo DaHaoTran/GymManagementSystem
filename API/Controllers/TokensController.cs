@@ -75,7 +75,7 @@ namespace API.Controllers
             var code = claims.Where(x => x.Type == "code").First();
             if(code!.Value == null) { return NotFound(); }
 
-            return Ok(code.Value.Substring(0, 2));
+            return Ok(code.Value);
         }
     }
 }

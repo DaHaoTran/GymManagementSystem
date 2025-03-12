@@ -16,7 +16,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddHttpClient();
 builder.Services.AddSignalR();
 builder.Services.AddRadzenComponents();
-builder.Services.AddHttpContextAccessor();
+//builder.Services.AddHttpContextAccessor();
 builder.Services.AddSweetAlert2();
 builder.Services.AddResponseCompression(opts =>
 {
@@ -36,7 +36,7 @@ builder.Services.AddDistributedMemoryCache();
 //});
 //builder.Services.AddSession(options =>
 //{
-//    options.IdleTimeout = TimeSpan.FromHours(8);
+//    options.IdleTimeout = TimeSpan.FromHours(2);
 //    options.Cookie.HttpOnly = true;
 //    options.Cookie.IsEssential = true;
 //});
@@ -52,6 +52,7 @@ builder.Services.AddScoped<Equipment_Int, Equipment_Imp>();
 builder.Services.AddScoped<EmployeeSalary_Int, EmployeeSalary_Imp>();
 builder.Services.AddScoped<WorkingCheck_Int, WorkingCheck_Imp>();
 builder.Services.AddScoped<Fine_Int, Fine_Imp>();
+builder.Services.AddScoped<Token_Int, Token_Imp>();
 
 var app = builder.Build();
 

@@ -24,7 +24,7 @@ namespace Client_FAU.Business.Implements
             var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}/generate", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<string>(apiResponse)!;
+            return apiResponse!;
         }
 
         public async Task<string> SolveToken(string token)
@@ -34,7 +34,7 @@ namespace Client_FAU.Business.Implements
             var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}/solve", stringContent);
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<string>(apiResponse)!;
+            return apiResponse!;
         }
     }
 }

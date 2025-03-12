@@ -34,14 +34,14 @@ IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading
                 <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Small" class="mb-1 mt-1" data-bs-toggle="modal" data-bs-target="#editmodal" @onclick:stopPropagation=true Click="@(arg => SetEditState(item))" />
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.EmpSalCode)" Title="EmpSalCode" Width="160px" TextAlign="TextAlign.Left" />
-        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.FullName)" Title="FullName" Width="160px" />
-        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.BranchName)" Title="BranchName" Width="160px" />
-        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.Month)" Title="Month" Width="160px" />
-        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.WorkDays)" Filterable=false Title="WorkDays" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.EmpSalCode)" Title="EmpSalCode" Width="100px" TextAlign="TextAlign.Left" />
+        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.FullName)" Title="FullName" Width="120px" />
+        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.BranchName)" Title="BranchName" Width="120px" />
+        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.Month)" Title="Month" Width="100px" />
+        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.WorkDays)" Filterable=false Title="WorkDays" Width="100px" />
         <RadzenDataGridColumn Property="@nameof(EmployeeSalary.PriceTotals)" Filterable=false Title="PriceTotals" Width="160px" />
-        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.Note)" Filterable=false Title="Note" Width="160px" />
-        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.AccountCode)" Title="AccountCode" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.Note)" Filterable=false Title="Note" Width="120px" />
+        <RadzenDataGridColumn Property="@nameof(EmployeeSalary.AccountCode)" Title="AccountCode" Width="120px" />
         <RadzenDataGridColumn Title="ProofImage" Frozen="true" Sortable="false" Filterable="false" Width="160px" TextAlign="TextAlign.Center">
             <Template Context="item">
                 @if (item.ProofImage != null && item.ProofImage.Length > 0)

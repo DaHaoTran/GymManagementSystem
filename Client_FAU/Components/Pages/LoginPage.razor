@@ -14,24 +14,7 @@
                     <img class="w-100" src="/images/loginimage.png" alt="gym boy" />
                 </div>
                 <div class="col-md-6 m-3 me-5">
-                    @if(!Load.IsFirstLoad)
-                    {
-                        <form>
-                            <div class="mb-4 mt-3">
-                                <label for="codeInput" class="form-label fw-bold fs-3">Code</label>
-                                <input type="text" class="form-control border-dark border-2" id="codeInput" aria-describedby="code">
-                                <div id="code" class="form-text"></div>
-                            </div>
-                            <div class="mb-4">
-                                <label for="passInput" class="form-label fw-bold fs-3">Password</label>
-                                <input type="text" class="form-control border-dark border-2" id="passInput" aria-describedby="code">
-                                <div id="pass" class="form-text"></div>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-warning fw-bold fs-4">Confirm</button>
-                            </div>
-                        </form>
-                    } else
+                    @if(Load.IsLoggingIn)
                     {
                         <div class="d-flex justify-content-center align-items-center h-100 m-0">
                             <svg class="bike" viewBox="0 0 48 30" width="48px" height="30px">
@@ -63,8 +46,27 @@
                                 </g>
                             </svg>
                         </div>
+                    } else
+                    {
+                        @if (!Validation.IsLoggedIn)
+                        {
+                            <EditForm Model="Model" FormName="Login" OnValidSubmit="CheckLoginDatabase">
+                                <DataAnnotationsValidator />
+                                <div class="mb-4 mt-3">
+                                    <label for="codeInput" class="form-label fw-bold fs-3">Code</label>
+                                    <InputText type="text" class="form-control border-dark border-2" id="codeInput" aria-describedby="code" @bind-Value=Model.AccountCode />
+                                </div>
+                                <div class="mb-4">
+                                    <label for="passInput" class="form-label fw-bold fs-3">Password</label>
+                                    <InputText type="text" class="form-control border-dark border-2" id="passInput" aria-describedby="code" @bind-value=Model.Password />
+                                </div>
+                                <ValidationSummary />
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-warning fw-bold fs-4">Confirm</button>
+                                </div>
+                            </EditForm>
+                        }
                     }
-
                 </div>
             </div>
         </div>

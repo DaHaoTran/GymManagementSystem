@@ -3,7 +3,7 @@
 
 <RadzenComponents @rendermode="InteractiveServer" />
 
-@if(!Load.IsFirstLoad)
+@if(Validation.IsLoggedIn)
 {
     <div class="page">
         <div class="new_sidebar">
