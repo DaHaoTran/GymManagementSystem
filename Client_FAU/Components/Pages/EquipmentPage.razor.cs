@@ -216,7 +216,6 @@ namespace Client_FAU.Components.Pages
             if (getEquipment == null || getEquipment == default)
             {
                 Lists.equipment.Insert(0, equipment);
- 
             } else
             {
                 var index = Lists.equipment.IndexOf(getEquipment);
