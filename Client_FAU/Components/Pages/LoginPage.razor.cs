@@ -44,27 +44,24 @@ namespace Client_FAU.Components.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            Thread.Sleep(500);
-            if (!firstRender) { return; }
+            //if (!firstRender) { return; }
 
-            var getSession = await GetSessionByName(name);
-            if (getSession == null) { Validation.IsLoggedIn = false; }
-            else
-            {
-                var getTokenInfor = await SolveToken(getSession);
-                if(getTokenInfor != null)
-                {
-                    if (getTokenInfor.Substring(0, 2).Contains("AD", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Validation.AccountCode = getTokenInfor;
-                        Validation.IsLoggedIn = true;
-                        NavigationManager!.NavigateTo("/", forceLoad:true);
-                    }
-                }
-             }
-
-            Load.IsLoggingIn = false;
-            StateHasChanged();
+            //var getSession = await GetSessionByName(name);
+            //if (getSession == null) { Validation.IsLoggedIn = false; }
+            //else
+            //{
+            //    var getTokenInfor = await SolveToken(getSession);
+            //    if(getTokenInfor != null)
+            //    {
+            //        if (getTokenInfor.Substring(0, 2).Contains("AD", StringComparison.OrdinalIgnoreCase))
+            //        {
+            //            Validation.AccountCode = getTokenInfor;
+            //            Validation.IsLoggedIn = true;
+            //            NavigationManager!.NavigateTo("/", forceLoad:true);
+            //        }
+            //    }
+            //}
+            await JSRuntime!.InvokeVoidAsync("localStorage.removeItem", "jwtToken");
         } 
 
         private void ClearForm() => Model = new();
@@ -106,6 +103,7 @@ namespace Client_FAU.Components.Pages
                 }
                 Load.IsLoggingIn = false;
                 NavigationManager!.NavigateTo("/", forceLoad: true);
+                StateHasChanged();
             } catch { }
         }
 

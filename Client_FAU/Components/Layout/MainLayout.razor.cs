@@ -2,6 +2,7 @@
 using Client_FAU.Business.Interfaces;
 using Client_FAU.Variables;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Models;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
@@ -28,17 +29,21 @@ namespace Client_FAU.Components.Layout
         [Inject]
         private WorkingCheck_Int? WKBsn { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await GetBranchList();
-            await GetRoleList();
-            await GetSalaryList();
-            await GetServicePackageList();
-            await GetAccountList();
-            await GetEquipmentList();
-            await GetFineList();
-            await GetWorkingCheckList();
-        }
+        //protected override async Task OnAfterRenderAsync(bool firstRender)
+        //{
+        //    if (Validation.IsLoggedIn)
+        //    {
+        //        await GetBranchList();
+        //        await GetRoleList();
+        //        await GetSalaryList();
+        //        await GetServicePackageList();
+        //        await GetAccountList();
+        //        await GetEquipmentList();
+        //        await GetFineList();
+        //        await GetWorkingCheckList();
+        //        StateHasChanged();
+        //    }
+        //}
 
         private async Task GetRoleList()
         {
