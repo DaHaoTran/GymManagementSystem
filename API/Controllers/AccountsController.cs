@@ -1,5 +1,6 @@
 ﻿using API.Services.Interfaces;
 using DBA.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -16,11 +17,12 @@ namespace API.Controllers
             _accountSvc = accountSvc;
         }
 
-       /// <summary>
-       /// Get account list
-       /// </summary>
-       /// <param name="limit">data retrieval limit</param>
-       /// <returns></returns>
+        /// <summary>
+        /// Get account list
+        /// </summary>
+        /// <param name="limit">data retrieval limit</param>
+        /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<Account>> GetAccountList([FromQuery] int limit)
         {
@@ -32,6 +34,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="account_code">account code</param>
         /// <returns>a valid account</returns>
+        [Authorize]
         [HttpGet("{account_code}")]
         public async Task<IActionResult> GetTheAccountByAccountCode(string account_code)
         {
@@ -47,6 +50,7 @@ namespace API.Controllers
         /// <param name="str">search string</param>
         /// <param name="limit">data retrieval limit</param>
         /// <returns>valid account list</returns>
+        [Authorize]
         [HttpGet("filter")]
         public async Task<IActionResult> GetTheAccountsBySearchString([FromQuery] string str, [FromQuery] int limit)
         {
@@ -76,6 +80,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="account">account data</param>
         /// <returns>account has added</returns>
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddANewAccount([FromBody] Account account)
         {
@@ -94,6 +99,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="account">account data</param>
         /// <returns>account has edited</returns>
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> EditAnExistAccount([FromBody] Account account)
         {
@@ -108,6 +114,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="account_code">account code</param>
         /// <returns>account has deleted</returns>
+        [Authorize]
         [HttpDelete("{account_code}")]
         public async Task<IActionResult> DeleteAnExistAccount(string account_code)
         {

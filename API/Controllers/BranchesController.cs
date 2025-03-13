@@ -1,4 +1,5 @@
 ﻿using API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -6,6 +7,7 @@ using System.Collections.Immutable;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/branches")]
     [ApiController]
     public class BranchesController : ControllerBase

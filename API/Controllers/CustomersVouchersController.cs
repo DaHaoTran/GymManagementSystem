@@ -1,10 +1,12 @@
 ﻿using API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
 namespace API.Controllers
 {
+    [Authorize]
     [Route("api/customers-vouchers")]
     [ApiController]
     public class CustomersVouchersController : ControllerBase
