@@ -61,7 +61,8 @@ namespace Client_FAU.Components.Pages
             //        }
             //    }
             //}
-            await JSRuntime!.InvokeVoidAsync("localStorage.removeItem", "jwtToken");
+            if(!firstRender) { return;  }
+            await JSRuntime!.InvokeVoidAsync("localStorage.removeItem", name);
         } 
 
         private void ClearForm() => Model = new();
