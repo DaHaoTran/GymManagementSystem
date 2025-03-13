@@ -53,6 +53,7 @@ builder.Services.AddScoped<EmployeeSalary_Int, EmployeeSalary_Imp>();
 builder.Services.AddScoped<WorkingCheck_Int, WorkingCheck_Imp>();
 builder.Services.AddScoped<Fine_Int, Fine_Imp>();
 builder.Services.AddScoped<Token_Int, Token_Imp>();
+builder.Services.AddScoped<Jwt_Int, Jwt_Imp>();
 
 var app = builder.Build();
 
