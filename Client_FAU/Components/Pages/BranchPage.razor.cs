@@ -23,6 +23,19 @@ namespace Client_FAU.Components.Pages
 
         private string str = string.Empty;
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await GetBranchList();
+            StateHasChanged();
+        }
+
+        private async Task GetBranchList()
+        {
+            if (Lists.branches.Count() > 0) { return; }
+            var getBranches = await BranchBsn!.GetBranchList(9);
+            Lists.branches = getBranches;
+        }
+
         private void ClearForm() => Model = new();
 
         private void SetModelState(ModalState.State state)

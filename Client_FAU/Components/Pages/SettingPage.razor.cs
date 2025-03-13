@@ -23,6 +23,27 @@ namespace Client_FAU.Components.Pages
         [SupplyParameterFromForm]
         private Salary? Model { get; set; } = new();
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await GetSalaryList();
+            await GetServicePackageList();
+            StateHasChanged();
+        }
+
+        private async Task GetSalaryList()
+        {
+            if (Lists.salaries.Count() > 0) { return; }
+            var getSalaries = await SalaryBsn!.GetSalaryList(0);
+            Lists.salaries = getSalaries;
+        }
+
+        private async Task GetServicePackageList()
+        {
+            if (Lists.servicePackages.Count() > 0) { return; }
+            var getSPs = await SPBsn!.GetServicePackageList(0);
+            Lists.servicePackages = getSPs;
+        }
+
         private void ClearForm() => Model = new();
 
         private void SetSalaryProperties()

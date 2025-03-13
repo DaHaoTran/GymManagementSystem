@@ -26,6 +26,18 @@ namespace Client_FAU.Components.Pages
         private string sip = string.Empty;
         private RadzenDropDown<string>? radzenDropDown;
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await GetEquipmentList();
+            StateHasChanged();
+        }
+        private async Task GetEquipmentList()
+        {
+            if (Lists.equipment.Count() > 0) { return; }
+            var getEquipment = await EquipBsn!.GetEquipmentList(0);
+            Lists.equipment = getEquipment;
+        }
+
         async Task ShowLoading()
         {
             isLoading = true;

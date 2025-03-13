@@ -16,10 +16,43 @@ namespace Client_FAU.Components.Pages
         private Account_Int? AccountBsn { get; set; }
         [Inject]
         private IJSRuntime? JSRuntime { get; set; }
+        [Inject]
+        private Role_Int? RoleBsn { get; set; }
+        [Inject]
+        private Salary_Int? SalaryBsn { get; set; }
         [SupplyParameterFromForm]
         private Account? Model { get; set; } = new();
 
         private string str = string.Empty;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await GetAccountList();
+            await GetRoleList();
+            await GetSalaryList(); 
+            StateHasChanged();
+        }
+
+        private async Task GetAccountList()
+        {
+            if (Lists.accounts.Count() > 0) { return; }
+            var getAccounts = await AccountBsn!.GetAccountList(9);
+            Lists.accounts = getAccounts;
+        }
+
+        private async Task GetRoleList()
+        {
+            if (Lists.roles.Count() > 0) { return; }
+            var getRoles = await RoleBsn!.GetRoleList(0);
+            Lists.roles = getRoles;
+        }
+
+        private async Task GetSalaryList()
+        {
+            if (Lists.salaries.Count() > 0) { return; }
+            var getSalaries = await SalaryBsn!.GetSalaryList(0);
+            Lists.salaries = getSalaries;
+        }
 
         private void ClearForm() => Model = new();
 

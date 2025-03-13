@@ -17,6 +17,19 @@ namespace Client_FAU.Components.Pages
         private IEnumerable<Fine>? data = Lists.fines;
         private bool isLoading = false;
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await GetFineList();
+            StateHasChanged();
+        }
+
+        private async Task GetFineList()
+        {
+            if (Lists.fines.Count() > 0) { return; }
+            var getFines = await FineBsn!.GetFineList("asc", 0);
+            Lists.fines = getFines;
+        }
+
         async Task ShowLoading()
         {
             isLoading = true;
