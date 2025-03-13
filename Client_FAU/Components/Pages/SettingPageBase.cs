@@ -25,7 +25,7 @@ namespace Client_FAU.Components.Pages
             Model2!.PackageName = Model2.PackageName!.Trim();
             Model2!.PackageCode = "SP";
             Model2.Price = double.Parse(Model2.GetPrice.Trim());
-            Model2.AdminUpdate = "AC00000001";
+            Model2.AdminUpdate = Validation.AccountCode;
         }
 
         protected async Task AddServiceDataBase()

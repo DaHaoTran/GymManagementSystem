@@ -93,7 +93,7 @@ namespace Client_FAU.Components.Pages
             Model.IdNumber = Model.IdNumber.Trim();
             Model.LivingAt = Model.LivingAt.Trim();
             Model.Password = PasswordManipulates.EncryptPassword(Model.Password.Trim());
-            Model.UpdateBy = "AD00000001";
+            Model.UpdateBy = Validation.AccountCode;
 
             var getRole = Lists.roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
             if(getRole == null || getRole == default) 
@@ -119,7 +119,7 @@ namespace Client_FAU.Components.Pages
             Model.IdNumber = Model.IdNumber.Trim();
             Model.LivingAt = Model.LivingAt.Trim();
             SetPasswordModelWithChangedValue();
-            Model.UpdateBy = "AD00000001";
+            Model.UpdateBy = Validation.AccountCode;
 
             var getRole = Lists.roles!.Where(x => x.RoleName == Model.GetRoleName).FirstOrDefault();
             if (getRole == null || getRole == default)

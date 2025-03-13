@@ -73,9 +73,9 @@ namespace Client_FAU.Components.Pages
             int count = Lists.equipment.Count() + 1;
             Model!.EquipCode = "EQ" + "00000000".Substring(0,8 - count.ToString().Length) + count.ToString();
             Model.EquipName = Model.EquipName.Trim();
-            Model.Status = Model.Status.Trim();
-            Model.Note = Model.Note!.Trim();
-            Model.AdminUpdate = "AD00000001";
+            Model.Status = !string.IsNullOrEmpty(Model.Status) ? Model.Status.Trim() : Model.Status;
+            Model.Note = !string.IsNullOrEmpty(Model.Note) ? Model.Note!.Trim() : Model.Note;
+            Model.AdminUpdate = Validation.AccountCode;
             Model.IsDeleted = false;
             Model.IsReceived = false;
         }
@@ -83,9 +83,9 @@ namespace Client_FAU.Components.Pages
         private void SetEquipmentProperties2()
         {
             Model!.EquipName = Model.EquipName.Trim();
-            Model.Status = Model.Status.Trim();
-            Model.Note = Model.Note!.Trim();
-            Model.AdminUpdate = Model.AdminUpdate.Trim();
+            Model.Status = !string.IsNullOrEmpty(Model.Status) ? Model.Status.Trim() : Model.Status;
+            Model.Note = !string.IsNullOrEmpty(Model.Note) ? Model.Note!.Trim() : Model.Note;
+            Model.AdminUpdate = Validation.AccountCode;
         }
 
         private void ClearForm() => Model = new();

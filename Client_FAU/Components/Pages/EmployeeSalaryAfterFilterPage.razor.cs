@@ -34,7 +34,7 @@ namespace Client_FAU.Components.Pages
             isLoading = false;
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             int month = 0, year = 0;
             var uri = new Uri(Navigation!.Uri);
@@ -50,6 +50,7 @@ namespace Client_FAU.Components.Pages
 
             if (month == 0 || year == 0) { return; }
             await FindEmployeeSalariesDatabase(month, year);
+            StateHasChanged();
         }
 
         private void ClearForm() => Model = new();

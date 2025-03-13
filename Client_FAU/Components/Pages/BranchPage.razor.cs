@@ -65,14 +65,14 @@ namespace Client_FAU.Components.Pages
         private void SetModelProperties()
         {
             Model!.BranchCode = "BR";
-            Model!.AdminUpdate = "AD00000001";
+            Model!.AdminUpdate = Validation.AccountCode;
             Model.BranchName = Model.BranchName.Trim();
             Model.Address = Model.Address.Trim();
         }
 
         private void SetModelProperties2()
         {
-            Model!.AdminUpdate = "AD00000001";
+            Model!.AdminUpdate = Validation.AccountCode;
             Model.BranchName = Model.BranchName.Trim();
             Model.Address = Model.Address.Trim();
         }
