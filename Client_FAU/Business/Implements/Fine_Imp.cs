@@ -11,17 +11,20 @@ namespace Client_FAU.Business.Implements
         private static string? baseAPIUrl;
         private readonly HttpClient _httpClient;
         private readonly string name = "fines";
-        public Fine_Imp(IConfiguration configuration, HttpClient httpClient)
+        private readonly Jwt_Int _jwt;
+        public Fine_Imp(IConfiguration configuration, HttpClient httpClient, Jwt_Int jwt)
         {
             var apiUrl = configuration["BaseAPIUrl"];
             baseAPIUrl = apiUrl != null ? apiUrl : string.Empty;
             _httpClient = httpClient;
+            _jwt = jwt;
         }
 
         public async Task<Fine> AddANewFine(Fine fine)
         {
             var json = JsonConvert.SerializeObject(fine);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -30,6 +33,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<Fine> DeleteAnExistFine(Guid fineCode)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.DeleteAsync($"{baseAPIUrl}/{name}/{fineCode}");
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -40,6 +44,7 @@ namespace Client_FAU.Business.Implements
         {
             var json = JsonConvert.SerializeObject(fine);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.PutAsync($"{baseAPIUrl}/{name}", stringContent);
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -48,6 +53,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<List<Fine>> GetFineList(string sort, int limit)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}?sort={sort}&limit={limit}");
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiReponse = await apiRequest.Content.ReadAsStringAsync();
@@ -56,6 +62,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<Fine> GetTheFineByFineCode(Guid fineCode)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/{fineCode}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -64,6 +71,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<List<Fine>> GetTheFinesByCustomerCode(string customerCode, string sort, int limit)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/{customerCode}/customers?sort={sort}&limit={limit}");
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiReponse = await apiRequest.Content.ReadAsStringAsync();

@@ -10,17 +10,20 @@ namespace Client_FAU.Business.Implements
         private static string? baseAPIUrl;
         private readonly HttpClient _httpClient;
         private readonly string name = "working-checks";
-        public WorkingCheck_Imp(IConfiguration configuration, HttpClient httpClient)
+        private readonly Jwt_Int _jwt;
+        public WorkingCheck_Imp(IConfiguration configuration, HttpClient httpClient, Jwt_Int jwt)
         {
             var apiUrl = configuration["BaseAPIUrl"];
             baseAPIUrl = apiUrl != null ? apiUrl : string.Empty;
             _httpClient = httpClient;
+            _jwt = jwt;
         }
 
         public async Task<WorkingCheck> AddANewWorkingCheck(WorkingCheck workCheck)
         {
             var json = JsonConvert.SerializeObject(workCheck);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -29,6 +32,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<WorkingCheck> DeleteAnExistWorkingCheck(int orderNumber)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.DeleteAsync($"{baseAPIUrl}/{name}/{orderNumber}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -39,6 +43,7 @@ namespace Client_FAU.Business.Implements
         {
             var json = JsonConvert.SerializeObject(workCheck);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.PutAsync($"{baseAPIUrl}/{name}", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -47,6 +52,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<WorkingCheck> GetTheWorkingCheckByOrderNumber(int orderNumber)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/{orderNumber}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -55,6 +61,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<List<WorkingCheck>> GetTheWorkingChecksByAccountCode(string accountCode, string sort, int limit)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/{accountCode}/accounts?sort={sort}&limit={limit}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -63,6 +70,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<List<WorkingCheck>> GetWorkingCheckList(string sort, int limit)
         {
+            await _jwt.SetAuthorizationHeaderAsync("jwtToken");
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}?sort={sort}&limit={limit}");
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
