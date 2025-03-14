@@ -27,7 +27,7 @@ namespace Client_FAU.Components.Pages
         [SupplyParameterFromForm]
         private Login Model { get; set; } = new();
 
-        private string name = "jwtToken";
+        private string storageName = "jwtToken";
 
         private async Task<string> GetSessionByName(string name)
         {
@@ -62,7 +62,7 @@ namespace Client_FAU.Components.Pages
             //    }
             //}
             if(!firstRender) { return;  }
-            await JSRuntime!.InvokeVoidAsync("localStorage.removeItem", name);
+            await JSRuntime!.InvokeVoidAsync("localStorage.removeItem", storageName);
         } 
 
         private void ClearForm() => Model = new();
