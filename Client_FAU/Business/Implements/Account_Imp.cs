@@ -93,7 +93,6 @@ namespace Client_FAU.Business.Implements
         {
             var json = JsonConvert.SerializeObject(login);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            await SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}/validate", stringContent);
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
