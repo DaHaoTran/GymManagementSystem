@@ -30,7 +30,7 @@ namespace Client_FSU.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Login login)
         {
-            if (!ModelState.IsValid) { return RedirectToAction("Index"); }
+            if (!ModelState.IsValid) { return View(); }
             try
             {
                 login.Password = !string.IsNullOrEmpty(login.Password) ? PasswordManipulates.EncryptPassword(login.Password) : login.Password;
@@ -40,7 +40,7 @@ namespace Client_FSU.Controllers
                     if (!result.AccountCode.Substring(0, 2).Contains("ST", StringComparison.OrdinalIgnoreCase))
                     {
                         ViewBag.Message = "This account is not allowed to access !";
-                        return RedirectToAction("Index");
+                        return View();
                     }
                     //Set generate state
                     result.GetRoleName = "string";
@@ -53,7 +53,7 @@ namespace Client_FSU.Controllers
                     if (token == null)
                     {
                         ViewBag.Message = "There are unexpected problem. Maybe can try again !";
-                        return RedirectToAction("Index");
+                        return View();
                     }
 
                     HttpContext.Session.SetString(SessionNames.token, token);
@@ -62,7 +62,7 @@ namespace Client_FSU.Controllers
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction("Index");
+                return View();
             }
 
             return RedirectToAction("Index", "Home");
