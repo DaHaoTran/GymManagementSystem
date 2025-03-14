@@ -88,6 +88,7 @@ namespace Client_FAU.Components.Pages
                         result.GetSalaryType = "string";
                         
                         Validation.AccountCode = result.AccountCode;
+                        Validation.FullName = result.FullName;
 
                         var token = await GenerateToken(result);
                         if(token == null) { return; }

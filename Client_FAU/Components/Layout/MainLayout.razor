@@ -12,9 +12,12 @@
 
         <main>
             <header>
-                <div class="display_name">
-                    <h3 class="text-end me-3">Hi, ...</h3>
+                @if(!string.IsNullOrEmpty(Validation.FullName))
+                {
+                    <div class="display_name">
+                    <h3 class="text-end me-3">Hi, @Validation.FullName</h3>
                 </div>
+                }
             </header>
             <article class="content px-4">
                 @Body
