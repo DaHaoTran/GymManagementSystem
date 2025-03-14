@@ -1,0 +1,29 @@
+﻿@model Models.Login
+@{
+    ViewData["Title"] = "Login page";
+}
+
+<div class="d-flex justify-content-center align-items-center login-container">
+    <div class="card login-card">
+        <div class="card-header text text-center">
+            <h5>Login</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Index" asp-controller="Login">
+                <label asp-for=AccountCode class="text form-label">Code</label>
+                <input asp-for=AccountCode type="text" class="form-control"/>
+                <span asp-validation-for="AccountCode"></span>
+
+                <label asp-for=Password class="text form-label">Password</label>
+                <input asp-for=Password type="password" class="form-control"/>
+                <span asp-validation-for="Password"></span>
+
+                <button type="submit" class="btn btn-primary text text-center my-3" id="confirmBtn">Confirm</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() => ShowLiveToast());
+</script>
