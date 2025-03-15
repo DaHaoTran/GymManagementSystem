@@ -8,14 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromHours(2);
-});
 
 //
 builder.Services.AddScoped<Account_Int, Account_Imp>();
 builder.Services.AddScoped<Token_Int, Token_Imp>();
+builder.Services.AddScoped<Customer>
 
 var app = builder.Build();
 
@@ -31,7 +28,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseSession();
 
 app.MapStaticAssets();
 

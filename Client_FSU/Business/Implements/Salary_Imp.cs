@@ -1,4 +1,5 @@
 ﻿using Client_FSU.Business.Interfaces;
+using Client_FSU.Variables;
 using Microsoft.JSInterop;
 using Models;
 using Newtonsoft.Json;
@@ -12,29 +13,24 @@ namespace Client_FSU.Business.Implements
         private static string? baseAPIUrl;
         private readonly HttpClient _httpClient;
         private readonly string name = "salaries";
-        private readonly IJSRuntime _jSRunTime;
-        public Salary_Imp(HttpClient httpClient, IConfiguration configuration, IJSRuntime jSRunTime)
+        public Salary_Imp(HttpClient httpClient, IConfiguration configuration)
         {
             var apiUrl = configuration["BaseAPIUrl"];
             baseAPIUrl = apiUrl != null ? apiUrl : string.Empty;
             _httpClient = httpClient;
-            _jSRunTime = jSRunTime;
         }
 
-        private async Task SetAuthorizationHeaderAsync()
+        private void SetAuthorizationHeaderAsync()
         {
-            var token = await _jSRunTime.InvokeAsync<string>("localStorage.getItem", "jwtToken");
-            if (!string.IsNullOrEmpty(token))
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            }
+            if (string.IsNullOrEmpty(Validation.Token)) { return; }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Validation.Token);
         }
 
         public async Task<Salary> AddANewSalary(Salary salary)
         {
             var json = JsonConvert.SerializeObject(salary);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -43,7 +39,7 @@ namespace Client_FSU.Business.Implements
 
         public async Task<Salary> DeleteAnExistSalary(string salaryCode)
         {
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.DeleteAsync($"{baseAPIUrl}/{name}/{salaryCode}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -54,7 +50,7 @@ namespace Client_FSU.Business.Implements
         {
             var json = JsonConvert.SerializeObject(salary);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.PutAsync($"{baseAPIUrl}/{name}", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -63,7 +59,7 @@ namespace Client_FSU.Business.Implements
 
         public async Task<List<Salary>> GetSalaryList(int limit)
         {
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}?limit={limit}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -72,7 +68,7 @@ namespace Client_FSU.Business.Implements
 
         public async Task<Salary> GetTheSalaryBySalaryCode(string salaryCode)
         {
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/{salaryCode}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();

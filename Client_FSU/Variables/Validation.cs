@@ -6,5 +6,6 @@
         public static string AccountCode { get; set; } = string.Empty;
         public static string FullName { get; set; } = string.Empty;
 
+        public static string Token { get; set; } = string.Empty;
     }
 }

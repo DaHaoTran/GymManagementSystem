@@ -56,7 +56,7 @@ namespace Client_FSU.Controllers
                         return View();
                     }
 
-                    HttpContext.Session.SetString(SessionNames.token, token);
+                    Validation.Token = token.Trim();
                 }
             }
             catch (Exception ex)
