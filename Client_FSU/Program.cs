@@ -12,7 +12,7 @@ builder.Services.AddHttpClient();
 //
 builder.Services.AddScoped<Account_Int, Account_Imp>();
 builder.Services.AddScoped<Token_Int, Token_Imp>();
-builder.Services.AddScoped<Customer>
+builder.Services.AddScoped<Customer_Int, Customer_Imp>();
 
 var app = builder.Build();
 
