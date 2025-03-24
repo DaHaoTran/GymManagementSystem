@@ -11,7 +11,7 @@
 </p>
 @if (!string.IsNullOrEmpty(ViewBag.Message))
 {
-    <div class="alert alert-danger d-flex align-items-center row" role="alert">
+    <div class="alert alert-success d-flex align-items-center row" role="alert">
         <div class="col-6 text-start">
             @ViewBag.Message
         </div>
@@ -60,7 +60,9 @@
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsBanned)
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(item.IsBanned ? "checked" : "") readonly>
+                </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BannedReason)
@@ -73,7 +75,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { id=item.CustomerCode }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>

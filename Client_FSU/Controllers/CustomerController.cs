@@ -37,6 +37,7 @@ namespace Client_FSU.Controllers
             if (!ModelState.IsValid) { /*var errors = ModelState.Values.SelectMany(v => v.Errors);*/ return View(customer); }
             // Set value
             Customer sCustomer = new Customer();
+            sCustomer.CustomerCode = "CT";
             sCustomer.CustomerName = customer.CustomerName.Trim();
             sCustomer.PhoneNumber = customer.PhoneNumber.Trim();
             sCustomer.UpdateBy = Validation.StaffCode;
@@ -54,7 +55,7 @@ namespace Client_FSU.Controllers
                 {
                     ViewBag.Message = "Create new customer successfully";
                     UpdateCustomerList(result);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Customer");
                 }
                 else
                 {
@@ -75,6 +76,13 @@ namespace Client_FSU.Controllers
 
             var index = Lists.customers.IndexOf(getCustomer);
             Lists.customers[index] = customer;
+        }
+
+        public IActionResult Details(string id)
+        {
+            var getCustomer = Lists.customers.Where(x => x.CustomerCode == id).FirstOrDefault();
+            if (getCustomer == default) { ViewBag.Message = "Problem arise !"; }
+            return View(getCustomer);
         }
     }
 }
