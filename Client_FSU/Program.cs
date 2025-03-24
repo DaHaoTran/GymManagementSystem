@@ -13,6 +13,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<Account_Int, Account_Imp>();
 builder.Services.AddScoped<Token_Int, Token_Imp>();
 builder.Services.AddScoped<Customer_Int, Customer_Imp>();
+builder.Services.AddScoped<Branch_Int, Branch_Imp>();
 
 var app = builder.Build();
 
@@ -33,7 +34,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Login}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 

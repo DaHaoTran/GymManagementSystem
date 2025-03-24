@@ -1,14 +1,25 @@
 ﻿@model IEnumerable<Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index Customer";
 }
 
-<h1>Index</h1>
+<h1>Customer</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger d-flex align-items-center row" role="alert">
+        <div class="col-6 text-start">
+            @ViewBag.Message
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
 <table class="table">
     <thead>
         <tr>

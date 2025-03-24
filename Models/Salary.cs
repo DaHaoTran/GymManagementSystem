@@ -31,6 +31,6 @@ namespace Models
         [NotMapped]
         [Required(ErrorMessage = "Prices apply is required")]
         [RegularExpression(@"^\d+$", ErrorMessage = "Prices apply is number")]
-        public string GetPricesApply { get; set; }
+        public string? GetPricesApply { get; set; }
     }
 }

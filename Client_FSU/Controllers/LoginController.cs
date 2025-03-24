@@ -46,7 +46,7 @@ namespace Client_FSU.Controllers
                     result.GetRoleName = "string";
                     result.GetSalaryType = "string";
 
-                    Validation.AccountCode = result.AccountCode;
+                    Validation.StaffCode = result.AccountCode;
                     Validation.FullName = result.FullName;
 
                     var token = await _tokenBsn.GenerateJwtToken(result);
@@ -64,8 +64,9 @@ namespace Client_FSU.Controllers
                 ViewBag.Message = ex.Message;
                 return View();
             }
-
-            return RedirectToAction("Index", "Home");
+            
+            Validation.IsLoggedIn = true;
+            return RedirectToAction("Index", "Customer");
         }
     }
 }

@@ -65,10 +65,10 @@ namespace Models
 
         [NotMapped]
         [Required(ErrorMessage = "Role is required")]
-        public string GetRoleName { get; set; }
+        public string? GetRoleName { get; set; }
 
         [NotMapped]
         [Required(ErrorMessage = "Salary type is required")]
-        public string GetSalaryType { get; set; }
+        public string? GetSalaryType { get; set; }
     }
 }
