@@ -19,7 +19,6 @@ Json web token validation
 ## Some images
 ### Admin UI:
 ![Admin UI](<Screenshot 2025-03-25 123944.jpg>)
-<video controls src="webm.webm" title="Title" autoplay></video>
 ### Staff UI:
 ![Staff UI](<Screenshot 2025-03-25 123316.jpg>)
 ### API:
