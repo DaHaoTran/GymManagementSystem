@@ -1,5 +1,6 @@
 ﻿using Client_FAU.Business.Interfaces;
 using Client_FAU.Components.Pages;
+using Client_FAU.Variables;
 using Microsoft.JSInterop;
 using Models;
 using Newtonsoft.Json;
@@ -24,12 +25,11 @@ namespace Client_FAU.Business.Implements
             _jSRunTime = jSRuntime;
         }
 
-        private async Task SetAuthorizationHeaderAsync()
+        private void SetAuthorizationHeaderAsync()
         {
-            var token = await _jSRunTime.InvokeAsync<string>("localStorage.getItem", "jwtToken");
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(Validation.JwtToken))
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Validation.JwtToken);
             }
         }
 
@@ -37,7 +37,7 @@ namespace Client_FAU.Business.Implements
         {
             var json = JsonConvert.SerializeObject(branch);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.PostAsync($"{baseAPIUrl}/{name}", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -46,7 +46,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<Branch> DeleteAnExistBranch(string branchCode)
         {
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.DeleteAsync($"{baseAPIUrl}/{name}/{branchCode}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -57,7 +57,7 @@ namespace Client_FAU.Business.Implements
         {
             var json = JsonConvert.SerializeObject(branch);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.PutAsync($"{baseAPIUrl}/{name}", stringContent);
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -66,7 +66,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<List<Branch>> GetBranchList(int limit)
         {
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}?limit={limit}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -75,7 +75,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<Branch> GetTheBranchByBranchCode(string branchCode)
         {
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/{branchCode}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
@@ -84,7 +84,7 @@ namespace Client_FAU.Business.Implements
 
         public async Task<List<Branch>> GetTheBranchesBySearchString(string str, int limit)
         {
-            await SetAuthorizationHeaderAsync();
+            SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.GetAsync($"{baseAPIUrl}/{name}/filter?str={str}&limit={limit}");
             if(!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();
