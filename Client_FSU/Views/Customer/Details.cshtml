@@ -34,7 +34,7 @@
         </dt>
         <dd class = "col-sm-10">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(Model.IsBanned ? "checked" : "") readonly>
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(Model.IsBanned ? "checked" : "") disabled>
             </div>
         </dd>
         <dt class = "col-sm-2">
@@ -44,10 +44,10 @@
             @Html.DisplayFor(model => model.BannedReason)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BranchCode)
+            @Html.DisplayNameFor(model => model.BranchName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BranchCode)
+            @Html.DisplayFor(model => model.BranchName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.UpdateBy)
@@ -58,6 +58,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerCode }) |
     <a asp-action="Index">Back to List</a>
 </div>

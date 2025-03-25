@@ -92,7 +92,7 @@ namespace Client_FAU.Components.Pages
 
                         var token = await GenerateToken(result);
                         if(token == null) { return; }
-                        await SetSessionByName(name, token);
+                        await SetSessionByName(storageName, token);
 
                         Validation.IsLoggedIn = true;
                     } else

@@ -15,3 +15,11 @@ Json web token validation
   "Issuer": "Your-issuer", 
   "Audience": "Your-audience" 
 }
+
+## Some images
+### Admin UI:
+![Admin UI](<Screenshot 2025-03-25 123944.jpg>)
+### Staff UI:
+![Staff UI](<Screenshot 2025-03-25 123316.jpg>)
+### API:
+![API UI](<Screenshot 2025-03-25 122725.jpg>)

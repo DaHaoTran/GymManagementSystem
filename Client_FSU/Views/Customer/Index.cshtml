@@ -9,17 +9,6 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-@if (!string.IsNullOrEmpty(ViewBag.Message))
-{
-    <div class="alert alert-success d-flex align-items-center row" role="alert">
-        <div class="col-6 text-start">
-            @ViewBag.Message
-        </div>
-        <div class="col-6 d-flex justify-content-end">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>
-}
 <table class="table">
     <thead>
         <tr>
@@ -49,36 +38,36 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(item.IsBanned ? "checked" : "") readonly>
-                </div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BannedReason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BranchCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateBy)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { id=item.CustomerCode }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+    <tr class="@(item.CustomerCode == ViewBag.CustomerCode ? "table-success" : "table")">
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(item.IsBanned ? "checked" : "") disabled>
+            </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BannedReason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateBy)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CustomerCode }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CustomerCode }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
 }
     </tbody>
 </table>
