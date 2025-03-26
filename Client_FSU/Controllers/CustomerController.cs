@@ -22,6 +22,7 @@ namespace Client_FSU.Controllers
             _branchBsn = branchBsn;
             _fineBsn = fineBsn;
         }
+
         public async Task<IActionResult> Index()
         {
             if(Lists.customers.Count() <= 0) { Lists.customers = await _customerBsn.GetCustomerList(9); }
@@ -228,6 +229,13 @@ namespace Client_FSU.Controllers
             catch
             {
             }
+            return RedirectToAction("Index", "Customer");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(string str)
+        {
+            if(!string.IsNullOrEmpty(str)) { Lists.customers = await _customerBsn.GetTheCustomersBySearchString(str.Trim(), 9); }
             return RedirectToAction("Index", "Customer");
         }
     }

@@ -2,10 +2,19 @@
 
 @{
     ViewData["Title"] = "Index Customer";
+    string str = string.Empty;
 }
 
 <h1>Customer</h1>
 
+<div class="d-flex justify-content-end my-2">
+    <form asp-action="Search" method="post" asp-route-str="@str" style="width: 40%;">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Typing customer name or phone number" asp-for="@str" />
+            <input type="submit" value="search" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+</div>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
