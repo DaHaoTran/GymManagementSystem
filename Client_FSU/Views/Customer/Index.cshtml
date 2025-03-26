@@ -65,7 +65,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CustomerCode }) |
             @Html.ActionLink("Details", "Details", new { id=item.CustomerCode }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Ban", "Ban", new { id=item.CustomerCode }) |
+            @Html.ActionLink("Unban", "Unban", new { id=item.CustomerCode })
         </td>
     </tr>
 }

@@ -1,0 +1,57 @@
+﻿@model Models.Customer
+@using Client_FSU.Variables
+
+@{
+    ViewData["Title"] = "Ban";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ban</h1>
+
+<h4>Customer</h4>
+<hr />
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger d-flex align-items-center row" role="alert">
+        <div class="col-6 text-start">
+            @ViewBag.Message
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-6">
+        <form asp-action="Ban" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BannedReason" class="control-label"></label>
+                <textarea asp-for="BannedReason" class="form-control"></textarea>
+                <span asp-validation-for="BannedReason" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="hidden" asp-for="CustomerCode" />
+                <input type="hidden" asp-for="CustomerName" />
+                <input type="hidden" asp-for="PhoneNumber" />
+                <input type="hidden" asp-for="BranchName" />
+                <input type="hidden" asp-for="IsBanned" />
+                <input type="hidden" asp-for="PhoneNumber" />
+                <input type="hidden" asp-for="BranchCode" />
+                <input type="submit" value="confirm" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+<div>
+    <a asp-action="Index" asp-controller="Customer">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

@@ -14,6 +14,7 @@ builder.Services.AddScoped<Account_Int, Account_Imp>();
 builder.Services.AddScoped<Token_Int, Token_Imp>();
 builder.Services.AddScoped<Customer_Int, Customer_Imp>();
 builder.Services.AddScoped<Branch_Int, Branch_Imp>();
+builder.Services.AddScoped<Fine_Int, Fine_Imp>();
 
 var app = builder.Build();
 

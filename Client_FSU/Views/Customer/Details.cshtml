@@ -1,63 +1,103 @@
 ﻿@model Models.Customer
+@using Models
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Customer</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsBanned)
-        </dt>
-        <dd class = "col-sm-10">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(Model.IsBanned ? "checked" : "") disabled>
-            </div>
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BannedReason)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BannedReason)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BranchName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BranchName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdateBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdateBy)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerCode }) |
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-md-12 col-lg-6">
+        <h1>Details</h1>
+        <div>
+            <h4>Customer</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.CustomerCode)
+                </dt>
+                <dd class="col-sm-10 ms-2">
+                    @Html.DisplayFor(model => model.CustomerCode)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.CustomerName)
+                </dt>
+                <dd class="col-sm-10 ms-2">
+                    @Html.DisplayFor(model => model.CustomerName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+                <dd class="col-sm-10 ms-2">
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.IsBanned)
+                </dt>
+                <dd class="col-sm-10">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(Model.IsBanned ? "checked" : "") disabled>
+                    </div>
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.BannedReason)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.BannedReason)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.BranchName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.BranchName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UpdateBy)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UpdateBy)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerCode }) |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <h1>Fines</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Date</td>
+                    <td>Reason</td>
+                    <td>Is Compensated</td>
+                    <td>Admin note</td>
+                    <td>Staff note</td>
+                    <td>Update by</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if(ViewData["Fines"] != null)
+                {
+                    @foreach (var item in ViewData["Fines"] as IEnumerable<Fine>)
+                    {
+                        <tr>
+                            <td>@item.Date</td>
+                            <td>@item.Reason</td>
+                            <td>@item.IsCompensated</td>
+                            <td>@item.AdminNote</td>
+                            <td>@item.StaffNote</td>
+                            <td>@item.UpdateBy</td>
+                        </tr>
+                    }
+                } else
+                {
+                    <tr>
+                        <td colspan="6">There are excepted problem !</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
