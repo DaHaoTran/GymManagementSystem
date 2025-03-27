@@ -18,7 +18,7 @@
         <!-- compensated switch -->
         <RadzenDataGridColumn Frozen="true" Filterable="false" Width="80px" Title="Is Compensated" >
             <Template Context="item">
-                <RadzenSwitch @bind-Value=@item.IsCompensated contenteditable="false" />
+                <RadzenSwitch @bind-Value=@item.IsCompensated Disabled />
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="@nameof(Fine.FineCode)" Title="FineCode" Width="160px" TextAlign="TextAlign.Left" />
@@ -27,7 +27,7 @@
         <RadzenDataGridColumn Property="@nameof(Fine.Reason)" Filterable="false" Title="Reason" Width="160px" />
         <RadzenDataGridColumn Frozen="true" Filterable="false" Width="160px" Title="AdminNote">
             <Template Context="item">
-                <RadzenDataGridColumn Property="@nameof(Fine.AdminNote)" Filterable="false" Title="AdminNote" Width="160px" contenteditable="true" @onchange="() => EditFineDatabase(item)" />
+                <InputTextArea class="w-75" @bind-Value=item.AdminNote DisplayName="Admin note" @onblur="() => EditFineDatabase(item)"/>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="@nameof(Fine.StaffNote)" Filterable="false" Title="StaffNote" Width="160px" />
