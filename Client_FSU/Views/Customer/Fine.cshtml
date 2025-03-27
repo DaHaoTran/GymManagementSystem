@@ -1,0 +1,66 @@
+﻿@model Models.Fine
+
+@{
+    ViewData["Title"] = "Fine";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Fine</h1>
+
+<h4>Fine</h4>
+<hr />
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger d-flex align-items-center row" role="alert">
+        <div class="col-6 text-start">
+            @ViewBag.Message
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Fine" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CustomerCode" class="control-label"></label>
+                <input asp-for="CustomerCode" class="form-control" readonly/>
+                <span asp-validation-for="CustomerCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" required/>
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check mt-2">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCompensated" /> @Html.DisplayNameFor(model => model.IsCompensated)
+                </label>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="StaffNote" class="control-label"></label>
+                <textarea asp-for="StaffNote" class="form-control" ></textarea>
+                <span asp-validation-for="StaffNote" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
