@@ -238,5 +238,43 @@ namespace Client_FSU.Controllers
             if(!string.IsNullOrEmpty(str)) { Lists.customers = await _customerBsn.GetTheCustomersBySearchString(str.Trim(), 9); }
             return RedirectToAction("Index", "Customer");
         }
+
+        public IActionResult Fine(string id)
+        {
+            Fine fine = new Fine();
+            fine.CustomerCode = id;
+            return View(fine);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Fine(Fine fine)
+        {
+            try
+            {
+                //set value
+                fine.FineCode = new Guid();
+                fine.Reason = fine.Reason.Trim();
+                fine.StaffNote = !string.IsNullOrEmpty(fine.StaffNote) ? fine.StaffNote : string.Empty;
+                fine.UpdateBy = Validation.StaffCode;
+
+                // do business
+                var result = await _fineBsn.AddANewFine(fine);
+                if(result != null)
+                {
+                    ViewBag.Message = $"Create new fine for {fine.CustomerCode} successfully";
+                    customerCode = fine.CustomerCode;
+                    return RedirectToAction("Index", "Customer");
+                }
+                else
+                {
+                    ViewBag.Message = "Create failed. There are a problem !";
+                    return View();
+                }
+            } catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -74,6 +74,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CustomerCode }) |
             @Html.ActionLink("Details", "Details", new { id=item.CustomerCode }) |
+            @Html.ActionLink("Fine", "Fine", new { id=item.CustomerCode }) |
             @Html.ActionLink("Ban", "Ban", new { id=item.CustomerCode }) |
             @Html.ActionLink("Unban", "Unban", new { id=item.CustomerCode })
         </td>
