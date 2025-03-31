@@ -16,6 +16,8 @@ Json web token validation
   "Audience": "Your-audience" 
 }
 
+After update database, open StoredProcedure.sql in sql folder to install procedures for database (use sql server managements studio 20).
+
 ## Some images
 ### Admin UI:
 ![Admin UI](<Screenshot 2025-03-25 123944.jpg>)
