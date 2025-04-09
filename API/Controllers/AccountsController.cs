@@ -22,6 +22,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="limit">data retrieval limit</param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<Account>> GetAccountList([FromQuery] int limit)
         {
@@ -79,7 +80,6 @@ namespace API.Controllers
         /// </summary>
         /// <param name="account">account data</param>
         /// <returns>account has added</returns>
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddANewAccount([FromBody] Account account)
         {
@@ -98,7 +98,6 @@ namespace API.Controllers
         /// </summary>
         /// <param name="account">account data</param>
         /// <returns>account has edited</returns>
-        [Authorize]
         [HttpPut]
         public async Task<IActionResult> EditAnExistAccount([FromBody] Account account)
         {
