@@ -14,7 +14,7 @@ Json web token validation
   "Audience": "Your-audience" 
 }
 
-Open ~~ StoredProcedure.sql in sql folder to install procedures for database ~~ Data.sql to get sample database (use sql server managements studio 20).
+Open ~~StoredProcedure.sql in sql folder to install procedures for database~~ Data.sql to get sample database (use sql server managements studio 20).
 
 ## Some images
 ### Admin UI:
