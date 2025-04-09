@@ -7,8 +7,6 @@ Database
   "GymConnection": "Your-connection-string"
 },
 
-<sup> Then run command line to create datbase </sup>
-
 Json web token validation
 > "Jwt": {
   "Key": "Your-secret-key",
@@ -16,7 +14,7 @@ Json web token validation
   "Audience": "Your-audience" 
 }
 
-After update database, open StoredProcedure.sql in sql folder to install procedures for database (use sql server managements studio 20).
+Open ~~ StoredProcedure.sql in sql folder to install procedures for database ~~ Data.sql to get sample database (use sql server managements studio 20).
 
 ## Some images
 ### Admin UI:
