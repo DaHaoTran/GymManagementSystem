@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Models.Customer>
+﻿@using Client_FSU.Variables
+@model IEnumerable<Models.Customer>
 
 @{
     ViewData["Title"] = "Index Customer";
@@ -46,39 +47,51 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-    <tr class="@(item.CustomerCode == ViewBag.CustomerCode ? "table-success" : "table")">
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(item.IsBanned ? "checked" : "") disabled>
-            </div>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BannedReason)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BranchCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdateBy)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CustomerCode }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CustomerCode }) |
-            @Html.ActionLink("Fine", "Fine", new { id=item.CustomerCode }) |
-            @Html.ActionLink("Ban", "Ban", new { id=item.CustomerCode }) |
-            @Html.ActionLink("Unban", "Unban", new { id=item.CustomerCode })
-        </td>
-    </tr>
-}
+        @if(Lists.customers == null)
+        {
+            <tr>Loading...</tr>
+        }
+        else if(Lists.customers.Count() <= 0)
+        {
+            <tr>There are no record to display</tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr class="@(item.CustomerCode == ViewBag.CustomerCode ? "table-success" : "table")">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @(item.IsBanned ? "checked" : "") disabled>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BannedReason)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BranchCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateBy)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CustomerCode }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.CustomerCode }) |
+                        @Html.ActionLink("Fine", "Fine", new { id = item.CustomerCode }) |
+                        @Html.ActionLink("Ban", "Ban", new { id = item.CustomerCode }) |
+                        @Html.ActionLink("Unban", "Unban", new { id = item.CustomerCode })
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

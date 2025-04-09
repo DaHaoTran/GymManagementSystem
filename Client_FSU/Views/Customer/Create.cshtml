@@ -39,9 +39,12 @@
                 <label asp-for="BranchName" class="control-label"></label>
                 <select class="form-control h-25" asp-for="BranchName">
                     <option value="@string.Empty">-- Choose branch --</option>
-                    @for(int i = 0; i < Lists.branches.Count(); i++)
+                    @if(Lists.branches!=null)
                     {
-                        <option value="@Lists.branches[i].BranchName">@Lists.branches[i].BranchName</option>
+                        @for (int i = 0; i < Lists.branches.Count(); i++)
+                        {
+                            <option value="@Lists.branches[i].BranchName">@Lists.branches[i].BranchName</option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="BranchName" class="text-danger"></span>

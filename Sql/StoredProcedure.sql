@@ -23,7 +23,7 @@ Begin
 	Set @IsBanned = 0;
 	Set @BannedReason = null;
 	Set @BranchCode = (Select BranchCode from inserted);
-	Set @UpdateBy = (Select @UpdateBy from inserted);
+	Set @UpdateBy = (Select UpdateBy from inserted);
 
 	Insert into Customers (CustomerCode, PhoneNumber, CustomerName, IsBanned, BannedReason, BranchCode, UpdateBy) values
 	(@CustomerCode, @PhoneNumber, @CustomerName, @IsBanned, @BannedReason, @BranchCode, @UpdateBy);
@@ -42,7 +42,7 @@ Begin
 	Set @CodeSetString = '00000000';
 
 	Declare @Count int;
-	Set @Count = (Select COUNT(*) from Accounts) + 1;
+	Set @Count = (Select COUNT(*) from Accounts Where AccountCode Like (Select AccountCode from inserted) COLLATE SQL_Latin1_General_CP1_CI_AS) + 1;
 
 	While exists (Select AccountCode from Accounts where AccountCode = (Select AccountCode from inserted) + SUBSTRING(@CodeSetString, 1, Len(@CodeSetString) - Len(CONVERT(varchar(max), @Count))) + CONVERT(varchar(max), @Count))
 		Begin

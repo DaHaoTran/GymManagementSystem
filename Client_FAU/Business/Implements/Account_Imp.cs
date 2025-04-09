@@ -55,7 +55,7 @@ namespace Client_FAU.Business.Implements
         {
             var json = JsonConvert.SerializeObject(account);
             StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            SetAuthorizationHeaderAsync();
+            //SetAuthorizationHeaderAsync();
             var apiRequest = await _httpClient.PutAsync($"{baseAPIUrl}/{name}", stringContent);
             if (!apiRequest.IsSuccessStatusCode) { return null!; }
             var apiResponse = await apiRequest.Content.ReadAsStringAsync();

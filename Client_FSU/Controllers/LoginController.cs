@@ -57,6 +57,9 @@ namespace Client_FSU.Controllers
                     }
 
                     Validation.Token = token.Trim();
+
+                    Validation.IsLoggedIn = true;
+                    return RedirectToAction("Index", "Customer");
                 }
             }
             catch (Exception ex)
@@ -64,9 +67,8 @@ namespace Client_FSU.Controllers
                 ViewBag.Message = ex.Message;
                 return View();
             }
-            
-            Validation.IsLoggedIn = true;
-            return RedirectToAction("Index", "Customer");
+
+            return View();
         }
     }
 }
