@@ -23,3 +23,5 @@ Open ~~ StoredProcedure.sql in sql folder to install procedures for database ~~ 
 ![Staff UI](<Screenshot 2025-03-25 123316.jpg>)
 ### API:
 ![API UI](<Screenshot 2025-03-25 122725.jpg>)
+### Password change:
+![alt text](<Screenshot 2025-04-10 121345.PNG>)
