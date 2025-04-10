@@ -1,10 +1,15 @@
-﻿using PasswordManipulate.Components;
+﻿using PasswordManipulate.Business.Implements;
+using PasswordManipulate.Business.Interfaces;
+using PasswordManipulate.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<Account_Int, Account_Imp>();
+builder.Services.AddSingleton<Token_Int, Token_Imp>();
 
 var app = builder.Build();
 
